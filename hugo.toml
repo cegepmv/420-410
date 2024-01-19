@@ -1,0 +1,19 @@
+baseURL = 'https://cegepmv.github.io/420-410'
+languageCode = 'fr-ca'
+title = 'Introduction aux plateformes IdO'
+theme = 'hugo-theme-relearn'
+[params]
+  # Change default color scheme with a variant one. Can be empty, "red", "blue", "green".
+  themeVariant = "green"
+  disableLandingPageButton = true
+  alwaysopen = false
+  # Set this to true to disable copy-to-clipboard button for inline code.
+  disableInlineCopyToClipBoard = true
+  # Désactiver search bar
+  # disableSearch = true
+  # Hide breadcrumbs in the header and only show the current page title
+  disableBreadcrumb = false
+  # If set to true, hide table of contents menu in the header of all pages
+  disableToc = true
+  # Hide Next and Previous page buttons normally displayed full height beside content
+  disableNextPrev = true
