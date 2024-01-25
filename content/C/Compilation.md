@@ -98,7 +98,7 @@ Les fonctions `saluerFr()` et `saluerEn()` ne sont pas définies dans le fichier
 
 Pour compiler le programme, il s'agit d'ajouter le nouveau fichier aux arguments de `gcc` lorsqu'on lance la compilation: 
 ```bash
-gcc hello.c salutations.c -o hello`
+gcc hello.c salutations.c -o hello
 ```
 
 Le _Makefile_ doit aussi être modifié en conséquence:
