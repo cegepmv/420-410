@@ -60,9 +60,9 @@ CIBLE: DÉPENDANCES
     COMMANDE
     COMMANDE
     ...
-
-all: Ce que make fait si on ne spécifie pas de cible
 ```
+**all**: Ce que _make_ fait si on ne spécifie pas de cible.
+
 
 ## Fichiers de programme
 Il est possible de séparer un programme dans plusieurs fichiers:
