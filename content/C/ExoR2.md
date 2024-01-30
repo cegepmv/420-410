@@ -1,98 +1,66 @@
 +++
-title = 'ExoR2'
+title = 'Exo R2'
 date = 2024-01-29T21:33:41-05:00
-draft = false
+draft = true
 +++
 ## 1
-Créez un fichier nommé cours2.c qui permet d'afficher la phrase classic : Hello world.
+Créez un programme nommé `cours2.c` qui permet d'afficher la phrase classique _Hello world_.
 
-
-
+<!--
 ```c
     #include <stdio.h>
     int main() {
         printf("hello world\n");
     }
 ```
-
+-->
 ## 2
-Modifier le Makefile pour pouvoir utiliser make cours2 pour rapidement compiler ce fichier vers *cours2* et exécuter cet exécutable.
+Modifier le _Makefile_ suivant afin que la commande `make` (sans argument) compile ce fichier vers *cours2* et exécute le programme.
 
+```makefile
+all: 
+
+cours2: cours2.c
+	# Commande de compilation
+	./cours2
+```
+<!--
 ```Make
-all:
+all: cours2
 
 cours2: cours2.c
 	gcc cours2.c -o cours2
 	./cours2
 ```
-
+-->
 ## 3
-Faites un code pour prendre comme entrée le nom d'un utilisateur et vérifier si c'est Jean
+Faites un programme pour prendre comme entrée le nom d'un utilisateur et vérifier si le nom entré est "Jean". Affichez "Bienvenue" si c'est le cas, sinon affichez "Allez-vous en".
 
+_La fonction **strcmp()** vous sera utile ici..._
+
+<!--
 ```c
 #include <stdio.h>
 #include <string.h>
 
 int main() {
-    char nom[30];
-    fgets(nom, sizeof(nom), stdin);
-    printf("%s", nom);
-
-    if (strcmp(nom, "Jean") == 0) {
-        printf(" Identique\n");
+    char nom[10];
+    printf("Entrez votre nom: ");
+    scanf("%s",nom);
+    if (strcmp(nom,"Jean") == 0) {
+        printf(" Bienvenue\n");
     } else {
-        printf(" Différent\n");
+        printf(" Allez-vous en\n");
     }
-
     return 0;
 }
 ```
+-->
 
-Ce code indique qu'il sont différent, c'est parce qu'il faut considérer le "\n". Donc il faudrait écrire le code ainsi.
 
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char nom[30];
-    fgets(nom, sizeof(nom), stdin);
-    printf("%s", nom);
-
-    if (strcmp(nom, "Jean\n") == 0) {
-        printf(" Identique\n");
-    } else {
-        printf(" Différent\n");
-    }
-
-    return 0;
-}
-```
 ## 4
-Sinon nous pouvons retirer le \n du string avant la comparaison:
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char nom[30];
-    fgets(nom, sizeof(nom), stdin);
-    printf("%s", nom);
-
-    nom[strcspn(nom, "\n")] = 0; // Remove newline character
-    if (strcmp(nom, "Jean") == 0) {
-        printf(" Identique\n");
-    } else {
-        printf(" Différent\n");
-    }
-
-    return 0;
-}
-```
-
-## 5 
-Voyons maintenant comment utiliser les PINs de notre raspberryPi
+ 
+Voyons maintenant comment utiliser les PINs du RaspberryPi
 
 ```c
 #include <stdio.h>
@@ -102,23 +70,23 @@ Voyons maintenant comment utiliser les PINs de notre raspberryPi
 #define PIN_NUMBER 18
 
 int main() {
-    // Initialize the pigpio library
+    // Initialiser
     if (gpioInitialise() < 0) {
         fprintf(stderr, "Failed to initialize pigpio\n");
         return 1;
     }
 
-    // Set the specified GPIO pin to output mode
+    // Définir en mode output
     gpioSetMode(PIN_NUMBER, PI_OUTPUT);
 
     while (1) {
-        // Turn on the GPIO pin
+        // Allumer 1 s
         gpioWrite(PIN_NUMBER, 1);
-        usleep(1000000);  // 1 second delay (in microseconds)
+        usleep(1000000);  
 
-        // Turn off the GPIO pin
+        // Éteindre 1 s
         gpioWrite(PIN_NUMBER, 0);
-        usleep(1000000);  // 1 second delay (in microseconds)
+        usleep(1000000);  
     }
 
     // Terminate the pigpio library
@@ -128,22 +96,21 @@ int main() {
 }
 
 ```
-## 6
-Si vous avez des problèmes avec l'initialisation de pigpio, essayer:
+_S'il y a des problèmes avec l'initialisation de pigpio, essayer:_
 
 ```bash
     sudo killall pigpiod
 ```
 
-Car il se peut qu'il y est des processus qui trainent.
+Car il se peut qu'il y ait des processus qui trainent.
 
-## 7
+## 5
 
-Faites un programme qui lorsque vous appuyez sur le touch module, allume la LED
+Faites un programme qui allume une LED lorsque vous appuyez sur un bouton (une LED et un bouton du kit KeyStudio).
 
-## 8
+## 6
 
-Maintenant, faites un programme qui rendra interactif ce menu:
+Faites un programme qui allume ou éteint une LED selon ce qui est saisi à la ligne de commande:
 
 ```c
 printf("#########################################\n");
