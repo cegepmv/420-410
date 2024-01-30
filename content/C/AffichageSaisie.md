@@ -2,7 +2,7 @@
 title = 'Affichage et saisie'
 weight = 22
 date = 2024-01-21T19:43:03-05:00
-draft = true
+draft = false
 +++
 
 
@@ -43,7 +43,9 @@ printf("Le nombre %f est affiché en décimal\n",(float)i/3);
 ```
 > Que se passe-t-il si on omet `(float)` au 3e appel de _printf()_ ?
 
-## `scanf()`
+## Saisie
+
+### `scanf()`
 + scanf
 + fscanf
 + sscanf
