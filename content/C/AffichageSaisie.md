@@ -14,6 +14,7 @@ Cette fonction affiche des informations sur la _sortie standard_ (par défaut, l
 ```c
 printf("Bonjour tout le monde");
 ```
+La fonction retourne un entier qui représente le nombre de caractères affichés; une valeur négative signifie qu'une erreur est survenue lors de l'exécution.
 
 Il est possible d'insérer des valeurs ou des variables dans la chaîne de caractères affichée et de spécifier leur format. Par exemple:
 ```c
@@ -25,8 +26,8 @@ Il existe plusieurs types de spécifieurs selon le type de données à afficher.
 
 | SYMBOLE | TYPE | INTERPRÉTATION |
 |:---|:---:|:---|
-| %d ou %i | int | entier relatif |
-| %u | int | entier naturel (unsigned) |
+| %d ou %i | int | entier (signé) |
+| %u | int | entier naturel (non-signé) |
 | %o | int | entier exprimé en octal |
 | %x | int | entier exprimé en hexadécimal |
 | %c | int | caractère |
@@ -45,9 +46,23 @@ printf("Le nombre %f est affiché en décimal\n",(float)i/3);
 
 ## Saisie
 
-### `scanf()`
-+ scanf
-+ fscanf
-+ sscanf
-+ vsscanf
-+ vfscanf
+### `int scanf()`
+Cette fonction prend une chaîne de caractères saisie sur _l'entrée standard_ (par défaut, la ligne de commande) et stocke sons contenu dans une ou plusieurs variables.
+
+La valeur retournée désigne le nombre de valeurs qui ont été traitées dans la chaîne saisie.
+
+scanf() prend comme premier argument une chaîne de caractères composée desspécifieurs, puis des variables qui correspondent à ceux-ci. Par exemple, dans l'instruction suivante on lit un nombre entier et on le stocke dans la variable nombre:
+
+```c
+scanf("%d",&nombre);
+```
+Les variables dans lesquelles les valeurs seront stockée doivent être déclarées au préalable. Le code suivant affichera donc la somme de deux nombres entrés par l'utilisateur:
+```c
+int main() {
+    int i;
+    printf("Entrez un nombre: ");
+    scanf("%d",&i);
+    printf("Vous avez entré le nombre %d\n",i);
+    return 0;
+}
+```
