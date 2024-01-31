@@ -156,6 +156,21 @@ int main() {
  
 Voyons maintenant comment utiliser les PINs du RaspberryPi
 
+```bash
+    sudo apt update
+    sudo apt upgrade
+    sudo apt install pigpio
+
+    sudo systemctl start pigpiod
+    sudo systemctl enable pigpiod
+```
+
+Il faut compiler comme suit (En ajoutant le fichier librairie lpigpio) :
+
+```
+    gcc -o cours2 cours2.c -lpigpio
+```
+
 ```c
 #include <stdio.h>
 #include <unistd.h>
@@ -194,6 +209,7 @@ _S'il y a des problèmes avec l'initialisation de pigpio, essayer:_
 
 ```bash
     sudo killall pigpiod
+    sudo rm -f /var/run/pigpio.pid
 ```
 
 Car il se peut qu'il y ait des processus qui trainent.
