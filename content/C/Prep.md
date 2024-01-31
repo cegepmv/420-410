@@ -2,7 +2,7 @@
 title = 'Préparation du Pi'
 weight = 20
 date = 2024-01-31T08:30:37-05:00
-draft = true
+draft = false
 +++
 
 Pour programmer en langage C sur un _RaspberryPi_, il est essentiel d'installer quelques logiciels.
@@ -21,6 +21,9 @@ sudo apt install build-essential
 
 ## Librairies GPIO
 Le _RaspberryPi_ est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.
+
+![pinoutpi](/420-410/images/pinoutpi.png?height=300px)
+(source: https://pinout.xyz/)
 
 Pour utiliser cette interface à partir d'un programme en C, deux librairies sont disponibles: **WiringPi** et **pigpio**. 
 
@@ -58,7 +61,7 @@ gcc testWiring.c -o test -lwiringPi
 La documentation de _WiringPi_ est ici: https://projects.drogon.net/raspberry-pi/wiringpi/functions/
 
 #### pigpio
-Cette librairie est réputée plus performante que _WiringPi_, et semble être mieux maintenue que cette dernière. Elle inclut également un "wrapper" qui permet de l'importer en python comme un module. Elle est accessible via un service linux nommé _pigpiod_.
+Cette librairie est réputée plus performante que _WiringPi_, et semble être mieux maintenue que cette dernière. Elle inclut également un "wrapper" qui permet de l'importer en python comme un module. On peut aussi y accéder via un service linux nommé _pigpiod_.
 
 On peut l'installer à partir des dépôts de _Raspberry Pi OS_ comme suit:
 ```bash
