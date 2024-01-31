@@ -167,7 +167,7 @@ Voyons maintenant comment utiliser les PINs du RaspberryPi
 
 Il faut compiler comme suit (En ajoutant le fichier librairie lpigpio) :
 
-```
+```bash
     gcc -o cours2 cours2.c -lpigpio
 ```
 
