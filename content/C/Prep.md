@@ -59,7 +59,7 @@ Au moment de la compilation il faut lier l'exécutable à la librairie _wiringpi
 gcc testWiring.c -o test -lwiringPi
 ```
 La documentation de _WiringPi_ est ici: https://projects.drogon.net/raspberry-pi/wiringpi/functions/
-
+<!---->
 #### pigpio
 Cette librairie est réputée plus performante que _WiringPi_, et semble être mieux maintenue que cette dernière. Elle inclut également un "wrapper" qui permet de l'importer en python comme un module. On peut aussi y accéder via un service linux nommé _pigpiod_.
 
