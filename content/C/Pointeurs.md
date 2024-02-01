@@ -293,7 +293,36 @@ Si on déplace le pointeur à des adresses plus loin que le dernier _int_ de la 
 #### Exercices
 1. Modifier le programme de l'exemple précédent pour afficher les nombres 10, 8, 6, 4, 2 en utilisant uniquement le déplacement du pointeur.
 2. Affichez chaque lettre du mot 'bonjour' en déplacant un pointeur. Rappelez-vous: un mot est en fait un tableau de caractères. 
+3. Faites un programme en C qui demande deux nombres à l'utilisateur et utilise les pointeurs pour les additionner et afficher le résultat.
+4. Faites un tableau d'entiers et utilisez un pointeur pour vous déplacer dans le tableau et calculer la somme de ses éléments.
+5. En utilisant les pointeurs, faites un programme qui demande une phrase et une lettre à l'utilisateur et affiche le nombre de fois que cette lettre apparaît dans la phrase. Les fonctions suivantes peuvent vous être utiles: _gets()_, _strchr()_, _strlen()_.
+6. Pour les variables suivantes:
+```c
+int N[] = {51,21,-9,10,18,-5,5};
+int *p;
+p = N;
+```
+Trouvez la valeur de:
++ *p+3
++ *(p+3)
++ p+3 (trouvez un équivalent avec `N`)
++ &N[5]-3 (trouvez un équivalent avec `p`)
++ *(p+(*p-50))
 
+7. Faites un programme pour mettre en ordre dans le tableau **R** tous les éléments de **T1** et **T2**. À la fin, `R = {3,7,10,12,12,34,39,41,59,61}`.
+```c
+int main() {
+    int T1[] = {10,12,34,39,61};
+    int T2[] = {3,7,12,41,59};
+    int R[10];
+    int *p1;
+    int *p2;
+    
+    // Votre code ici
+
+    return 0;
+}
+```
 <!--
 {{% expand "Réponses" %}}
 ```c
