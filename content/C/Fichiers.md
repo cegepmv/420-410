@@ -18,7 +18,7 @@ Assurez-vous d'inclure la bibliothèque standard C en ajoutant la directive #inc
 ```
 
 ###### Ouverture et/ou création d'un fichier :
-Utilisez la fonction fopen pour ouvrir un fichier. La fonction prend deux paramètres : le nom du fichier et le mode d'ouverture (lecture, écriture, etc.).
+Utilisez la fonction `fopen()` pour ouvrir un fichier. La fonction prend deux paramètres : le nom du fichier et le mode d'ouverture (lecture, écriture, etc.).
 
 ```C
 FILE *fichier;
@@ -27,18 +27,18 @@ fichier = fopen("nom_du_fichier.txt", "w"); // "w" pour écriture, "r" pour lect
 
 ***
 
-Assurez-vous que fichier n'est pas NULL, ce qui indiquerait une ouverture de fichier infructueuse.
+Assurez-vous que _fichier_ n'est pas NULL, ce qui indiquerait une ouverture de fichier infructueuse.
 
 ```c
 if (fichier == NULL) {
         printf("Erreur lors de l'ouverture du fichier.\n");
         return 1;
-    }
+}
 ```
 ***
 
-Écriture dans un fichier :
-Utilisez la fonction fprintf ou fputc pour écrire dans le fichier.
+###### Écriture dans un fichier 
+Utilisez la fonction `fprintf()` ou `fputc()` pour écrire dans le fichier.
 
 ```c
 fprintf(fichier, "Bonjour, monde !\n");
@@ -48,8 +48,8 @@ fputc('A', fichier);
 
 ***
 
-Fermeture du fichier :
-Assurez-vous de fermer le fichier après avoir terminé les opérations. Utilisez la fonction fclose.
+###### Fermeture du fichier
+Assurez-vous de fermer le fichier après avoir terminé les opérations. Utilisez la fonction `fclose()`.
 
 ```c
 fclose(fichier);
@@ -81,7 +81,7 @@ Cet exemple crée un fichier nommé "mon_fichier.txt" et y écrit la chaîne de 
 #### Lecture
 
 ###### fget() :
-- Le premier paramètre de cette fonction permet de spécifié la varibale qui stockera ce que retourne cette fonction.
+- Le premier paramètre de cette fonction permet de spécifier la variable qui stockera ce que retourne cette fonction.
 - Le deuxième paramètre spécifie la taille maximale des données à lire. 
 - Le troisième paramètre nécessite un pointeur de fichier qui est utilisé pour lire le fichier. Donc la cible de la lecture.
 
@@ -89,19 +89,19 @@ Cet exemple crée un fichier nommé "mon_fichier.txt" et y écrit la chaîne de 
 
 FILE *fptr;
 
-// Open a file in read mode
+// Ouvrir en lecture
 fptr = fopen("filename.txt", "r");
 
-// Store the content of the file
+// Créer une variable pour le contenu
 char myString[100];
 
-// Read the content and store it inside myString
+// Mettre le contenu du fichier dans la variable
 fgets(myString, 100, fptr);
 
-// Print the file content
+// Afficher la variable
 printf("%s", myString);
 
-// Close the file
+// Fermer
 fclose(fptr);
 ```
 
@@ -109,32 +109,32 @@ fclose(fptr);
 *** 
 ###### Bonne pratique
 
-C'est toujours une bonne idée de vérifier si le fichier à bien été ouvert. Ceci évite des comportements inatendu du code.
+C'est toujours une bonne idée de vérifier si le fichier à bien été ouvert. Ceci évite des comportements inattendus du code.
 
 
 ```c
 FILE *fptr;
 
-// Open a file in read mode
+// Ouvrir en lecture
 fptr = fopen("filename.txt", "r");
 
-// Store the content of the file
+// Créer une variable pour le contenu
 char myString[100];
 
-// If the file exist
+// Si le fichier existe
 if(fptr != NULL) {
 
-  // Read the content and print it
+  // Lire le fichier et afficher
   while(fgets(myString, 100, fptr)) {
     printf("%s", myString);
   }
 
-// If the file does not exist
+// Fichier inexistant
 } else {
   printf("Not able to open the file.");
 }
 
-// Close the file
+// Fermer
 fclose(fptr);
 ```
 
@@ -195,3 +195,108 @@ int main(int argc, char **argv) {
 ```
 
 ## Gérer la mémoire
+Jusqu'ici nous avons vu comment allouer la mémoire de manière statique, au moment de la compilation. Dans le programme suivant par exemple, on stocke dans un tableau de taille 10 les caractères entrés sur la ligne de commande:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char mot[10];
+    char c;
+    int i = 0;
+
+    printf("Ecrivez un mot: ");
+
+    // Lire chaque caractère jusqu'à avoir '\n'
+    while ( (c = getchar()) != EOF && c != '\n') {
+        mot[i] = c;
+        i++;
+    }
+
+    // Afficher le contenu de la mémoire
+    char *p = mot;
+    for (int j=0;j<10;j++) {
+        printf("Adresse: %p\n",p);
+        printf("Valeur: %c\n\n",*p);
+        p++;
+    }
+    printf("Nombre de caracteres: %d\n", i);
+
+    return 0;
+}
+```
+
+Le problème avec ce code est que la chaîne de caractères entrée par l'utilisateur ne peut pas avoir une taille supérieure à 10. 
+
+La fonction `malloc()` permet de changer l'espace alloué à une variable pendant l'exécution du programme. Le code suivant demande à l'utilisateur la taille du mot avant de la définir:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char *mot;
+    char c;
+    int i;
+
+    printf("Entrez le nombre de caracteres: ");
+    scanf("%d",&i);
+    mot = (char *)malloc(i * sizeof(char));
+
+    printf("Ecrivez un mot: ");
+    
+    getchar(); // Ignorer le '\n' de l'input précédent
+    i = 0; // Remettre à 0
+    while ( (c = getchar()) != EOF && c != '\n') {
+        mot[i] = c;
+        i++;
+    }
+
+    // Afficher le contenu de a mémoire
+    char *p = mot;
+    for (int j=0;j<i;j++) {
+        printf("Adresse: %p\n",p);
+        printf("Valeur: %c\n\n",*p);
+        p++;
+    }
+    free(mot);
+
+    return 0;
+}
+```
+La fonction `malloc()` prend la taille réelle qu'on veut allouer au pointeur `mot`, soit le nombre de caractères souhaité multiplié par la taille d'un caractère en mémoire. Elle retourne un pointeur au début de cet espace.
+
+La fonction `free()` libère l'espace mémoire alloué au pointeur.
+
+Pour changer la taille d'un espace préalablement défini avec `malloc()`, on peut utiliser `malloc()` une nouvelle fois mais il faudra alors copier le contenu de la mémoire dans le nouveau bloc alloué. Dans cette situation il est donc préférable d'utiliser `realloc()`.
+
+Dans l'exemple suivant, on utilise `realloc()` pour ajouter incrémenter la taille d'un espace mémoire à mesure que l'utilisateur entre des caractères:
+```c
+int main() {
+    char *mot;
+    char c;
+    int i;
+
+    // Donner une taille de 1 caractère
+    mot = (char *)malloc(sizeof(char));
+
+    printf("Ecrivez un mot: ");
+    
+    while ( (c = getchar()) != EOF && c != '\n') {
+        // Augmenter de 1 la taille de mot à chaque nouveau caractère
+        mot = (char *)realloc(mot, (i + 1) * sizeof(char));
+        mot[i] = c;
+        i++;
+    }
+
+    char *p = mot;
+    for (int j=0;j<i;j++) {
+        printf("Adresse: %p\n",p);
+        printf("Valeur: %c\n\n",*p);
+        p++;
+    }
+    free(mot);
+
+    return 0;
+}
+```
+La fonction `realloc(*p,int)` prend le pointeur dont on veut changer la taille et la nouvelle taille qu'on veut lui donner, puis retourne un pointeur au début de cet espace mémoire.
