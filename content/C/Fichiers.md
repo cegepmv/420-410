@@ -7,17 +7,17 @@ draft = false
 
 Dans cette section on verra comment lire et écrire dans les fichiers, passer des arguments à un programme et gérer la mémoire avec _malloc()_, _realloc()_ et _free()_.
 
-# Lecture et écriture dans des fichiers
+## Lecture et écriture dans des fichiers
 [Lien vers w3school pour les fichiers en C, dont les notes sont très fortement inspirée](https://www.w3schools.com/c/c_files_read.php)
-## Écriture
-### Inclusion de la bibliothèque standard C :
+#### Écriture
+###### Inclusion de la bibliothèque standard C :
 Assurez-vous d'inclure la bibliothèque standard C en ajoutant la directive #include <stdio.h> au début de votre programme.
 
 ```c
 #include <stdio.h>
 ```
 
-### Ouverture et/ou création d'un fichier :
+###### Ouverture et/ou création d'un fichier :
 Utilisez la fonction fopen pour ouvrir un fichier. La fonction prend deux paramètres : le nom du fichier et le mode d'ouverture (lecture, écriture, etc.).
 
 ```C
@@ -78,9 +78,9 @@ int main() {
 ```
 Cet exemple crée un fichier nommé "mon_fichier.txt" et y écrit la chaîne de caractères "Bonjour, monde !". Assurez-vous que votre programme a les autorisations nécessaires pour écrire dans le répertoire spécifié.
 
-### Lecture
+#### Lecture
 
-##### fget() :
+###### fget() :
 - Le premier paramètre de cette fonction permet de spécifié la varibale qui stockera ce que retourne cette fonction.
 - Le deuxième paramètre spécifie la taille maximale des données à lire. 
 - Le troisième paramètre nécessite un pointeur de fichier qui est utilisé pour lire le fichier. Donc la cible de la lecture.
@@ -107,7 +107,7 @@ fclose(fptr);
 
 
 *** 
-##### Bonne pratique
+###### Bonne pratique
 
 C'est toujours une bonne idée de vérifier si le fichier à bien été ouvert. Ceci évite des comportements inatendu du code.
 
