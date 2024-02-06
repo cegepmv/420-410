@@ -133,6 +133,7 @@ int main() {
 }
 ```
 ```c
+// 3.
 int main() {
     int *p;
     printf("%p\n",p); 
@@ -293,10 +294,20 @@ Si on déplace le pointeur à des adresses plus loin que le dernier _int_ de la 
 #### Exercices
 1. Modifier le programme de l'exemple précédent pour afficher les nombres 10, 8, 6, 4, 2 en utilisant uniquement le déplacement du pointeur.
 2. Affichez chaque lettre du mot 'bonjour' en déplacant un pointeur. Rappelez-vous: un mot est en fait un tableau de caractères. 
-3. Faites un programme en C qui demande deux nombres à l'utilisateur et utilise les pointeurs pour les additionner et afficher le résultat.
-4. Faites un tableau d'entiers et utilisez un pointeur pour vous déplacer dans le tableau et calculer la somme de ses éléments.
-5. En utilisant les pointeurs, faites un programme qui demande une phrase et une lettre à l'utilisateur et affiche le nombre de fois que cette lettre apparaît dans la phrase. Les fonctions suivantes peuvent vous être utiles: _gets()_, _strchr()_, _strlen()_.
-6. Pour les variables suivantes:
+3. Complétez le programme suivant qui demande deux nombres à l'utilisateur et utilise les pointeurs pour les additionner et afficher le résultat:
+```c
+#include <stdio.h>
+
+int main() {
+    int i,j;
+    // Votre code ici
+    printf("La somme %d\n",*pi+*pj);
+ 
+    return 0;
+}
+```
+4. Faites un tableau qui contient 6 nombres entiers et utilisez un pointeur pour vous déplacer dans le tableau et calculer la somme de ses éléments.
+5. Pour les variables suivantes:
 ```c
 int N[] = {51,21,-9,10,18,-5,5};
 int *p;
@@ -347,6 +358,37 @@ int main() {
         p1++;
     }
     return 0;
+}
+```
+```c
+// 3. 
+#include <stdio.h>
+
+int main() {
+    int i,j;
+    int *pi = &i;
+    int *pj = &j;
+    printf("Entrez deux nombres: ");
+    scanf("%d %d",pi,pj);
+    printf("La somme %d\n",*pi+*pj);
+ 
+    return 0;
+}
+```
+```c
+// 4.
+#include <stdio.h>
+
+int main() {
+    int nombres[] = {10,11,12,20,21,22};
+    int *p = nombres;
+    int somme = 0;
+
+    for (int i=0;i<6;i++) {
+        somme += *p;
+        p++;
+    }
+    printf("Somme: %d|n",somme);
 }
 ```
 {{% /expand %}}

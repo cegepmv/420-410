@@ -31,8 +31,8 @@ Assurez-vous que _fichier_ n'est pas NULL, ce qui indiquerait une ouverture de f
 
 ```c
 if (fichier == NULL) {
-        printf("Erreur lors de l'ouverture du fichier.\n");
-        return 1;
+    printf("Erreur lors de l'ouverture du fichier.\n");
+    return 1;
 }
 ```
 ***
@@ -86,11 +86,10 @@ Cet exemple crée un fichier nommé "mon_fichier.txt" et y écrit la chaîne de 
 - Le troisième paramètre nécessite un pointeur de fichier qui est utilisé pour lire le fichier. Donc la cible de la lecture.
 
 ```c
-
 FILE *fptr;
 
 // Ouvrir en lecture
-fptr = fopen("filename.txt", "r");
+fptr = fopen("fichier.txt", "r");
 
 // Créer une variable pour le contenu
 char myString[100];
@@ -116,7 +115,7 @@ C'est toujours une bonne idée de vérifier si le fichier à bien été ouvert. 
 FILE *fptr;
 
 // Ouvrir en lecture
-fptr = fopen("filename.txt", "r");
+fptr = fopen("fichier.txt", "r");
 
 // Créer une variable pour le contenu
 char myString[100];
@@ -131,7 +130,7 @@ if(fptr != NULL) {
 
 // Fichier inexistant
 } else {
-  printf("Not able to open the file.");
+  printf("Impossible d'ouvrir le fichier.");
 }
 
 // Fermer
