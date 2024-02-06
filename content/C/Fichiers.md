@@ -80,7 +80,7 @@ Cet exemple crée un fichier nommé "mon_fichier.txt" et y écrit la chaîne de 
 
 #### Lecture
 
-###### fget() :
+###### fgets() :
 - Le premier paramètre de cette fonction permet de spécifier la variable qui stockera ce que retourne cette fonction.
 - Le deuxième paramètre spécifie la taille maximale des données à lire. 
 - Le troisième paramètre nécessite un pointeur de fichier qui est utilisé pour lire le fichier. Donc la cible de la lecture.
