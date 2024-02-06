@@ -136,7 +136,39 @@ if(fptr != NULL) {
 // Fermer
 fclose(fptr);
 ```
+#### Exercice
+1. Faites un programme qui demande à l'utilisateur d'entrer une phrase et sauvegarde chacun des mots sur une ligne séparée dans un fichier. Un conseil: utilisez `fgets(pointeur,taille,stdin)` pour lire ce qui est saisi par l'utilisateur.
 
+<!--
+{{% expand "Réponses" %}}
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char phrase[20];
+    char *p = phrase;
+    int i;
+    FILE *fp;
+    fp = fopen("exercice.txt", "w");
+
+    printf("Entrez une phrase de plusieurs mots: ");
+    fgets(phrase,20,stdin);
+
+    while (i<strlen(phrase)) {
+        if (*p == ' ') {
+            fputc('\n',fp);
+        } else {
+            fputc(*p,fp);
+        }
+        i++;
+        p++;
+    }
+    fclose(fp);
+}
+```
+{{% /expand %}}
+-->
 
 ## Passer des arguments à un programme
 Souvent il est utile de passer des arguments à un exécutable au moment où on l'appelle, par exemple le nom d'un fichier dans lequel on doit lire des données, etc. L'exemple suivant affiche "Bonjour" suivi de la chaîne de caractères passée au programme:
