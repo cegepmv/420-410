@@ -230,4 +230,4 @@ Créez un serveur UDP sur votre PI qui s'attend à recevoir l'une des trois comm
 - ferme : ferme cette led
 - exit : S'assure de fermer la led et de bien fermer le serveur.
 
-Créez ensuite le client UDP sur votre ordinateur(pas le Pi). Ce client doit pouvoir envoyer ces trois messages mentinnoé ci-dessus. 
+Créez ensuite le client UDP sur votre ordinateur(pas le Pi). Ce client doit pouvoir envoyer ces trois messages mentionné ci-dessus. 
