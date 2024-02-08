@@ -29,6 +29,7 @@ Le programme suivant envoit un message par UDP sur un réseau. L'adresse de dest
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define PORT 8888
 #define DEST_IP "127.0.0.1"
@@ -218,3 +219,15 @@ Pour tester ce programme à partir d'un autre hôte (qui agit comme client), lan
 nc 1.2.3.4 8888
 Bonjour!
 ```
+
+# Exercices
+
+## UDP
+
+Créez un serveur UDP sur votre PI qui s'attend à recevoir l'une des trois commande suivante: allume, ferme, exit.
+
+- allume :  allume une led
+- ferme : ferme cette led
+- exit : S'assure de fermer la led et de bien fermer le serveur.
+
+Créez ensuite le client UDP sur votre ordinateur(pas le Pi). Ce client doit pouvoir envoyer ces trois messages mentinnoé ci-dessus. 
