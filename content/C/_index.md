@@ -1,8 +1,8 @@
 +++
 archetype = "chapter"
-pre = "1. "
+pre = "2. "
 title = "Le langage C"
-weight = 1
+weight = 2
 +++
 
 

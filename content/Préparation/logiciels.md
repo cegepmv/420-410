@@ -1,6 +1,6 @@
 +++
-title = 'Préparation du Pi'
-weight = 10
+title = 'Logiciels requis'
+weight = 11
 date = 2024-01-31T08:30:37-05:00
 draft = false
 +++
@@ -11,9 +11,10 @@ Pour programmer en langage C sur un _RaspberryPi_, il est essentiel d'installer 
 Les programmes requis sont les suivants:
 + Le compilateur C _gcc_;
 + Les librairies C standard;
-+ L'utilitaire _make_
++ L'utilitaire _make_;
++ Le débogueur _gdb_
 
-Tous sont inclus dans le paquet _build-essential_ qu'on installe avec la commande suivante:
+Normalement, ces programmes devraient déjà être installés dans _RaspberryPi OS_. Toutefois si ce n'est pas le cas il est possible de le faire manuellement en installant le paquet _build-essential_ qu'on installe avec la commande suivante:
 ```c
 sudo apt update
 sudo apt install build-essential
@@ -28,7 +29,7 @@ Le _RaspberryPi_ est équipé de 40 broches GPIO utilisées pour communiquer ave
 Pour utiliser cette interface à partir d'un programme en C, deux librairies sont disponibles: **WiringPi** et **pigpio**. 
 
 #### WiringPi
-Cette librairie semble très populaire et est utilisée dans de nombreux projets; cependant elle n'est plus activement maintenue par son développeur d'origine (https://projects.drogon.net/raspberry-pi/wiringpi/). Il n'est donc pas recommandé de l'utiliser.
+Cette librairie semble très populaire et est utilisée dans de nombreux projets; cependant elle n'est plus activement maintenue par son développeur d'origine (https://projects.drogon.net/raspberry-pi/wiringpi/) et n'est plus supportée par les versions plus récentes de _RaspberryPi OS_. Il n'est donc pas recommandé de l'utiliser.
 
 Pour installer _WiringPi_, téléchargez le paquet **.deb** puis installez-le à l'aide des commandes suivantes:
 ```bash
@@ -107,7 +108,7 @@ int main() {
 }
 ```
 
-Au moment de la compilation il faut lier l'exécutable à la librairie _wiringpi_. Pour ce faire on utilise  l'option `-l`. La commande pour compiler le programme `testPig.c` et générer l'exécutable `test` est donc la suivante:
+Au moment de la compilation il faut lier l'exécutable à la librairie _pigpio_. Pour ce faire on utilise  l'option `-l`. La commande pour compiler le programme `testPig.c` et générer l'exécutable `test` est donc la suivante:
 ```bash
 gcc testPig.c -o test -lpigpio
 ```
