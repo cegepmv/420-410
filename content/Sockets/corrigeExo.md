@@ -148,7 +148,6 @@ int main() {
     while (1) {
         printf("> ");
         char message[100];
-        char answer[4];
 
         fgets(message,sizeof(message),stdin);
         send(sock, message, strlen(message), 0);
