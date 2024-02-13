@@ -224,10 +224,16 @@ Bonjour!
 
 ## UDP
 
-Créez un serveur UDP sur votre PI qui s'attend à recevoir l'une des trois commande suivante: allume, ferme, exit.
+Créez un **serveur** UDP sur votre PI qui s'attend à recevoir l'une des trois commande suivante: allume, ferme, exit.
 
 - allume :  allume une led
 - ferme : ferme cette led
 - exit : S'assure de fermer la led et de bien fermer le serveur.
 
-Créez ensuite le client UDP sur votre ordinateur(pas le Pi). Ce client doit pouvoir envoyer ces trois messages mentionné ci-dessus. 
+Créez ensuite le **client** UDP sur votre ordinateur (pas le Pi). Ce client doit pouvoir envoyer ces trois messages mentionné ci-dessus. 
+
+## TCP
+1. Faites deux programmes (`serveur1.c` et `client1.c`) ayant les mêmes fonctionnalités que celui de l'exercice précédent, mais en utilisant une connexion TCP. Au message _exit_, la connexion TCP est fermée des deux côtés.
+2. Ajoutez le fonctionnalité suivante: le serveur répond "OK" au client si la commande est _allume_, _ferme_ ou _exit_ ou "ERR" autrement (`serveur2.c` et `client2.c`).
+3. Modifiez votre programme: lorsque le client envoit _exit_, la connexion TCP est terminée, le client se termine, mais le serveur continue à attendre d'autres connexions TCP (`serveur3.c` et `client3.c`).
+4. Ajoutez un 2e module LED sur votre Pi. Modifiez le programme (`serveur4.c` et `client4.c`) pour que les commandes envoyées permettent de spécifier laquelle des 2 LED allumer (les messages "led1" et "led2" doivent être envoyés au serveur pour qu'il sache quelle LED allumer ou éteindre). Les messages possibles du client sont donc: `led1, led2, allume, ferme, exit`. Les messages du serveur sont `OK, ERR, BYE`.
