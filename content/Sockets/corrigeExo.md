@@ -220,7 +220,7 @@ int main() {
 ```
 
 #### Numéro 2
-client2c
+client2.c
 ```c
 #define ANSWER_LEN 4                // ** AJOUTE ** //
 
@@ -259,7 +259,8 @@ int main() {
     
     close(sock);
     return 0;
-}```
+}
+```
 
 serveur2.c
 ```c
