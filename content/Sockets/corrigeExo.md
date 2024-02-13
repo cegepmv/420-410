@@ -134,7 +134,7 @@ int main() {
     struct sockaddr_in dest_addr;
     
     // Créer le socket
-    sock = socket(AF_INET, SOCK_STREAM, 0);
+    sock = socket(AF_INET, SOCK_STREAM, 0);            // ** SOCK_STREAM ** //
     
     // Initialiser la struct de l'adresse IP 
     memset(&dest_addr, '0', sizeof(dest_addr));
@@ -150,7 +150,7 @@ int main() {
         char message[100];
 
         fgets(message,sizeof(message),stdin);
-        send(sock, message, strlen(message), 0);
+        send(sock, message, strlen(message), 0);       // ** MODIFIÉ **//
 
         if(strcmp(message,"exit\n") == 0){
             break;
