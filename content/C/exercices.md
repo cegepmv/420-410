@@ -40,8 +40,7 @@ créera un tableau qui contient la chaîne `abcxyzqwerty`.
 Faites un programme qui lit un fichier et affiche le nombre de lignes vides qu'il contient.
 
 #### Exercice 6
-Modifiez la fonction suivante afin d'échanger les valeurs des deux variables
-en utilisant des pointeurs. 
+Modifiez la fonction `changerVal()` afin qu'elle permette d'échanger les valeurs des deux variables **a** et **b** en utilisant des pointeurs. 
 ```c
 void changerVal(int x, int y) {
     int temp;
@@ -50,11 +49,27 @@ void changerVal(int x, int y) {
     x = y;
     y = temp;
 }
+
+int main() {
+    int a = 11;
+    int b = 22;
+    
+    changerVal(&a,&b);
+    printf("a=%d, b=%d\n",a,b); // Doit afficher "a=22, b=11"
+
+}
 ```
 
 #### Exercice 7
-Déclarer un nombre entier **int** et utiliser un pointeur de type `char` pour afficher la valeur en hexadécimal de chacun des octets (`int` est stocké sur 4 octets).
+Utiliser un pointeur de type `char` pour afficher la valeur en hexadécimal de chacun des octets de la variable **a** (`int` est stocké sur 4 octets).
+```c
+int main() {
+    int a = 64999;
+    char *p;
 
+    /* Votre code ici */
+}
+```
 #### Exercice 8
 Faire la fonction `lire_mem(char*, int)` à partir du code précédent. Le premier paramètre est un pointeur sur `char` et le deuxième est le nombre d'itérations de la boucle. Utilisez ensuite cette fonction pour montrer le contenu de trois variables: 
 ```c

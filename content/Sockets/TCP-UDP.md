@@ -233,6 +233,8 @@ Créez un **serveur** UDP sur votre PI qui s'attend à recevoir l'une des trois 
 Créez ensuite le **client** UDP sur votre ordinateur (pas le Pi). Ce client doit pouvoir envoyer ces trois messages mentionné ci-dessus. 
 
 ## TCP
+ > [Source](https://github.com/cegepmv/410-code.git)
+
 1. Faites deux programmes (`serveur1.c` et `client1.c`) ayant les mêmes fonctionnalités que celui de l'exercice précédent, mais en utilisant une connexion TCP. Au message _exit_, la connexion TCP est fermée des deux côtés.
 {{% expand "Solution" %}}
 client1.c
