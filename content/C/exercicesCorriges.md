@@ -104,6 +104,78 @@ int main(int argc, char *argv[]) {
 }
 ```
 
+#### Ex 5
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define TAILLE_BUF 200
+
+int main() {
+    FILE *f;
+    char buffer[TAILLE_BUF]; // Taille arbitraire pour stocker chaque ligne
+    int compte = 0;
+
+    f = fopen("monFichier.txt", "r"); 
+    if (f == NULL) {
+        printf("Erreur !!\n");
+        fclose(f);
+        return 1;
+    }
+
+    while (fgets(buffer,TAILLE_BUF,f)) {
+        if (strcmp(buffer,"\n") == 0) {
+            compte++;
+        }
+    }
+    printf("%i\n",compte);
+    fclose(f);
+
+}
+```
+
+#### Ex 6
+```c
+#include <stdio.h>
+
+void changerVal(int* x, int* y) {
+    int* temp;
+
+    /* // Les printf() commentés permettent de voir les adresses
+    // et les valeurs de chaque variable à chaque étape
+    printf("x=%p\t&x=%p\t*x=%d\n",x,&x,*x);
+    printf("y=%p\t&y=%p\t*y=%d\n",y,&y,*y); */
+
+    temp = *x;
+    /* printf("\ntemp = *x\n---------\n");
+    printf("temp=%p\t\t&temp=%p\t*temp=???\n",temp,&temp);
+    printf("x=%p\t&x=%p\t*x=%d\n",x,&x,*x);
+    printf("y=%p\t&y=%p\t*y=%d\n",y,&y,*y); */
+    
+    *x = *y;
+    /* printf("\n*x = *y;\n---------\n");
+    printf("temp=%p\t\t&temp=%p\t*temp=???\n",temp,&temp);
+    printf("x=%p\t&x=%p\t*x=%d\n",x,&x,*x);
+    printf("y=%p\t&y=%p\t*y=%d\n",y,&y,*y); */
+
+    *y = temp;
+    /* printf("\n*y = temp;\n---------\n");
+    printf("temp=%p\t\t&temp=%p\t*temp=???\n",temp,&temp);
+    printf("x=%p\t&x=%p\t*x=%d\n",x,&x,*x);
+    printf("y=%p\t&y=%p\t*y=%d\n",y,&y,*y); */
+}
+
+int main() {
+
+    int a = 11;
+    int b = 22;
+    
+    changerVal(&a,&b);
+    printf("a=%d, b=%d\n",a,b); // Doit afficher "a=22, b=11"
+
+}
+```
+
 #### Ex 7
 ```c
 #include <stdio.h>
