@@ -224,6 +224,8 @@ Les modifications apportées au code:
 + La fonction `pthread_create()` crée les threads
 + La fonction `pthread_join()` attend que les threads se terminent
 
+> ATTENTION: Au moment de la compilation, il faut ajouter l'option `-lpthread` à la commande **gcc**.
+> 
 ##### `pthread_create()`
 Sert à créer un _thread_, le mettre dans une variable et l'associer à une fonction donnée. Dans le programme cette fonction a 4 paramètres:
 + `&t_led1` : La référence au thread créé
