@@ -244,15 +244,15 @@ int main() {
 
         // Voir quel mot a été reçu
         if (strcmp(buffer, "allume\n") == 0) {
-            //pthread_cancel(thread);
+            pthread_cancel(thread);
             gpioWrite(LED_PIN, 1);
         }
         else if(strcmp(buffer,"ferme\n") == 0){
-            //pthread_cancel(thread);
+            pthread_cancel(thread);
             gpioWrite(LED_PIN, 0);
         }
         else if(strcmp(buffer,"exit\n") == 0){
-            //pthread_cancel(thread);
+            pthread_cancel(thread);
             gpioWrite(LED_PIN, 0);
             gpioTerminate();
             break;
@@ -261,139 +261,6 @@ int main() {
 
             // ******* Modification
             //
-            int arg = LED_PIN;
-            if (pthread_create(&thread, NULL, clignoter, &arg) != 0) {
-                printf("Erreur de création du thread.\n");
-                return 1;
-            }
-        }
-    }
-
-    return 0;
-}
-```
-
-Problème: le thread n'arrête jamais. On veut qu'il s'arrête à **allume**, **ferme** et **exit**. `pthread_cancel()` le supprime sans attendre qu'il se termine (comme avec `pthread_join()`).
-
-Solution 2
-```c
-        // Voir quel mot a été reçu
-        if (strcmp(buffer, "allume\n") == 0) {
-            pthread_cancel(thread);
-            gpioWrite(LED_PIN, 1);
-        }
-        else if(strcmp(buffer,"ferme\n") == 0){
-            pthread_cancel(thread);
-            gpioWrite(LED_PIN, 0);
-        }
-        else if(strcmp(buffer,"exit\n") == 0){
-            pthread_cancel(thread);
-            gpioWrite(LED_PIN, 0);
-            gpioTerminate();
-            break;
-        }
-        else if(strcmp(buffer,"flash\n") == 0){
-            int arg = LED_PIN;
-            if (pthread_create(&thread, NULL, clignoter, &arg) != 0) {
-                printf("Erreur de création du thread.\n");
-                return 1;
-            }
-        }
-```
-
-Problème: si on commence par **allume** ou **ferme**, on appelle `pthread_cancel(thread)` avant que le thread existe. Il faut donc:
-+ L'initialiser : pthread_t thread = pthread_self()
-+ Vérifier que c'est le bon thread : `if(pthread_equal(thread, pthread_self()) == 0) { ... }`
-
-Solution 3
-```c
-#include <stdio.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <pigpio.h>
-
-#define BUFFER_SIZE 10
-#define LED_PIN 17
-#define PORT 8888
-
-void *clignoter(void *args) {
-    int gpio = *(int *)args; 
-
-    for (;;) {
-        gpioWrite(gpio, 1);
-        usleep(100000);
-        gpioWrite(gpio, 0);
-        usleep(100000);
-    }
-} 
-
-int main() {
-    int socket_local;
-    struct sockaddr_in adr_local, adr_dist;
-    char buffer[BUFFER_SIZE];
-
-    // Créer le socket et initialiser l'adresse
-    socket_local = socket(AF_INET, SOCK_DGRAM, 0);
-    memset(&adr_local, 0, sizeof(adr_local));
-    adr_local.sin_family = AF_INET; 
-    adr_local.sin_addr.s_addr = INADDR_ANY;
-    adr_local.sin_port = htons(PORT);
-
-    // Associer le socket à l'adresse de l'interface
-    bind(socket_local, (const struct sockaddr *)&adr_local, sizeof(adr_local));
-
-    //Preparation de pigpio
-    // Initialiser
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Failed to initialize pigpio\n");
-        return 1;
-    }
-
-    // Définir en mode output
-    gpioSetMode(LED_PIN, PI_OUTPUT);
-
-    // Réception des messages  
-    // ******* Modification
-    //
-    pthread_t thread = pthread_self();
-    char input[BUFFER_SIZE];
-
-    while (1) {
-        int len,n;
-        len = sizeof(adr_dist); 
-        // Stocker le message reçu dans n
-        n = recvfrom(socket_local, (char *)buffer, BUFFER_SIZE, MSG_WAITALL, (struct sockaddr *)&adr_dist, &len);
-        buffer[n] = '\0';
-
-        // Voir quel mot a été reçu
-        if (strcmp(buffer, "allume\n") == 0) {
-            
-            // ******* Modification
-            //
-            if(pthread_equal(thread, pthread_self()) == 0){
-                 pthread_cancel(thread);
-            }
-            gpioWrite(LED_PIN, 1);
-        }
-        else if(strcmp(buffer,"ferme\n") == 0){
-            if(pthread_equal(thread, pthread_self()) == 0){
-                 pthread_cancel(thread);
-            }
-            gpioWrite(LED_PIN, 0);
-        }
-        else if(strcmp(buffer,"exit\n") == 0){
-            if(pthread_equal(thread, pthread_self()) == 0){
-                 pthread_cancel(thread);
-            }
-            gpioWrite(LED_PIN, 0);
-            gpioTerminate();
-            break;
-        }
-        else if(strcmp(buffer,"flash\n") == 0){
             int arg = LED_PIN;
             if (pthread_create(&thread, NULL, clignoter, &arg) != 0) {
                 printf("Erreur de création du thread.\n");
