@@ -34,7 +34,7 @@ int main() {
 
 	while(1) {
         // Convertir valeur 0-3.3v à 0-255
-        int dc = readVoltage(0) / 3.3 * 255;
+        int dc = readVoltage(0) / 3.3 * 256;
 		printf("%.2f\n", readVoltage(0));
         gpioPWM(LED1, dc); 
 	} 
@@ -96,7 +96,7 @@ int main() {
     int dc;
 	while(1) {
         // Convertir valeur 0-3.3v à 0-255
-        dc = readVoltage(0) / 3.3 * 255;
+        dc = readVoltage(0) / 3.3 * 256;
 		printf("%d\n", dc);
         send(sock, &dc, sizeof(dc), 0);
 	} 
