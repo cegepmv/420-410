@@ -143,6 +143,7 @@ curl -X POST http://10.10.10.100:3000/setLED -H "Content-Type: application/json"
 </html>
 ```
 
-## Exercices
-1. Connectez la LED RGB et faites 2 endpoints: setRGB, qui change la couleur de la LED ou l'éteint et peut prendre 4 valeurs ("red","green","blue" et "off") pour un attribut nommé "state", et getRGB qui retourne des données au même format JSON selon l'état de la LED.
+## Exercice
+Connectez la LED RGB et faites 2 endpoints: `setRGB`, qui change la couleur de la LED ou l'éteint et peut prendre 4 valeurs ("red","green","blue" et "off") pour un attribut nommé "state", et `getRGB` qui retourne des données au même format JSON selon l'état de la LED.
 
+Codez ensuite une page HTML en vous basant sur l'exemple précédent; cette page doit comprendre 4 boutons pour changer l'état de la LED et un bouton pour afficher sur la page la couleur courante de la LED.
