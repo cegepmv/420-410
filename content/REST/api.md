@@ -44,7 +44,7 @@ Ensuite on doit:
 Votre programme devrait donc ressembler à ceci:
 ```js
 const express = require('express');
-const Gpio = require('onoff');  // Importer module onoff
+const { Gpio } = require('onoff');  // Importer module onoff
 const BTN = new Gpio(18, 'in'); // GPIO 18 en mode lecture
 const app = express()
 const port = 3000
@@ -126,7 +126,7 @@ curl -X POST http://10.10.10.100:3000/setLED -H "Content-Type: application/json"
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ valeur: 1 })
+        body: JSON.stringify({ state: 1 })
       })
       .then(response => {
         if (!response.ok) {
