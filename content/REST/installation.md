@@ -14,7 +14,7 @@ Cette API doit donc s'exécuter sur le Pi. Pour cela nous utilisersons _Node_ et
 Sur le Pi, en tant que **root**, installez _Node_ et le gestionnaire de paquets _npm_:
 ```
 apt update
-apt install node npm
+apt install nodejs npm
 ```
 Vérifiez que l'installation est correcte avec les commandes `node -v` et `npm -v`. Elles devraient respectivement afficher `v12.22.12` et `7.5.2`.
 
@@ -47,5 +47,5 @@ app.listen(port, () => {
   console.log(`Application roule sur port ${port}`)
 })
 ```
-Lancez ensuite l'application avec la commande `node index.js`. Vous pourrez y accéder en ouvrant une page web au port 3000 de votre Pi.
+Lancez ensuite l'application avec la commande `nodejs index.js`. Vous pourrez y accéder en ouvrant une page web au port 3000 de votre Pi.
 
