@@ -43,6 +43,8 @@ mosquitto_pub -h mqttbroker.lan -t 'test' -m 'Ceci est un test'
 ```
 
 ## "Subscriber" en C
+
+mqtt_sub.c
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,6 +99,8 @@ int main() {
 ```
 
 ## "Publisher" en C
+
+mqtt_pub.c
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -154,7 +158,54 @@ int main() {
 }
 ```
 
+## Exercice 1
+L'agent MQTT diffuse des messages dans 2 rubriques: `ex1_temp` et `ex1_hum`. La première donne une température en Celsius et la 2e un pourcentage d'humidité.
 
+Faites un programme qui lit les valeurs des 2 rubriques et affiche les données sur une même ligne à chaque 10 secondes, formatées comme suit:
+```
+root@pi:~# ./ex1
+T: 23C | Hum: 45%
+T: 23C | Hum: 45%
+T: 22C | Hum: 45%
+T: 22C | Hum: 45%
+T: 22C | Hum: 46%
+```
 
+## Exercice 2
+Un agent diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
++ ex2/salle1/temp
++ ex2/salle1/db
++ ex2/salle2/temp
++ ex2/salle2/db
++ ex2/salle3/temp
++ ex2/salle3/db
++ ex2/salle4/temp
++ ex2/salle4/db
+
+Faites un programme qui détecte quelles sont les salles où les valeurs de température et de bruit sont les plus élevées, et écrit dans un fichier CSV le nom de la salle et la valeur chaque fois que ce maximum change. Le fichier devrait contenir des valeurs similaires à celles-ci:
+```
+root@pi:~# cat données.csv
+2024-03-15 15:41:35;salle2;78dB
+2024-03-15 15:45:22;salle1;81dB
+2024-03-15 15:46:15;salle2;28C
+2024-03-15 15:54:12;salle2;29C
+2024-03-15 15:58:35;salle1;19C
+```
+
+## Projet 2
+Connectez un senseur de luminosité et l'écran LCD à votre Pi.
+
+Vous devez faire 2 programmes:
++ **p2_pub**: Publie chaque 10 secondes dans la rubrique `p2` la valeur de luminosité lue sur le senseur;
++ **p2_sub**: À partir des données lues sur tous les Pi, affiche le nom du Pi où est la valeur maximale et la moyenne.
+
+#### Spécifications:
++ Le message publié doit avoir le format `HOTE-VALEUR` (HOTE est le _hostname_ du Pi et VALEUR est la luminosité)
++ Le nom de l'agent et de la rubrique ne doivent pas être directement dans le code mais être écrits dans un fichier sur 2 lignes. La première ligne est le nom de l'agent et la deuxième est le nom de la rubrique. Le fichier doit se nommer `mqttcl.conf` et être dans le même répertoire que l'exécutable.
++ Les informations doivent être affichées comme suit sur l'écran LCD:
+```
+equipe 2
+21093
+```
 
 
