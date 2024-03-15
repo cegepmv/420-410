@@ -59,3 +59,10 @@ Un client qui envoit un message envoyé avec un QoS de 1 reçoit un accusé de r
 
 Un client qui envoit un message envoyé avec un QoS de 2 reçoit un accusé de réception, et une confirmation lorsque le message est livré aux abonnés.
 
+La valeur du QoS est déterminée lors de l'_envoi_ d'un message (côté émetteur) et lors de l'_abonnement_ (côté récepteur).
+
+#### Cas d'utilisation
++ **QoS 0**: À utiliser lorsque la connexion est assez stable ou que la perte occasionnelle de messages n'est pas un problème.
++ **Qos 1**: À utiliser lorsqu'on souhaite avoir tous les messages, mais qu'on accepte d'avoir des messages répétés à l'occasion.
++ **QoS 2**: À utiliser lorsqu'on souhaite avoir tous les messages et qu'on ne veut pas avoir de messages qui se répètent.
+
