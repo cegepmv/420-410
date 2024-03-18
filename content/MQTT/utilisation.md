@@ -159,7 +159,7 @@ int main() {
 ```
 
 ## Exercice 1
-L'agent MQTT diffuse des messages dans 2 rubriques: `ex1_temp` et `ex1_hum`. La première donne une température en Celsius et la 2e un pourcentage d'humidité.
+L'agent MQTT _mqttbroker.lan_ diffuse des messages dans 2 rubriques: `ex1_temp` et `ex1_hum`. La première donne une température en Celsius et la 2e un pourcentage d'humidité.
 
 Faites un programme qui lit les valeurs des 2 rubriques et affiche les données sur une même ligne à chaque 10 secondes, formatées comme suit:
 ```
@@ -172,7 +172,7 @@ T: 22C | Hum: 46%
 ```
 
 ## Exercice 2
-Un agent diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
+L'agent _mqttbroker.lan_ diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
 + ex2/salle1/temp
 + ex2/salle1/db
 + ex2/salle2/temp
@@ -204,7 +204,7 @@ Vous devez faire 2 programmes:
 + Le nom de l'agent et de la rubrique ne doivent pas être directement dans le code mais être écrits dans un fichier sur 2 lignes. La première ligne est le nom de l'agent et la deuxième est le nom de la rubrique. Le fichier doit se nommer `mqttcl.conf` et être dans le même répertoire que l'exécutable.
 + Les informations doivent être affichées comme suit sur l'écran LCD:
 ```
-equipe 2
+equipe2
 21093
 ```
 
