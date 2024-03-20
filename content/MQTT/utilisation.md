@@ -107,7 +107,7 @@ int main() {
 
 mqtt_pub.c
 ```bash
-    gcc -o mqtt_sub mqtt_sub.c -lmosquitto
+    gcc -o mqtt_pub mqtt_pub.c -lmosquitto
 ```
 ```c
 #include <stdio.h>
