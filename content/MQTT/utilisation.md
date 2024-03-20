@@ -157,7 +157,65 @@ int main() {
     return 0;
 }
 ```
+<!-- Pour que les étudiants fassent les exercices 1 et 2 il faut avoir lancé le programme suivant avec l'adresse ou le nom du broker
+en argument:
+```python
+import paho.mqtt.publish as publish
+import sys, random, time
+from threading import Thread
 
+host = sys.argv[1]
+
+def genNombre(compte,minVal,maxVal):
+    # Générer le premier nombre dans la plage [minVal,maxVal]
+    random_number = random.randint(minVal, maxVal)
+    random_list = [random_number]
+
+    # Générer les 99 nombres suivants
+    for _ in range(compte):
+        # Choisir un nombre aléatoire entre -1 et 1 pour ajouter ou soustraire au nombre précédent
+        change = random.randint(-1, 1)
+        # Si le nombre précédent est déjà au bord de la plage, ajuster la direction en conséquence
+        if random_number == minVal:
+            change = 1
+        elif random_number == maxVal:
+            change = -1
+        # Ajouter ou soustraire le changement pour obtenir le prochain nombre
+        random_number += change
+        random_list.append(random_number)
+
+    return random_list
+
+
+def publishData(broker,top,minVal,maxVal,intervalle,prefixe):
+    # Publier des nombres vers un broker MQTT
+    while True:
+        liste = genNombre(100,minVal,maxVal)
+        for nombre in liste:
+            publish.single(topic=top, payload=prefixe+str(nombre), hostname=broker)        
+            time.sleep(intervalle)
+
+    
+tt = Thread(target=publishData,args=(host,'ex1_tmp',18,24,9,'t|'))
+th = Thread(target=publishData,args=(host,'ex1_hum',34,45,11,'h|'))
+
+allt = [Thread(target=publishData,args=(host,'ex2/salle1/temp',16,22,5,'1|t|')),
+        Thread(target=publishData,args=(host,'ex2/salle1/db',50,75,5,'1|db|')),
+        Thread(target=publishData,args=(host,'ex2/salle2/temp',18,24,5,'2|t|')),
+        Thread(target=publishData,args=(host,'ex2/salle2/db',65,85,5,'2|db|')),
+        Thread(target=publishData,args=(host,'ex2/salle3/temp',19,25,5,'3|t|')),
+        Thread(target=publishData,args=(host,'ex2/salle3/db',70,90,5,'3|db|')),
+        Thread(target=publishData,args=(host,'ex2/salle4/temp',30,75,5,'4|t|')),
+        Thread(target=publishData,args=(host,'ex2/salle4/db',18,24,5,'4|db|')) 
+    ]
+
+tt.start()
+th.start()
+for t in allt:
+    t.start()
+    time.sleep(5/6)
+```
+-->
 ## Exercice 1
 L'agent MQTT diffuse des messages dans 2 rubriques: `ex1_temp` et `ex1_hum`. La première donne une température en Celsius et la 2e un pourcentage d'humidité.
 
@@ -170,6 +228,7 @@ T: 22C | Hum: 45%
 T: 22C | Hum: 45%
 T: 22C | Hum: 46%
 ```
+Attention, l'agent MQTT n'envoit pas lui-même les données aux 10 secondes...
 
 ## Exercice 2
 Un agent diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
