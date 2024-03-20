@@ -46,6 +46,10 @@ mosquitto_pub -h mqttbroker.lan -t 'test' -m 'Ceci est un test'
 ## "Subscriber" en C
 
 mqtt_sub.c
+
+```bash
+    gcc -o mqtt_sub mqtt_sub.c -lmosquitto
+```
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,6 +106,9 @@ int main() {
 ## "Publisher" en C
 
 mqtt_pub.c
+```bash
+    gcc -o mqtt_sub mqtt_sub.c -lmosquitto
+```
 ```c
 #include <stdio.h>
 #include <stdlib.h>
