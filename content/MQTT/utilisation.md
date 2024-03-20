@@ -218,7 +218,7 @@ for t in allt:
 ```
 -->
 ## Exercice 1
-L'agent MQTT diffuse des messages dans 2 rubriques: `ex1_temp` et `ex1_hum`. La première donne une température en Celsius et la 2e un pourcentage d'humidité.
+L'agent MQTT _mqttbroker.lan_ diffuse des messages dans 2 rubriques: `ex1_temp` et `ex1_hum`. La première donne une température en Celsius et la 2e un pourcentage d'humidité.
 
 Faites un programme qui lit les valeurs des 2 rubriques et affiche les données sur une même ligne à chaque 10 secondes, formatées comme suit:
 ```
@@ -232,7 +232,7 @@ T: 22C | Hum: 46%
 Attention, l'agent MQTT n'envoit pas lui-même les données aux 10 secondes...
 
 ## Exercice 2
-Un agent diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
+L'agent _mqttbroker.lan_ diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
 + ex2/salle1/temp
 + ex2/salle1/db
 + ex2/salle2/temp
