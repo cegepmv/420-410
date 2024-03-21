@@ -237,6 +237,138 @@ T: 22C | Hum: 45%
 T: 22C | Hum: 46%
 ```
 Attention, l'agent MQTT n'envoit pas lui-même les données aux 10 secondes...
+<!-- 
+#### Solution
+```c
+/*
+Les données sont écrites dans des fichiers à mesure qu'elles arrivent. 
+Une fonction lit le contenu de ce fichiers et l'affiche à chaque 10 sec.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <mosquitto.h>
+#include <pthread.h>
+
+#define MQTT_BROKER_HOST "172.16.70.146"
+#define MQTT_PORT 1883
+#define MQTT_TOP_TMP "ex1_tmp"
+#define MQTT_TOP_HUM "ex1_hum"
+#define FILE_T "temp.txt"
+#define FILE_H "humi.txt"
+
+#define MQTT_QOS 1
+
+/*
+Écrit les données 'data'' dans le fichier 'filename' 
+*/
+int write_data(char* filename,char* data) {
+    FILE *fichier;
+    fichier = fopen(filename, "w");
+    if (fichier == NULL) {
+        printf("Erreur lors de l'ouverture du fichier.\n");
+        return 1;
+    }
+    fprintf(fichier,data);
+    fclose(fichier);
+    return 0;
+}
+
+/*
+Retourne un pointeur sur la chaine de caractères après le délimiteur.
+extract_data("abcd*1234", '*'') retourne "1234"
+*/
+char* extract_data(char* data, char delim) {
+    char* substr = strchr(data,delim);
+    if (substr != NULL) {
+        return substr+1;
+    }
+    return NULL;
+}
+
+/*
+Prend les données dans les deux fichiers et affiche la chaine
+chaque 10sec
+*/
+void print_data() {
+
+    while(1) {
+        sleep(10);
+
+        FILE *fptr;
+        fptr = fopen(FILE_T, "r");
+        char temp[3];
+        fgets(temp,3,fptr);
+        fclose(fptr);
+
+        fptr = fopen(FILE_H, "r");
+        char humi[3];
+        fgets(humi,3,fptr);
+        fclose(fptr);
+
+        fprintf(stdout,"T: %sC | Hum: %s\%\n",temp,humi);
+        fflush(stdout);
+    }
+}
+
+void on_connect(struct mosquitto *mosq, void *userdata, int result) {
+    if (result == 0) {
+        // S'abonner à 2 rubriques
+        mosquitto_subscribe(mosq, NULL, MQTT_TOP_TMP, MQTT_QOS);
+        mosquitto_subscribe(mosq, NULL, MQTT_TOP_HUM, MQTT_QOS);
+    } else {
+        fprintf(stderr, "Erreur: connexion broker MQTT.\n");
+    }
+}
+
+void on_message(struct mosquitto *mosq, void *userdata, const struct mosquitto_message *message) {
+    char* data = extract_data((char *)message->payload,'|');
+    // message->topic détermine dans quel fichier on écrit
+    if (strcmp(message->topic,MQTT_TOP_TMP) == 0) {
+        write_data(FILE_T,data);
+    } else {
+        write_data(FILE_H,data);
+    }
+}
+
+
+int main() {
+    struct mosquitto *mosq = NULL;
+    int rc;
+
+    mosquitto_lib_init();
+
+    mosq = mosquitto_new(NULL, true, NULL);
+    if (!mosq) {
+        fprintf(stderr, "Erreur: création de l'instance mosquitto.\n");
+        return 1;
+    }
+
+    mosquitto_connect_callback_set(mosq, on_connect);
+    mosquitto_message_callback_set(mosq, on_message);
+
+    rc = mosquitto_connect(mosq, MQTT_BROKER_HOST, MQTT_PORT, 60);
+    if (rc != MOSQ_ERR_SUCCESS) {
+        fprintf(stderr, "Connexion impossible au broker: %s\n", mosquitto_strerror(rc));
+        return 1;
+    }
+
+    // Lancer print_data dans un thread 
+    pthread_t t_mosq;
+    if (pthread_create(&t_mosq,NULL,print_data,NULL) != 0) {
+        printf("Erreur à la création du thread pour publication.\n");
+        return 1;
+    }
+
+    mosquitto_loop_forever(mosq, -1, 1);
+
+    mosquitto_destroy(mosq);
+    mosquitto_lib_cleanup();
+
+    return 0;
+}
+```
+-->
 
 ## Exercice 2
 L'agent _mqttbroker.lan_ diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
