@@ -6,7 +6,7 @@ weight = 72
 +++
 
 #### Préalables
-Connectez un senseur de luminosité et l'écran LCD à votre Pi.
+Connectez un senseur de luminosité et l'écran LCD à votre Pi. Le senseur doit utiliser un courant de 3.3V.
 
 Vous devez faire 2 programmes:
 + **p2_pub**: Publie chaque 10 secondes dans la rubrique `p2` la valeur de luminosité lue sur le senseur;
@@ -18,5 +18,5 @@ Vous devez faire 2 programmes:
 + Les informations doivent être affichées comme suit sur l'écran LCD:
 ```
 equipe 2
-21093
+1.966
 ```
