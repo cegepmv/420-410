@@ -237,7 +237,8 @@ T: 22C | Hum: 45%
 T: 22C | Hum: 46%
 ```
 Attention, l'agent MQTT n'envoit pas lui-même les données aux 10 secondes...
- 
+
+<!--
 #### Solution
 ```c
 /*
@@ -390,7 +391,7 @@ root@pi:~# cat données.csv
 2024-03-15 15:54:12;salle2;29C
 2024-03-15 15:58:35;salle1;19C
 ```
-
+-->
 
 
 
