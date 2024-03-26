@@ -14,8 +14,17 @@ Vous devez faire 2 programmes:
 
 #### Spécifications:
 + Le message publié doit avoir le format `HOTE|VALEUR`. HOTE est le _hostname_ du Pi et VALEUR est le pourcentage de luminosité (un nombre entier entre 0 et 100).
-+ Les informations doivent s'afficher comme suit sur la console de votre conteneur lorsque vous exécutez le programme:
++ Les informations doivent s'afficher comme suit, à intervalles réguliers, sur la console de votre conteneur lorsque vous exécutez le programme:
 ```
-equipe2
-42
+Max: denis (93)
+Moy: 60.40
+-------------
+Max: WuJitsu (56)
+Moy: 24.60
+-------------
+Max: Equipe 3
+Moy: 34.20
+-------------
 ```
+
+
