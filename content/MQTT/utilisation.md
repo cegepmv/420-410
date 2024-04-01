@@ -238,8 +238,7 @@ T: 22C | Hum: 46%
 ```
 Attention, l'agent MQTT n'envoit pas lui-même les données aux 10 secondes...
 
-<!--
-#### Solution
+{{% expand "Solution" %}}
 ```c
 /*
 Les données sont écrites dans des fichiers à mesure qu'elles arrivent. 
@@ -251,7 +250,7 @@ Une fonction lit le contenu de ce fichiers et l'affiche à chaque 10 sec.
 #include <mosquitto.h>
 #include <pthread.h>
 
-#define MQTT_BROKER_HOST "172.16.70.146"
+#define MQTT_BROKER_HOST "mqttbroker.lan"
 #define MQTT_PORT 1883
 #define MQTT_TOP_TMP "ex1_tmp"
 #define MQTT_TOP_HUM "ex1_hum"
@@ -369,9 +368,102 @@ int main() {
     return 0;
 }
 ```
-
+{{% /expand %}}
 
 ## Exercice 2
+Quels sont les sous-rubriques de _$SYS_ qui permettent d'obtenir les informations suivantes sur l'agent :
+1.  Nombre d'octets de données reçues
+2.  Nombre total de clients connectés
+3.  Nombre de messages reçus durant les 15 dernières minutes
+4.  Le nombre d'abonnements en cours
+
+Cherchez la réponse dans la documentation (https://mosquitto.org/man/mosquitto-8.html), puis modifiez le programme client [mqtt_sub.c](https://github.com/cegepmv/410-code/blob/main/MQTT/mqtt_sub.c) pour afficher à la console ces 4 rubriques.
+
+<!--
+{{% expand "Solution" %}}
+Ajouter les lignes suivantes dans la fonction `on_connect()`:
+```c
+void on_connect(struct mosquitto *mosq, void *userdata, int result) {
+    if (result == 0) {
+        mosquitto_subscribe(mosq, NULL, "$SYS/broker/bytes/received", MQTT_QOS);
+        mosquitto_subscribe(mosq, NULL, "$SYS/broker/clients/connected", MQTT_QOS);
+        mosquitto_subscribe(mosq, NULL, "$SYS/broker/load/messages/received/15min", MQTT_QOS);
+        mosquitto_subscribe(mosq, NULL, "$SYS/broker/subscriptions/count", MQTT_QOS);
+    } else {
+        fprintf(stderr, "Erreur: connexion broker MQTT.\n");
+    }
+}
+{{% /expand %}}
+```
+-->
+
+## Exercice 3
+Créez le fichier `/etc/mosquitto/mosquittocl.conf`. Celui-ci contiendra 4 paramètres de configuration pour votre client: 
++ Le nom ou l'adresse IP de l'agent
++ Le nom du _topic_
++ Le nom d'utilisateur
++ Le mot de passe
+Chaque élément devra être sur sa propre ligne, par exemple:
+```
+192.168.0.110
+appli_mqtt
+bob
+abc-123
+```
+Modifiez le code du projet 2 pour que vos 2 programmes client utilisent les données dans ce fichier de configuration.
+
+<!--
+// Ajout de
+#define MQTT_CLIENT_CONFIG "/root/410-projet2/mosquittocl.conf"
+// et suppression de MQTT_BROKER, MQTT_TOPIC
+
+// Ajout des globales suivantes
+char* mqtt_broker;
+char* mqtt_topic;
+char* mqtt_user;
+char* mqtt_psw;
+
+// Fonction pour lire les variables dans le fichier
+int get_config(char* filename) {
+    FILE* f;
+    char* ligne = NULL;
+    size_t taille = 0;
+    ssize_t read;
+
+    f = fopen(filename,"r");
+    if (f == NULL) {
+        return 1;
+    }
+    read = getline(&ligne,&taille,f);
+    mqtt_broker = (char *)malloc((strlen(ligne) + 1) * sizeof(char));
+    strcpy(mqtt_broker, r_trim(ligne));
+
+    read = getline(&ligne,&taille,f);
+    mqtt_topic = (char *)malloc((strlen(ligne) + 1) * sizeof(char));
+    strcpy(mqtt_topic, r_trim(ligne));
+
+    read = getline(&ligne,&taille,f);
+    mqtt_user= (char *)malloc((strlen(ligne) + 1) * sizeof(char));
+    strcpy(mqtt_user, r_trim(ligne));
+
+    read = getline(&ligne,&taille,f);
+    mqtt_psw = (char *)malloc((strlen(ligne) + 1) * sizeof(char));
+    strcpy(mqtt_psw, r_trim(ligne));
+
+    fclose(f);
+}
+
+// Ajout dans main()
+if (get_config(MQTT_CLIENT_CONFIG) != 0){
+    fprintf(stderr, "Erreur: Lecture du fichier de configuration.\n");
+    return 1;
+}
+mosquitto_username_pw_set(mosq,mqtt_user,mqtt_psw);
+
+-->
+
+<!--
+## Exercice 4
 L'agent _mqttbroker.lan_ diffuse chaque 5 secondes des données de température (Celsius) et de bruit (décibels) sur les rubriques suivantes:
 + ex2/salle1/temp
 + ex2/salle1/db

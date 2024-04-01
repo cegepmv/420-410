@@ -41,7 +41,7 @@ Les caractères `#` et `+` ne peuvent pas être utilisés pour publier des messa
 {{% /notice %}}
 
 #### $SYS
-La plupart des implémentations de MQTT ont une rubrique `$SYS` qui permet d'accéder à des informations sur l'agent. Par exemple, `$SYS/broker/clients/connected` donne le nombre de clients connectés; `$SYS/broker/load/messages/received/15` donne le nombre de messages reçus par l'agent durant les 15 dernières minutes; etc.
+La plupart des implémentations de MQTT ont une rubrique `$SYS` qui permet d'accéder à des informations sur l'agent. Par exemple, `$SYS/broker/clients/maximum` donne le nombre maximum de clients connectés; `$SYS/broker/publish/messages/received` donne le nombre de messages publiés par des clients sur ce broker; etc.
 
 Il n'est pas possible de publier sous cette rubrique.
 
@@ -65,4 +65,28 @@ La valeur du QoS est déterminée lors de l'_envoi_ d'un message (côté émette
 + **QoS 0**: À utiliser lorsque la connexion est assez stable ou que la perte occasionnelle de messages n'est pas un problème.
 + **Qos 1**: À utiliser lorsqu'on souhaite avoir tous les messages, mais qu'on accepte d'avoir des messages répétés à l'occasion.
 + **QoS 2**: À utiliser lorsqu'on souhaite avoir tous les messages et qu'on ne veut pas avoir de messages qui se répètent.
+
+## Authentification
+MQTT supporte des fonctionnalités d'authentification. Lorsqu'on les active, tous les clients devront fournir un identifiant et un mot de passe à l'agent au moment de la connexion.
+
+C'est la configuration de l'agent ("broker") qui détermine si les clients doivent s'authentifier: dans le fichier de configuration du _broker_ `/etc/mosquitto/mosquitto.conf`, la variable `allow_anonymous` doit être à `false`, et `password_file` doit indiquer le fichier qui contient les identifiants et mots de passe. Par exemple:
+```
+allow_anonymous false
+password_file /etc/mosquitto/users
+```
+On peut créer autant d'utilisateurs qu'il y a de clients qui se connectent, mais il est aussi possible que plusieurs clients se partagent les mêmes identifiants.
+
+La commande `mosquitto_passwd` permet de créer le fichier des identifiants.
+
+{{% notice primary "Attention" %}}
+MQTT ne définit pas de méthodes de chiffrement. Ainsi les mots de passe et identifiants sont transmis en clair lors de la connexion. Si on souhaite chiffrer les communications, il faut utiliser des outils tiers comme par exemple le protocole TLS.
+{{% /notice %}}
+
+#### Identification des clients
+Les commandes `mosquitto_sub` et `mosquitto_pub` utilisent les options `-u` et `-P` pour passer respectivement le nom d'utilisateur et le mot de passe à l'agent:
+```
+mosquitto_pub -h 192.168.0.10 -u nom_utilisateur -P mot_de_passe -t "sujet" -m "Bonjour" 
+```
+
+Dans un programme C qui utilise la librairie `mosquitto`, il faut appeler la fonction `mosquitto_username_pw_set()` (avant la connexion) pour définir les identifiants à utiliser lors de la connexion. Voir https://mosquitto.org/api/files/mosquitto-h.html#Username_and_password pour plus de détails.
 
