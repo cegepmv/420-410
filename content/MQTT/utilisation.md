@@ -377,7 +377,7 @@ Quels sont les sous-rubriques de _$SYS_ qui permettent d'obtenir les information
 3.  Nombre de messages reçus durant les 15 dernières minutes
 4.  Le nombre d'abonnements en cours
 
-Cherchez la réponse dans la documentation (https://mosquitto.org/man/mosquitto-8.html), puis modifiez le programme client [mqtt_sub.c](https://github.com/cegepmv/410-code/blob/main/MQTT/mqtt_sub.c) pour afficher à la console ces 4 rubriques.
+Cherchez la réponse dans la documentation ( https://mosquitto.org/man/mosquitto-8.html ), puis modifiez le programme client [mqtt_sub.c](https://github.com/cegepmv/410-code/blob/main/MQTT/mqtt_sub.c) pour afficher à la console ces 4 rubriques.
 
 <!--
 {{% expand "Solution" %}}
