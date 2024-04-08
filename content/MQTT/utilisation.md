@@ -21,10 +21,37 @@ sys_interval 5
 
 > Pour le cours, SVP utilisez l'agent MQTT disponible sur le réseau interne au nom `mqttbroker.lan`.
 
-## Client MQTT _Mosquitto_
+
 Dans ce cours nous utiliserons [Mosquitto](https://mosquitto.org/). Cette implémentation de MQTT, développée par la fondation _Eclipse_, fournit des utilitaires de ligne de commande pour envoyer et recevoir des messages (`mosquitto_pub` et `mosquitto_sub`), et aussi des librairies permettant d'implémenter des clients MQTT en C/C++.
 
-Pour installer les logiciels requis, lancez la commande suivante:
+## Agent MQTT _Mosquitto_
+Pour installer le service _mosquitto_, lancez la commande suivante:
+```
+apt update
+apt install mosquitto
+```
+#### Configuration de base
+Les paramètres de configuration de _mosquitto_ sont définis dans le fichier `/etc/mosquitto/mosquitto.conf`. 
+
+Pour utiliser mosquitto sans authentification, assurez-vous d'avoir la valeur **true** pour la directive `allow_anonymous`. Aussi, vérifiez que `listener` est bien au port **1883** et que mosquitto écoute sur toutes les interfaces (valeur **0.0.0.0**). Ceci correspond aux lignes suivantes dans le fichier:
+```
+listener 1883 0.0.0.0
+allow_anonymous true
+```
+Laissez les autres valeurs inchangées.
+
+Lorsque vous avez modifié la configuration, lancez les commandes suivantes pour démarrer le service puis pour l'activer au démarrage du serveur:
+```
+systemctl start mosquitto
+systemctl enable mosquitto
+```
+{{% notice primary "Note" %}}
+Nous verrons dans la section [Sécurité](/420-410/mqtt/securite/) comment activer l'authentification et le chiffrement dans mosquitto.
+{{% /notice %}}
+
+
+## Client MQTT _Mosquitto_
+Pour installer les logiciels et librairies pour la partie client, lancez la commande suivante:
 
 ```
 apt update
@@ -403,6 +430,7 @@ Créez le fichier `/etc/mosquitto/mosquittocl.conf`. Celui-ci contiendra 4 param
 + Le nom du _topic_
 + Le nom d'utilisateur
 + Le mot de passe
+
 Chaque élément devra être sur sa propre ligne, par exemple:
 ```
 192.168.0.110
