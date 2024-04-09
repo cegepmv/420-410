@@ -442,19 +442,21 @@ abc-123
 Modifiez le code du projet 2 pour que vos 2 programmes client utilisent les données dans ce fichier de configuration.
 
 {{% expand "Solution" %}}
+Ajouter une référence au fichier de configuration:
 ```C
-// Ajouter une référence au fichier de configuration
 #define MQTT_CLIENT_CONFIG "/root/410-projet2/mosquittocl.conf"
+```
+Ensuite, supprimer les variables MQTT_BROKER, MQTT_TOPIC.
 
-// et supprimer les variables MQTT_BROKER, MQTT_TOPIC
-
-// Ajout des globales suivantes
+Ajouter les globales suivantes:
+```C
 char* mqtt_broker;
 char* mqtt_topic;
 char* mqtt_user;
 char* mqtt_psw;
-
-// Fonction pour lire les variables dans le fichier
+```
+Ajouter la fonction pour lire les variables dans le fichier:
+```C
 int get_config(char* filename) {
     FILE* f;
     char* ligne = NULL;
@@ -483,8 +485,9 @@ int get_config(char* filename) {
 
     fclose(f);
 }
-
-// Ajouter dans main()
+```
+Ajouter le code suivant dans main():
+```C
 if (get_config(MQTT_CLIENT_CONFIG) != 0){
     fprintf(stderr, "Erreur: Lecture du fichier de configuration.\n");
     return 1;
