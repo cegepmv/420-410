@@ -442,7 +442,7 @@ abc-123
 Modifiez le code du projet 2 pour que vos 2 programmes client utilisent les données dans ce fichier de configuration.
 
 {{% expand "Solution" %}}
-```
+```C
 // Ajouter une référence au fichier de configuration
 #define MQTT_CLIENT_CONFIG "/root/410-projet2/mosquittocl.conf"
 
