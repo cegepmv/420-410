@@ -406,7 +406,7 @@ Quels sont les sous-rubriques de _$SYS_ qui permettent d'obtenir les information
 
 Cherchez la réponse dans la documentation ( https://mosquitto.org/man/mosquitto-8.html ), puis modifiez le programme client [mqtt_sub.c](https://github.com/cegepmv/410-code/blob/main/MQTT/mqtt_sub.c) pour afficher à la console ces 4 rubriques.
 
-<!--
+
 {{% expand "Solution" %}}
 Ajouter les lignes suivantes dans la fonction `on_connect()`:
 ```c
@@ -420,9 +420,10 @@ void on_connect(struct mosquitto *mosq, void *userdata, int result) {
         fprintf(stderr, "Erreur: connexion broker MQTT.\n");
     }
 }
-{{% /expand %}}
 ```
--->
+{{% /expand %}}
+
+
 
 ## Exercice 3
 Créez le fichier `/etc/mosquitto/mosquittocl.conf`. Celui-ci contiendra 4 paramètres de configuration pour votre client: 
@@ -440,10 +441,12 @@ abc-123
 ```
 Modifiez le code du projet 2 pour que vos 2 programmes client utilisent les données dans ce fichier de configuration.
 
-<!--
-// Ajout de
+{{% expand "Solution" %}}
+```
+// Ajouter une référence au fichier de configuration
 #define MQTT_CLIENT_CONFIG "/root/410-projet2/mosquittocl.conf"
-// et suppression de MQTT_BROKER, MQTT_TOPIC
+
+// et supprimer les variables MQTT_BROKER, MQTT_TOPIC
 
 // Ajout des globales suivantes
 char* mqtt_broker;
@@ -481,14 +484,14 @@ int get_config(char* filename) {
     fclose(f);
 }
 
-// Ajout dans main()
+// Ajouter dans main()
 if (get_config(MQTT_CLIENT_CONFIG) != 0){
     fprintf(stderr, "Erreur: Lecture du fichier de configuration.\n");
     return 1;
 }
 mosquitto_username_pw_set(mosq,mqtt_user,mqtt_psw);
-
--->
+```
+{{% /expand %}}
 
 <!--
 ## Exercice 4
