@@ -8,6 +8,7 @@ draft = false
 ## Variables et mémoire 
 Lorsqu'on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c'est l'adresse qui se trouve au début des données contenues dans la variable qui est utilisée. 
 
+
 Dans l'exemple suivant, la variable nommée **mot** contient la chaîne de caractères "abcd" et est à l'adresse `0x77fe00`:
 
 ![abcd](/420-410/images/abcd.png)
