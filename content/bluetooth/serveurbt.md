@@ -85,7 +85,7 @@ Avant que deux appareils puissent s'échanger des données, quelques étapes son
 2. Appariement ("pairing"): les deux appareils s'échangent des informations qui leur permettront de se reconnaître de manière sécurisée plus tard. Cette étape peut nécessiter une confirmation de l'utilisateur sur les appareils.
 3. Connexion: les deux appareils établissent un canal de communication pour une application spécifique (écouteurs, clavier, etc.)
 
-La première étape est donc de déteter le téléphone. Cependant lorsqu'on fait `a`, il est très possible qu'il n'aparaisse pas. 
+La première étape est donc de détecter le téléphone. Cependant lorsqu'on fait `a`, il est très possible qu'il n'aparaisse pas. 
 
 > Pour des raisons de sécurité, la plupart des téléphones d'aujourd'hui limitent sévèrement les connexions bluetooth entrantes. C'est pour cette raison qu'il ne sera peut-être pas détecté.
 
@@ -137,7 +137,7 @@ Dans cet exemple, on retrouve des profils pour les connexions d'écouteurs, l'ac
 #### Mode serveur
 On configure le Pi en mode serveur afin que la connexion puisse être initiée par le téléphone en mode client.
 
-Au menu de démarrage de _btferret_, faites la commande `s`. Ensuite il faut choisi le mode "Classique", l'identifiant du client puis le type de sécurité (0)
+Au menu de démarrage de _btferret_, faites la commande `s`. Ensuite il faut choisir le mode "Classique", l'identifiant du client puis le type de sécurité (0)
 ```
 > s
 
@@ -173,7 +173,7 @@ Server will listen on channel 1 and any of the following UUIDs
 Listening for Pixel-6 to connect (x=cancel)
 ```
 
-Du côté du téléphone Android, il est possible de se connecter avec l'application Serial Bluetooth terminal pour envoyer des messages au Pi.
+Du côté du téléphone Android, il sera ensuite possible de se connecter avec l'application _Serial Bluetooth Terminal_ pour envoyer des messages au Pi.
 
 
 ## Exercices
