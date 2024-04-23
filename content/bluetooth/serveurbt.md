@@ -36,8 +36,8 @@ Le projet contient de nombreux programmes:
 + `btlib`: la librairie bluetooth et BLE
 + `btferret`: le programme linux pour utiliser bluetooth
 + `bluedot`: une application client-serveur pour Android
-+ `classic_client`, classic_server: des applications client-serveur 
-+ `le_client`, le_server: des applications client-serveur pour BLE
++ `classic_client`, `classic_server`: des applications client-serveur 
++ `le_client`, `le_server`: des applications client-serveur pour BLE
 + `keyboard`: permet au Pi de se connecter comme un clavier BT
 + `rn4020`: programme pour communiquer avec le module RN4020 (BLE)
 + `sample`: exemple des différents types de connexions supportées par BT
