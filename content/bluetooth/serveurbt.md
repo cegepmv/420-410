@@ -180,4 +180,233 @@ Du côté du téléphone Android, il sera ensuite possible de se connecter avec 
 
 1. Compiler puis exécutez le programme `classic_server.c` et envoyez-lui des messages à partir de votre téléphone.
 2. Modifiez le programme serveur pour qu'il réponde "pong" lorsqu'il reçoit le message "ping" et qu'il se déconnecte pour n'importe quel autre message.
+{{% expand "Solution" %}}
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "btlib.h"
+
+int callback(int node, unsigned char *data, int len);
+
+int main()
+{
+  int security, keyflag;
+
+  if (init_blue("devices.txt") == 0)
+    return (0);
+
+  security = 3;
+
+  keyflag = KEY_ON | PASSKEY_LOCAL;
+  if (security == 1)
+    keyflag = KEY_OFF | PASSKEY_LOCAL;
+  else if (security == 2)
+    keyflag = KEY_OFF | PASSKEY_OFF;
+  else if (security == 3)
+    keyflag = KEY_ON | PASSKEY_OFF;
+
+  classic_server(ANY_DEVICE, callback, 10, keyflag);
+  close_all();
+}
+
+int callback(int node, unsigned char *data, int len)
+{
+  static unsigned char *message = {"pong\n"};
+
+  printf("   %s", data);
+
+  if (strcmp(data, "ping\r\n") == 0)
+  {
+    write_node(node, message, strlen(message));
+    printf("%s", message);
+    return (SERVER_EXIT);
+  }
+  return (SERVER_CONTINUE);
+}
+```
+{{% /expand %}}
 3. Connectez le module LED sur votre Pi. Modifiez ensuite le programme serveur pour que "1" allume la LED et "0" l'éteigne. 
+{{% expand "Solution" %}}
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "btlib.h"
+#include <pigpio.h>
+
+#define LED 26
+
+int callback(int node, unsigned char *data, int len);
+
+int main()
+{
+    int security, keyflag;
+
+    // Initialiser
+    if (gpioInitialise() < 0)
+    {
+        fprintf(stderr, "Erreur d'initialisation pigpio\n");
+        return 1;
+    }
+
+    // Définir en mode output
+    gpioSetMode(LED, PI_OUTPUT);
+
+    if (init_blue("devices.txt") == 0)
+        return (0);
+
+    security = 3;
+
+    keyflag = KEY_ON | PASSKEY_LOCAL;
+    if (security == 1)
+        keyflag = KEY_OFF | PASSKEY_LOCAL;
+    else if (security == 2)
+        keyflag = KEY_OFF | PASSKEY_OFF;
+    else if (security == 3)
+        keyflag = KEY_ON | PASSKEY_OFF;
+
+    classic_server(ANY_DEVICE, callback, 10, keyflag);
+    close_all();
+}
+
+int callback(int node, unsigned char *data, int len)
+{
+    printf("   %s", data);
+
+    switch (data[0])
+    {
+    case '1':
+        gpioWrite(LED, 1);
+        break;
+    
+    case '0':
+        gpioWrite(LED, 0);
+        break;
+
+    default:
+        break;
+    } 
+    
+    return (SERVER_CONTINUE);
+}
+```
+{{% /expand %}}
+
+4. Avec une autre équipe, adaptez les programmes`classic_client.c` et `classic_server.c` pour faire un programme de _chat_ simple: une fois connecté, le client et le serveur peuvent s'échanger des messages comme suit:
+
+**Serveur**
+```
+Connected OK
+Waiting for data from Raspberrypi        (x = stop server)
+        hey
+> salut
+        boum
+> pouet
+Raspberrypi      has disconnected
+```
+
+**Client**
+```
+Connect OK
+> hey
+        salut
+> boum
+        pouet
+> *
+```
+La fonction `read_node_endchar()` ([référence](https://github.com/petzval/btferret?tab=readme-ov-file#4-2-37-read_node_endchar)) sera utile pour le programme client.
+
+<!-- SOLUTION
+SERVEUR:
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "btlib.h"
+
+#define MAX_SIZE 100
+
+int callback(int node, unsigned char *data, int len);
+
+int main()
+{
+    int security, keyflag;
+
+    if (init_blue("devices.txt") == 0)
+        return (0);
+
+    // Essayer 0,1,2,3 si problème
+    security = 3;
+
+    keyflag = KEY_ON | PASSKEY_LOCAL;
+    if (security == 1)
+        keyflag = KEY_OFF | PASSKEY_LOCAL;
+    else if (security == 2)
+        keyflag = KEY_OFF | PASSKEY_OFF;
+    else if (security == 3)
+        keyflag = KEY_ON | PASSKEY_OFF;
+
+    classic_server(ANY_DEVICE, callback, 10, keyflag);
+    close_all();
+}
+
+int callback(int node, unsigned char *data, int len)
+{
+
+    char *message;
+    size_t length = 0;
+
+    printf("        %s", data);
+    if (data[0] == '*')
+    {
+        printf("Déconnexion\n");
+        return (SERVER_EXIT);
+    }
+    printf("> ");
+    getline(&message, &length, stdin);
+    message[length] = '\n';
+    write_node(node, message, strlen(message));
+    free(message);
+    
+    return (SERVER_CONTINUE);
+}
+
+CLIENT:
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "btlib.h"
+
+#define NODE_ID 1
+#define MAX_SIZE 100
+#define END_CHAR 10 // \n
+
+int main()
+{
+    int channel, ret;
+    char *message;
+    size_t len = 0;
+    unsigned char buf[MAX_SIZE];
+
+    if (init_blue("devices.txt") == 0)
+        return (0);
+
+    channel = find_channel(NODE_ID, UUID_16, strtohex("00001101-0000-1000-8000-00805F9B34FB", NULL));
+    connect_node(NODE_ID, CHANNEL_NEW, channel);
+
+    while (1)
+    {
+        printf("> ");
+        getline(&message, &len, stdin);
+        write_node(NODE_ID, message, strlen(message));
+        free(message);
+
+        ret = read_node_endchar(NODE_ID, buf, MAX_SIZE, END_CHAR, EXIT_TIMEOUT, 300000); 
+        printf("        %s",buf);
+    }
+
+    disconnect_node(NODE_ID);
+    close_all();
+}
+
+-->
