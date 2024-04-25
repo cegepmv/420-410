@@ -176,10 +176,11 @@ Listening for Pixel-6 to connect (x=cancel)
 Du côté du téléphone Android, il sera ensuite possible de se connecter avec l'application _Serial Bluetooth Terminal_ pour envoyer des messages au Pi.
 
 
-## Exercices
+#### Exercice 1
+Compiler puis exécutez le programme `classic_server.c` et envoyez-lui des messages à partir de votre téléphone.
 
-1. Compiler puis exécutez le programme `classic_server.c` et envoyez-lui des messages à partir de votre téléphone.
-2. Modifiez le programme serveur pour qu'il réponde "pong" lorsqu'il reçoit le message "ping" et qu'il se déconnecte pour n'importe quel autre message.
+#### Exercice 2
+Modifiez le programme serveur pour qu'il réponde "pong" lorsqu'il reçoit le message "ping" et qu'il se déconnecte pour n'importe quel autre message.
 {{% expand "Solution" %}}
 ```c
 #include <stdio.h>
@@ -226,7 +227,9 @@ int callback(int node, unsigned char *data, int len)
 }
 ```
 {{% /expand %}}
-3. Connectez le module LED sur votre Pi. Modifiez ensuite le programme serveur pour que "1" allume la LED et "0" l'éteigne. 
+
+#### Exercice 3
+Connectez le module LED sur votre Pi. Modifiez ensuite le programme serveur pour que "1" allume la LED et "0" l'éteigne. 
 {{% expand "Solution" %}}
 ```c
 #include <stdio.h>
@@ -293,7 +296,8 @@ int callback(int node, unsigned char *data, int len)
 ```
 {{% /expand %}}
 
-4. Avec une autre équipe, adaptez les programmes`classic_client.c` et `classic_server.c` pour faire un programme de _chat_ simple: une fois connecté, le client et le serveur peuvent s'échanger des messages comme suit:
+#### Exercice 4
+Avec une autre équipe, adaptez les programmes`classic_client.c` et `classic_server.c` pour faire un programme de _chat_ simple: une fois connecté, le client et le serveur peuvent s'échanger des messages comme suit:
 
 **Serveur**
 ```
@@ -412,7 +416,8 @@ int main()
 }
 -->
 
-5. Dans cet exercice, un message doit circuler à travers toutes les équipes: chaque équipe reçoit un message d'une autre équipe et doit immédiatement le retransmettre à une 3e équipe. Votre programme doit donc:
+#### Exercice 5
+Dans cet exercice, un message doit circuler à travers toutes les équipes: chaque équipe reçoit un message d'une autre équipe et doit immédiatement le retransmettre à une 3e équipe. Votre programme doit donc:
 + Démarrer en mode serveur
 + Recevoir un message
 + Arrêter le serveur  
