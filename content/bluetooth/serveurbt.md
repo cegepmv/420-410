@@ -408,5 +408,10 @@ int main()
     disconnect_node(NODE_ID);
     close_all();
 }
-
 -->
+
+5. Dans cet exercice, un message doit circuler à travers toutes les équipes: chaque équipe reçoit un message d'une autre équipe et doit immédiatement le retransmettre à une 3e équipe. Votre programme doit donc:
++ Démarrer en mode serveur
++ Recevoir un message
++ Arrêter le serveur  
++ Se connecter sur un autre serveur et envoyer le message.
