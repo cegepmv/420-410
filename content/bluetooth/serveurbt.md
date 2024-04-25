@@ -315,6 +315,8 @@ Connect OK
         pouet
 > *
 ```
+Lorsque le client envoit le caractère `*`, le serveur se déconnecte. 
+
 La fonction `read_node_endchar()` ([référence](https://github.com/petzval/btferret?tab=readme-ov-file#4-2-37-read_node_endchar)) sera utile pour le programme client.
 
 <!-- SOLUTION
