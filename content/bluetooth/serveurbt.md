@@ -323,8 +323,9 @@ Lorsque le client envoit le caractère `*`, le serveur se déconnecte.
 
 La fonction `read_node_endchar()` ([référence](https://github.com/petzval/btferret?tab=readme-ov-file#4-2-37-read_node_endchar)) sera utile pour le programme client.
 
-<!-- SOLUTION
-SERVEUR:
+{{% expand "Solution" %}}
+##### SERVEUR
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -376,8 +377,9 @@ int callback(int node, unsigned char *data, int len)
     
     return (SERVER_CONTINUE);
 }
-
-CLIENT:
+```
+##### CLIENT
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -414,7 +416,8 @@ int main()
     disconnect_node(NODE_ID);
     close_all();
 }
--->
+```
+{{% /expand %}}
 
 #### Exercice 5
 Dans cet exercice, un message doit circuler à travers toutes les équipes: chaque équipe reçoit un message d'une autre équipe et doit immédiatement le retransmettre à une 3e équipe. Votre programme doit donc:
