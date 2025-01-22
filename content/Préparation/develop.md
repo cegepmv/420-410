@@ -2,7 +2,7 @@
 title = 'Développement en C'
 weight = 12
 date = 2024-01-21T19:36:31-05:00
-draft = false
+draft = true
 +++
 
 Dans cette section nous verrons les outils courants pour développer des programmes en C sur RaspberryPi.

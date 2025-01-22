@@ -5,48 +5,44 @@
     <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="generator" content="Hugo 0.142.0">
     <meta name="generator" content="Relearn 7.3.1+80e448e5bdaa92c87ee0d0d86f1125c8606ebf5f">
-    <meta name="description" content="Pour programmer en langage C sur un RaspberryPi, il est essentiel d’installer quelques logiciels.
-Module python pigpio Le RaspberryPi est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.
-(source: https://pinout.xyz/)
-Pour utiliser cette interface à partir d’un programme en python on doit importer le module pigpio.
-Ce module est un “wrapper” d’une librairie en C. On y accède via un service linux nommé pigpiod.">
+    <meta name="description" content="Pour programmer en Python sur un RaspberryPi, il est essentiel d’installer quelques logiciels et modules.
+Outils de développement Les programmes et libraires requis sont les suivants:
+python3 ; Les modules venv et pigpio de pip. Normalement, python3 devrait déjà être installé dans RaspberryPi OS. Toutefois, si ce n’est pas le cas, il est possible de le faire manuellement en installant le paquet python3 avec la commande suivante:
+sudo apt update sudo apt install python3 Environnement virtuel Python (venv) Le module Python venv permet de créer des “environnements virtuels” légers, portables et isolés du système global. Chaque environnement virtuel a son propre binaire Python (qui correspond à la version du binaire qui a été utilisée pour créer cet environnement) et peut avoir sa propre liste de paquets Python installée.">
     <meta name="author" content="">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Logiciels requis :: Introduction aux plateformes IdO">
-    <meta name="twitter:description" content="Pour programmer en langage C sur un RaspberryPi, il est essentiel d’installer quelques logiciels.
-Module python pigpio Le RaspberryPi est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.
-(source: https://pinout.xyz/)
-Pour utiliser cette interface à partir d’un programme en python on doit importer le module pigpio.
-Ce module est un “wrapper” d’une librairie en C. On y accède via un service linux nommé pigpiod.">
+    <meta name="twitter:description" content="Pour programmer en Python sur un RaspberryPi, il est essentiel d’installer quelques logiciels et modules.
+Outils de développement Les programmes et libraires requis sont les suivants:
+python3 ; Les modules venv et pigpio de pip. Normalement, python3 devrait déjà être installé dans RaspberryPi OS. Toutefois, si ce n’est pas le cas, il est possible de le faire manuellement en installant le paquet python3 avec la commande suivante:
+sudo apt update sudo apt install python3 Environnement virtuel Python (venv) Le module Python venv permet de créer des “environnements virtuels” légers, portables et isolés du système global. Chaque environnement virtuel a son propre binaire Python (qui correspond à la version du binaire qui a été utilisée pour créer cet environnement) et peut avoir sa propre liste de paquets Python installée.">
     <meta property="og:url" content="http://localhost:1313/420-410/pr%C3%A9paration/logiciels/index.html">
     <meta property="og:site_name" content="Introduction aux plateformes IdO">
     <meta property="og:title" content="Logiciels requis :: Introduction aux plateformes IdO">
-    <meta property="og:description" content="Pour programmer en langage C sur un RaspberryPi, il est essentiel d’installer quelques logiciels.
-Module python pigpio Le RaspberryPi est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.
-(source: https://pinout.xyz/)
-Pour utiliser cette interface à partir d’un programme en python on doit importer le module pigpio.
-Ce module est un “wrapper” d’une librairie en C. On y accède via un service linux nommé pigpiod.">
+    <meta property="og:description" content="Pour programmer en Python sur un RaspberryPi, il est essentiel d’installer quelques logiciels et modules.
+Outils de développement Les programmes et libraires requis sont les suivants:
+python3 ; Les modules venv et pigpio de pip. Normalement, python3 devrait déjà être installé dans RaspberryPi OS. Toutefois, si ce n’est pas le cas, il est possible de le faire manuellement en installant le paquet python3 avec la commande suivante:
+sudo apt update sudo apt install python3 Environnement virtuel Python (venv) Le module Python venv permet de créer des “environnements virtuels” légers, portables et isolés du système global. Chaque environnement virtuel a son propre binaire Python (qui correspond à la version du binaire qui a été utilisée pour créer cet environnement) et peut avoir sa propre liste de paquets Python installée.">
     <meta property="og:locale" content="fr_ca">
     <meta property="og:type" content="article">
     <meta property="article:section" content="Préparation">
     <meta property="article:published_time" content="2024-01-31T08:30:37-05:00">
     <meta property="article:modified_time" content="2024-01-31T08:30:37-05:00">
     <meta itemprop="name" content="Logiciels requis :: Introduction aux plateformes IdO">
-    <meta itemprop="description" content="Pour programmer en langage C sur un RaspberryPi, il est essentiel d’installer quelques logiciels.
-Module python pigpio Le RaspberryPi est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.
-(source: https://pinout.xyz/)
-Pour utiliser cette interface à partir d’un programme en python on doit importer le module pigpio.
-Ce module est un “wrapper” d’une librairie en C. On y accède via un service linux nommé pigpiod.">
+    <meta itemprop="description" content="Pour programmer en Python sur un RaspberryPi, il est essentiel d’installer quelques logiciels et modules.
+Outils de développement Les programmes et libraires requis sont les suivants:
+python3 ; Les modules venv et pigpio de pip. Normalement, python3 devrait déjà être installé dans RaspberryPi OS. Toutefois, si ce n’est pas le cas, il est possible de le faire manuellement en installant le paquet python3 avec la commande suivante:
+sudo apt update sudo apt install python3 Environnement virtuel Python (venv) Le module Python venv permet de créer des “environnements virtuels” légers, portables et isolés du système global. Chaque environnement virtuel a son propre binaire Python (qui correspond à la version du binaire qui a été utilisée pour créer cet environnement) et peut avoir sa propre liste de paquets Python installée.">
     <meta itemprop="datePublished" content="2024-01-31T08:30:37-05:00">
     <meta itemprop="dateModified" content="2024-01-31T08:30:37-05:00">
-    <meta itemprop="wordCount" content="199">
+    <meta itemprop="wordCount" content="600">
     <title>Logiciels requis :: Introduction aux plateformes IdO</title><link rel="icon" href="/420-410/images/favicon.png" type="image/png">
 
-    <link href="/420-410/css/fontawesome-all.min.css?1737564293" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737564293" rel="stylesheet"></noscript>
-    <link href="/420-410/css/auto-complete.css?1737564293" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737564293" rel="stylesheet"></noscript>
-    <link href="/420-410/css/perfect-scrollbar.min.css?1737564293" rel="stylesheet">
-    <link href="/420-410/css/theme.css?1737564293" rel="stylesheet">
-    <link href="/420-410/css/format-html.css?1737564293" rel="stylesheet" id="R-format-style">
+    <link href="/420-410/css/fontawesome-all.min.css?1737577427" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737577427" rel="stylesheet"></noscript>
+    <link href="/420-410/css/auto-complete.css?1737577427" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737577427" rel="stylesheet"></noscript>
+    <link href="/420-410/css/perfect-scrollbar.min.css?1737577427" rel="stylesheet">
+    <link href="/420-410/css/theme.css?1737577427" rel="stylesheet">
+    <link href="/420-410/css/format-html.css?1737577427" rel="stylesheet" id="R-format-style">
     <script>
       window.relearn = window.relearn || {};
       window.relearn.relBasePath='..\/..';
@@ -130,21 +126,74 @@ Ce module est un “wrapper” d’une librairie en C. On y accède via un servi
 
 <h1 id="logiciels-requis">Logiciels requis</h1>
 
-<p>Pour programmer en langage C sur un <em>RaspberryPi</em>, il est essentiel d&rsquo;installer quelques logiciels.</p>
-<h2 id="module-python-_pigpio_">Module python <em>pigpio</em></h2>
+<p>Pour programmer en Python sur un <em>RaspberryPi</em>, il est essentiel d&rsquo;installer quelques logiciels et modules.</p>
+<h2 id="outils-de-développement">Outils de développement</h2>
+<p>Les programmes et libraires requis sont les suivants:</p>
+<ul>
+<li><em>python3</em> ;</li>
+<li>Les modules <code>venv</code> et <code>pigpio</code> de <em>pip</em>.</li>
+</ul>
+<p>Normalement, <em>python3</em> devrait déjà être installé dans <em>RaspberryPi OS</em>. Toutefois, si ce n&rsquo;est pas le cas, il est possible de le faire manuellement en installant le paquet <em>python3</em> avec la commande suivante:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install python3</span></span></code></pre></div>
+<h3 id="environnement-virtuel-python-venv">Environnement virtuel Python (<em>venv</em>)</h3>
+<p>Le module Python <em>venv</em> permet de créer des &ldquo;environnements virtuels&rdquo; légers, portables et isolés du système global. Chaque environnement virtuel a son propre binaire Python (qui correspond à la version du binaire qui a été utilisée pour créer cet environnement) et peut avoir sa propre liste de paquets Python installée.</p>
+<p>Les environnements virtuels permettent d&rsquo;éviter d&rsquo;avoir à installer les paquets Python sur tout le système. Il permettent aussi de créer un fichier de configuration contenant la liste complète des dépendances/modules de notre programme, ce qui facilite grandement son exportation sur une autre machine.</p>
+<h4 id="création-dun-environnement-virtuel">Création d&rsquo;un environnement virtuel</h4>
+<p>La création d&rsquo;un environnement virtuel se fait en exécutant la commande <code>venv</code>, suivie du chemin du répertoire qui contiendra la configuration de l&rsquo;environnement :</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m venv /chemin/vers/le/dossier/de/lenvironment/virtuel</span></span></code></pre></div>
+<p>Pour <em>rentrer</em> dans l&rsquo;environnement virtuel, il suffit de lancer la commande suivante :</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>source /chemin/vers/le/dossier/de/lenvironment/virtuel/bin/activate</span></span></code></pre></div>
+
+<details open class=" box cstyle notices info">
+  <summary class="box-label" tabindex="-1">
+    <i class="fa-fw fas fa-info-circle"></i> 
+    Conseils
+  </summary>
+  <div class="box-content">
+<p>Créez le répertoire de l&rsquo;environnement virtuel à l&rsquo;intérieur du répertoire de votre programme.</p>
+  </div>
+</details>
+<p>Pour vérifier que nous sommes bel et bien <em>à l&rsquo;intérieur</em> de l&rsquo;environnement virtuel, son nom devrait apparaître sur la ligne de commande (entre parenthèses) :</p>
+<p><a href="#R-image-a0e01b7a1fb887f93b142a16ba5e3069" class="lightbox-link"><img alt="venv01" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/venv01.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-a0e01b7a1fb887f93b142a16ba5e3069"><img alt="venv01" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/venv01.png"></a></p>
+<p>Lorsque l&rsquo;environnement virtuel est actif, <code>pip</code> installe les paquets <strong>dans</strong> l&rsquo;environnement, ce qui n&rsquo;affecte en rien l&rsquo;installation de base de Python (celle du système global).</p>
+<p><a href="#R-image-15d8dcca6f52d3803a9cc5ca16c6ede8" class="lightbox-link"><img alt="venv02" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/venv02.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-15d8dcca6f52d3803a9cc5ca16c6ede8"><img alt="venv02" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/venv02.png"></a></p>
+<p>Pour &ldquo;sauvegarder&rdquo; la liste des modules installés, il faut utiliser la commande <code>pip freeze</code> :</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip freeze &gt; requirements.txt</span></span></code></pre></div>
+<p>Cette commande redirige la liste des modules et les dépendances installées dans un fichier <code>requirements.txt</code> :</p>
+<p><a href="#R-image-e54cf33519b26b3439073ab804fefed1" class="lightbox-link"><img alt="venv04" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/venv04.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-e54cf33519b26b3439073ab804fefed1"><img alt="venv04" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/venv04.png"></a></p>
+
+<details open class=" box cstyle notices warning">
+  <summary class="box-label" tabindex="-1">
+    <i class="fa-fw fas fa-exclamation-triangle"></i> 
+    Attention
+  </summary>
+  <div class="box-content">
+<p>À chaque fois que vous installez un nouveau module dans votre environnement virtuel, n&rsquo;oubliez pas de relancer la commande <code>pip freeze &gt; requirements.txt</code> pour mettre à jour la liste !</p>
+  </div>
+</details>
+<p>Pour sortir de l&rsquo;environnement, il suffit de lancer la commande <code>deactivate</code> (vous remarquerez que le nom de l&rsquo;environnement virtuel disparait de la ligne de commande) :</p>
+<p><a href="#R-image-a17d08153afa6594ff97cf09bbb000c2" class="lightbox-link"><img alt="venv03" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/venv03.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-a17d08153afa6594ff97cf09bbb000c2"><img alt="venv03" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/venv03.png"></a></p>
+<p>Si vous désirez exporter votre code sur une autre machine (par exemple, sur un autre <em>Raspberry PI</em>), il vous suffira de copier votre code (et le fichier <code>requirements.txt</code>), créer un nouvel environnement virtuel, entrer dans l&rsquo;environnement, puis lancer la commande suivante :</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -r requirements.txt</span></span></code></pre></div>
+<p>Cette commande installera la liste des paquets et et les dépendances du fichier <code>requirements.txt</code>.</p>
+<h2 id="module-gpio">Module GPIO</h2>
 <p>Le <em>RaspberryPi</em> est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.</p>
-<p><a href="#R-image-0ee75c945882e1c57a9e188976e4af06" class="lightbox-link"><img alt="pinoutpi" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/pinoutpi.png?height=300px" style=" height: 300px; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-0ee75c945882e1c57a9e188976e4af06"><img alt="pinoutpi" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/pinoutpi.png?height=300px"></a>
+<p><a href="#R-image-70f9e462ef16e3b8fe5a5e8fb43a321e" class="lightbox-link"><img alt="pinoutpi" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/pinoutpi.png?height=300px" style=" height: 300px; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-70f9e462ef16e3b8fe5a5e8fb43a321e"><img alt="pinoutpi" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/pinoutpi.png?height=300px"></a>
 (source: <a href="https://pinout.xyz/" rel="external" target="_blank">https://pinout.xyz/</a>)</p>
-<p>Pour utiliser cette interface à partir d&rsquo;un programme en python on doit importer le module <strong>pigpio</strong>.</p>
-<p>Ce module est un &ldquo;wrapper&rdquo; d&rsquo;une librairie en C. On y accède via un service linux nommé <em>pigpiod</em>.</p>
+<p>Pour communiquer avec cette interface à partir d&rsquo;un programme en Python on utilise le module <strong>pigpio</strong>.</p>
 <blockquote>
 <p>La documentation de <em>pigpio</em> est ici: <a href="https://abyz.me.uk/rpi/pigpio/python.html" rel="external" target="_blank">https://abyz.me.uk/rpi/pigpio/python.html</a></p>
 </blockquote>
 <p>Normalement il est déjà disponible sur <em>Raspberry Pi OS</em>, mais au besoin on peut aussi l&rsquo;installer à partir des dépôts de comme suit:</p>
 <div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
 </span></span><span style="display:flex;"><span>sudo apt install pigpio</span></span></code></pre></div>
-<p>Pour exécuter le service et s&rsquo;assurer qu&rsquo;il le sera à chaque démarrage du Pi, vous devez faire les commandes suivantes:</p>
+<p>Pour exécuter le service et s&rsquo;assurer qu&rsquo;il le sera à chaque démarrage du Pi, vous devez entrer les commandes suivantes:</p>
 <div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start pigpiod
 </span></span><span style="display:flex;"><span>sudo systemctl enable pigpiod</span></span></code></pre></div>
 <p>Dans le programme suivant un courant de 3.3V  est envoyé durant 1 seconde sur la broche 11 du Pi (qui correspond à l&rsquo;identifiant GPIO <code>17</code> dans <em>pigpio</em>):</p>
@@ -183,7 +232,7 @@ Ce module est un “wrapper” d’une librairie en C. On y accède via un servi
 
         </div>
         <script>
-          window.index_js_url="/420-410/searchindex.en.js?1737564293";
+          window.index_js_url="/420-410/searchindex.en.js?1737577427";
         </script>
         <search><form action="/420-410/search/index.html" method="get">
           <div class="searchbox default-animation">
@@ -196,12 +245,12 @@ Ce module est un “wrapper” d’une librairie en C. On y accède via un servi
         <script>
           var contentLangs=['fr'];
         </script>
-        <script src="/420-410/js/auto-complete.js?1737564293" defer></script>
-        <script src="/420-410/js/lunr/lunr.min.js?1737564293" defer></script>
-        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737564293" defer></script>
-        <script src="/420-410/js/lunr/lunr.multi.min.js?1737564293" defer></script>
-        <script src="/420-410/js/lunr/lunr.fr.min.js?1737564293" defer></script>
-        <script src="/420-410/js/search.js?1737564293" defer></script>
+        <script src="/420-410/js/auto-complete.js?1737577427" defer></script>
+        <script src="/420-410/js/lunr/lunr.min.js?1737577427" defer></script>
+        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737577427" defer></script>
+        <script src="/420-410/js/lunr/lunr.multi.min.js?1737577427" defer></script>
+        <script src="/420-410/js/lunr/lunr.fr.min.js?1737577427" defer></script>
+        <script src="/420-410/js/search.js?1737577427" defer></script>
       </div>
       <div id="R-homelinks" class="default-animation">
         <hr class="padding">
@@ -211,8 +260,7 @@ Ce module est un “wrapper” d’une librairie en C. On y accède via un servi
           <ul class="enlarge morespace collapsible-menu">
             <li class="parent " data-nav-id="/420-410/pr%C3%A9paration/index.html"><a class="padding" href="/420-410/pr%C3%A9paration/index.html">1. Préparation</a><ul id="R-subsections-481e5bcc4180197d50b8ef2fafbb3420" class="collapsible-menu">
             <li class="" data-nav-id="/420-410/pr%C3%A9paration/connexion/index.html"><a class="padding" href="/420-410/pr%C3%A9paration/connexion/index.html">Connexion</a></li>
-            <li class="active " data-nav-id="/420-410/pr%C3%A9paration/logiciels/index.html"><a class="padding" href="/420-410/pr%C3%A9paration/logiciels/index.html">Logiciels requis</a></li>
-            <li class="" data-nav-id="/420-410/pr%C3%A9paration/develop/index.html"><a class="padding" href="/420-410/pr%C3%A9paration/develop/index.html">Développement en C</a></li></ul></li>
+            <li class="active " data-nav-id="/420-410/pr%C3%A9paration/logiciels/index.html"><a class="padding" href="/420-410/pr%C3%A9paration/logiciels/index.html">Logiciels requis</a></li></ul></li>
           </ul>
         </div>
     
@@ -267,8 +315,8 @@ BY-NC-SA
         </div>
       </div>
     </aside>
-    <script src="/420-410/js/clipboard.min.js?1737564293" defer></script>
-    <script src="/420-410/js/perfect-scrollbar.min.js?1737564293" defer></script>
-    <script src="/420-410/js/theme.js?1737564293" defer></script>
+    <script src="/420-410/js/clipboard.min.js?1737577427" defer></script>
+    <script src="/420-410/js/perfect-scrollbar.min.js?1737577427" defer></script>
+    <script src="/420-410/js/theme.js?1737577427" defer></script>
   </body>
 </html>

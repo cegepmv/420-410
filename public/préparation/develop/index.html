@@ -34,11 +34,11 @@ Lorsqu’on compile un programme, le code source est analysé, optimisé et les 
     <meta itemprop="wordCount" content="1130">
     <title>Développement en C :: Introduction aux plateformes IdO</title><link rel="icon" href="/420-410/images/favicon.png" type="image/png">
 
-    <link href="/420-410/css/fontawesome-all.min.css?1737563165" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737563165" rel="stylesheet"></noscript>
-    <link href="/420-410/css/auto-complete.css?1737563165" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737563165" rel="stylesheet"></noscript>
-    <link href="/420-410/css/perfect-scrollbar.min.css?1737563165" rel="stylesheet">
-    <link href="/420-410/css/theme.css?1737563165" rel="stylesheet">
-    <link href="/420-410/css/format-html.css?1737563165" rel="stylesheet" id="R-format-style">
+    <link href="/420-410/css/fontawesome-all.min.css?1737577242" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737577242" rel="stylesheet"></noscript>
+    <link href="/420-410/css/auto-complete.css?1737577242" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737577242" rel="stylesheet"></noscript>
+    <link href="/420-410/css/perfect-scrollbar.min.css?1737577242" rel="stylesheet">
+    <link href="/420-410/css/theme.css?1737577242" rel="stylesheet">
+    <link href="/420-410/css/format-html.css?1737577242" rel="stylesheet" id="R-format-style">
     <script>
       window.relearn = window.relearn || {};
       window.relearn.relBasePath='..\/..';
@@ -246,27 +246,27 @@ Lorsqu’on compile un programme, le code source est analysé, optimisé et les 
 <div class="highlight wrap-code"><pre tabindex="0"><code>gcc -g -o programme programme.c</code></pre></div>
 <h4 id="vscode">VSCode</h4>
 <p>Pour déboguer un programme en C dans VSCode, il faut commencer par installer l&rsquo;extension <em>C/C++</em> au moment où VSCode est connecté sur le Pi:</p>
-<p><a href="#R-image-03eb1e4920b8892bf9613727b77e7119" class="lightbox-link"><img alt="cext" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/cext.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-03eb1e4920b8892bf9613727b77e7119"><img alt="cext" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/cext.png"></a></p>
+<p><a href="#R-image-5ae253a5248fe0727ab0a432f672ce34" class="lightbox-link"><img alt="cext" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/cext.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-5ae253a5248fe0727ab0a432f672ce34"><img alt="cext" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/cext.png"></a></p>
 <p>Sélectionnez ensuite le fichier source à déboguer puis cliquez sur le bouton <code>Run and Debug</code>.</p>
 <p>À cette étape il faut définir une configuration de débogage. Dans VSCode, elles sont définies dans des fichiers JSON. Vous pouvez en créer une vous-même mais il est plus simple d&rsquo;en choisir une parmi les modèles prédéfinis: cliquez sur <code>Show all automatic debug configurations</code>. Ceci fait apparaître le menu des débogueurs disponibles.</p>
 <p>Sélectionnez <code>C++ (GDB/LLDB)</code>, puis <code>Default Configuration</code>, et ensuite cliquez sur les paramètres de <code>(gdb) Launch</code> pour modifier sa configuration:</p>
-<p><a href="#R-image-be15f6e25aeb3e6f55f802245deee5a9" class="lightbox-link"><img alt="gdbconf" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/gdbconf.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-be15f6e25aeb3e6f55f802245deee5a9"><img alt="gdbconf" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/gdbconf.png"></a></p>
-<p><a href="#R-image-3255137f142ed8566f86d02f106a060a" class="lightbox-link"><img alt="gdbconf2" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/gdbconf2.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-3255137f142ed8566f86d02f106a060a"><img alt="gdbconf2" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/gdbconf2.png"></a></p>
-<p><a href="#R-image-442087a22fcc65dc404a18a5c71bd400" class="lightbox-link"><img alt="gdbconf3" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/gdbconf3.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-442087a22fcc65dc404a18a5c71bd400"><img alt="gdbconf3" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/gdbconf3.png"></a></p>
+<p><a href="#R-image-5a0b0ba88435465a2e411e15d015f7ba" class="lightbox-link"><img alt="gdbconf" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/gdbconf.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-5a0b0ba88435465a2e411e15d015f7ba"><img alt="gdbconf" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/gdbconf.png"></a></p>
+<p><a href="#R-image-1ea66352da353a07ca937c8d566669f3" class="lightbox-link"><img alt="gdbconf2" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/gdbconf2.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-1ea66352da353a07ca937c8d566669f3"><img alt="gdbconf2" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/gdbconf2.png"></a></p>
+<p><a href="#R-image-f46f6a407a5d1ba433f96398ad7b0c99" class="lightbox-link"><img alt="gdbconf3" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/gdbconf3.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-f46f6a407a5d1ba433f96398ad7b0c99"><img alt="gdbconf3" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/gdbconf3.png"></a></p>
 <p>Nous allons indiquer à VSCode que le programme à déboguer est nommé <code>a.out</code> dans le répertoire courant:</p>
-<p><a href="#R-image-6a65e0fc26875129706458bfa39943a6" class="lightbox-link"><img alt="launchjson" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/launchjson.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-6a65e0fc26875129706458bfa39943a6"><img alt="launchjson" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/launchjson.png"></a></p>
+<p><a href="#R-image-4d02867f140b07d0dfd48fe0ed60f0bb" class="lightbox-link"><img alt="launchjson" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/launchjson.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-4d02867f140b07d0dfd48fe0ed60f0bb"><img alt="launchjson" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/launchjson.png"></a></p>
 <p>Il faut donc s&rsquo;assurer que la commande pour la version <code>debug</code> du programme soit conforme dans le Makefile (c&rsquo;est-à-dire qu&rsquo;elle ait l&rsquo;option <code>-g</code> et qu&rsquo;elle ne renomme pas le fichier compilé), comme suit:</p>
 <div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Makefile" data-lang="Makefile"><span style="display:flex;"><span><span style="color:#a6e22e">debug</span><span style="color:#f92672">:</span> test.c
 </span></span><span style="display:flex;"><span>	gcc -g test.c
 </span></span></code></pre></div>
 <p>Lancez ensuite <code>make debug</code>, puis enfin vous pourrez lancer le débogage dans VSCode:</p>
-<p><a href="#R-image-2ed7da6a9defdc7965ad0fee03aec7b6" class="lightbox-link"><img alt="debugdone" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/debugdone.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-2ed7da6a9defdc7965ad0fee03aec7b6"><img alt="debugdone" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/debugdone.png"></a></p>
+<p><a href="#R-image-ed0492ad9e58d3d0723f79709058b344" class="lightbox-link"><img alt="debugdone" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/debugdone.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-ed0492ad9e58d3d0723f79709058b344"><img alt="debugdone" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/debugdone.png"></a></p>
 
 <details open class=" box cstyle notices primary">
   <summary class="box-label" tabindex="-1">
@@ -292,7 +292,7 @@ Lorsqu’on compile un programme, le code source est analysé, optimisé et les 
 
         </div>
         <script>
-          window.index_js_url="/420-410/searchindex.en.js?1737563165";
+          window.index_js_url="/420-410/searchindex.en.js?1737577242";
         </script>
         <search><form action="/420-410/search/index.html" method="get">
           <div class="searchbox default-animation">
@@ -305,12 +305,12 @@ Lorsqu’on compile un programme, le code source est analysé, optimisé et les 
         <script>
           var contentLangs=['fr'];
         </script>
-        <script src="/420-410/js/auto-complete.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.min.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.multi.min.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.fr.min.js?1737563165" defer></script>
-        <script src="/420-410/js/search.js?1737563165" defer></script>
+        <script src="/420-410/js/auto-complete.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.min.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.multi.min.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.fr.min.js?1737577242" defer></script>
+        <script src="/420-410/js/search.js?1737577242" defer></script>
       </div>
       <div id="R-homelinks" class="default-animation">
         <hr class="padding">
@@ -376,8 +376,8 @@ BY-NC-SA
         </div>
       </div>
     </aside>
-    <script src="/420-410/js/clipboard.min.js?1737563165" defer></script>
-    <script src="/420-410/js/perfect-scrollbar.min.js?1737563165" defer></script>
-    <script src="/420-410/js/theme.js?1737563165" defer></script>
+    <script src="/420-410/js/clipboard.min.js?1737577242" defer></script>
+    <script src="/420-410/js/perfect-scrollbar.min.js?1737577242" defer></script>
+    <script src="/420-410/js/theme.js?1737577242" defer></script>
   </body>
 </html>

@@ -3,7 +3,7 @@
   <channel>
     <title>Introduction aux plateformes IdO</title>
     <link>http://localhost:1313/420-410/index.html</link>
-    <description>Introduction aux plateformes IdO</description>
+    <description></description>
     <generator>Hugo</generator>
     <language>fr-ca</language>
     <lastBuildDate>Sat, 10 Feb 2024 12:08:31 -0500</lastBuildDate>
@@ -13,7 +13,7 @@
       <link>http://localhost:1313/420-410/pr%C3%A9paration/index.html</link>
       <pubDate>Sat, 10 Feb 2024 12:08:31 -0500</pubDate>
       <guid>http://localhost:1313/420-410/pr%C3%A9paration/index.html</guid>
-      <description>Configuration du RaspberryPi pour le cours.&#xA;Connexion Développement en C Logiciels requis</description>
+      <description>Configuration du RaspberryPi pour le cours.</description>
     </item>
   </channel>
 </rss>

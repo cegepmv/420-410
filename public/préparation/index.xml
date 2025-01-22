@@ -3,7 +3,7 @@
   <channel>
     <title>Préparation :: Introduction aux plateformes IdO</title>
     <link>http://localhost:1313/420-410/pr%C3%A9paration/index.html</link>
-    <description>Configuration du RaspberryPi pour le cours.&#xA;Connexion Développement en C Logiciels requis</description>
+    <description>Configuration du RaspberryPi pour le cours.</description>
     <generator>Hugo</generator>
     <language>fr-ca</language>
     <lastBuildDate>Sat, 10 Feb 2024 12:08:31 -0500</lastBuildDate>
@@ -20,14 +20,7 @@
       <link>http://localhost:1313/420-410/pr%C3%A9paration/logiciels/index.html</link>
       <pubDate>Wed, 31 Jan 2024 08:30:37 -0500</pubDate>
       <guid>http://localhost:1313/420-410/pr%C3%A9paration/logiciels/index.html</guid>
-      <description>Pour programmer en langage C sur un RaspberryPi, il est essentiel d’installer quelques logiciels.&#xA;Outils de développement Les programmes requis sont les suivants:&#xA;Le compilateur C gcc; Les librairies C standard; L’utilitaire make; Le débogueur gdb Normalement, ces programmes devraient déjà être installés dans RaspberryPi OS. Toutefois si ce n’est pas le cas il est possible de le faire manuellement en installant le paquet build-essential qu’on installe avec la commande suivante:</description>
-    </item>
-    <item>
-      <title>Développement en C</title>
-      <link>http://localhost:1313/420-410/pr%C3%A9paration/develop/index.html</link>
-      <pubDate>Sun, 21 Jan 2024 19:36:31 -0500</pubDate>
-      <guid>http://localhost:1313/420-410/pr%C3%A9paration/develop/index.html</guid>
-      <description>Dans cette section nous verrons les outils courants pour développer des programmes en C sur RaspberryPi.&#xA;Compilation La compilation d’un programme est la traduction du code source en code machine. Le code machine se compose de différentes instructions qui peuvent varier selon le CPU ou le système d’exploitation; c’est pourquoi le fichier exécutable d’un programme pour Windows ne pourra pas être exécuté sur un RaspberryPi (par exemple).&#xA;Lorsqu’on compile un programme, le code source est analysé, optimisé et les instructions (qui peuvent se trouver dans différents fichiers) sont regroupées en un exécutable unique.</description>
+      <description>Pour programmer en Python sur un RaspberryPi, il est essentiel d’installer quelques logiciels et modules.&#xA;Outils de développement Les programmes et libraires requis sont les suivants:&#xA;python3 ; Les modules venv et pigpio de pip. Normalement, python3 devrait déjà être installé dans RaspberryPi OS. Toutefois, si ce n’est pas le cas, il est possible de le faire manuellement en installant le paquet python3 avec la commande suivante:&#xA;sudo apt update sudo apt install python3 Environnement virtuel Python (venv) Le module Python venv permet de créer des “environnements virtuels” légers, portables et isolés du système global. Chaque environnement virtuel a son propre binaire Python (qui correspond à la version du binaire qui a été utilisée pour créer cet environnement) et peut avoir sa propre liste de paquets Python installée.</description>
     </item>
   </channel>
 </rss>

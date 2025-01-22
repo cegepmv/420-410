@@ -30,11 +30,11 @@ Dans l’exemple suivant, la variable nommée mot contient la chaîne de caract�
     <meta itemprop="wordCount" content="1695">
     <title>Pointeurs :: Introduction aux plateformes IdO</title><link rel="icon" href="/420-410/images/favicon.png" type="image/png">
 
-    <link href="/420-410/css/fontawesome-all.min.css?1737563165" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737563165" rel="stylesheet"></noscript>
-    <link href="/420-410/css/auto-complete.css?1737563165" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737563165" rel="stylesheet"></noscript>
-    <link href="/420-410/css/perfect-scrollbar.min.css?1737563165" rel="stylesheet">
-    <link href="/420-410/css/theme.css?1737563165" rel="stylesheet">
-    <link href="/420-410/css/format-html.css?1737563165" rel="stylesheet" id="R-format-style">
+    <link href="/420-410/css/fontawesome-all.min.css?1737577242" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737577242" rel="stylesheet"></noscript>
+    <link href="/420-410/css/auto-complete.css?1737577242" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737577242" rel="stylesheet"></noscript>
+    <link href="/420-410/css/perfect-scrollbar.min.css?1737577242" rel="stylesheet">
+    <link href="/420-410/css/theme.css?1737577242" rel="stylesheet">
+    <link href="/420-410/css/format-html.css?1737577242" rel="stylesheet" id="R-format-style">
     <script>
       window.relearn = window.relearn || {};
       window.relearn.relBasePath='..\/..';
@@ -121,8 +121,8 @@ Dans l’exemple suivant, la variable nommée mot contient la chaîne de caract�
 <h2 id="variables-et-mémoire">Variables et mémoire</h2>
 <p>Lorsqu&rsquo;on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c&rsquo;est l&rsquo;adresse qui se trouve au début des données contenues dans la variable qui est utilisée.</p>
 <p>Dans l&rsquo;exemple suivant, la variable nommée <strong>mot</strong> contient la chaîne de caractères &ldquo;abcd&rdquo; et est à l&rsquo;adresse <code>0x77fe00</code>:</p>
-<p><a href="#R-image-0e151689a5bede5716f0bd294b61252a" class="lightbox-link"><img alt="abcd" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/abcd.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-0e151689a5bede5716f0bd294b61252a"><img alt="abcd" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/abcd.png"></a></p>
+<p><a href="#R-image-1954bab7e10a3465bc976a2a7ba6bfad" class="lightbox-link"><img alt="abcd" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/abcd.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-1954bab7e10a3465bc976a2a7ba6bfad"><img alt="abcd" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/abcd.png"></a></p>
 <p>L&rsquo;espace occupé par une variable dans la mémoire dépend de ce qu&rsquo;elle contient: dans l&rsquo;exemple, plus la chaîne de caractères contenue dans <strong>mot</strong> est longue, plus l&rsquo;espace occupé par la variable sera grand. Mais le <em>type</em> d&rsquo;une variable a aussi un effet sur l&rsquo;espace qu&rsquo;elle occupe.</p>
 <h4 id="types">Types</h4>
 <p>Dans le langage C, les variables peuvent avoir les types <em>char</em>, <em>int</em>, <em>long</em>, <em>float</em> et <em>double</em>. Ces types permettent de stocker des valeurs numériques de tailles différentes car le nombre d&rsquo;octets qu&rsquo;ils utilisent pour stocker les variables sont différents. Le tableau suivant compare les types pour les nombres entiers:</p>
@@ -155,8 +155,8 @@ Dans l’exemple suivant, la variable nommée mot contient la chaîne de caract�
 <p>Les types peuvent être <em>signés</em>, c&rsquo;est-à-dire qu&rsquo;ils acceptent les valeurs négatives, ou <em>non-signés</em> (soit 0 ou une valeur positive). Dans les deux cas, le nombre de valeurs différentes possibles demeure le même: par exemple, une variable de type <em>int</em> non-signé peut avoir une valeur de 0 à 4 294 967 295; un <em>int</em> signé peut avoir une valeur de -2 147 483 648 à 2 147 483 647.</p>
 <p>Par défaut, les variables sont toujours signées à moins d&rsquo;ajouter le mot-clé <em>unsigned</em> devant leur type au moment de leur déclaration.</p>
 <p>La mémoire peut ainsi contenir des variables de divers types occupant des blocs de taille différentes:</p>
-<p><a href="#R-image-23186383419b021dd228afc51c04f64d" class="lightbox-link"><img alt="memblock" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/memblock.png" style=" height: auto; width: auto;"></a>
-<a href="javascript:history.back();" class="lightbox-back" id="R-image-23186383419b021dd228afc51c04f64d"><img alt="memblock" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/memblock.png"></a></p>
+<p><a href="#R-image-30793dc8c1a4384683eae7b463804e04" class="lightbox-link"><img alt="memblock" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/memblock.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-30793dc8c1a4384683eae7b463804e04"><img alt="memblock" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/memblock.png"></a></p>
 <p>Dans cet exemple:</p>
 <ul>
 <li>Une variable de type <em>long</em> est à l&rsquo;adresse <code>0x77fe00</code> et a la valeur 5655434;</li>
@@ -386,7 +386,7 @@ Dans l’exemple suivant, la variable nommée mot contient la chaîne de caract�
 
         </div>
         <script>
-          window.index_js_url="/420-410/searchindex.en.js?1737563165";
+          window.index_js_url="/420-410/searchindex.en.js?1737577242";
         </script>
         <search><form action="/420-410/search/index.html" method="get">
           <div class="searchbox default-animation">
@@ -399,12 +399,12 @@ Dans l’exemple suivant, la variable nommée mot contient la chaîne de caract�
         <script>
           var contentLangs=['fr'];
         </script>
-        <script src="/420-410/js/auto-complete.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.min.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.multi.min.js?1737563165" defer></script>
-        <script src="/420-410/js/lunr/lunr.fr.min.js?1737563165" defer></script>
-        <script src="/420-410/js/search.js?1737563165" defer></script>
+        <script src="/420-410/js/auto-complete.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.min.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.multi.min.js?1737577242" defer></script>
+        <script src="/420-410/js/lunr/lunr.fr.min.js?1737577242" defer></script>
+        <script src="/420-410/js/search.js?1737577242" defer></script>
       </div>
       <div id="R-homelinks" class="default-animation">
         <hr class="padding">
@@ -467,8 +467,8 @@ BY-NC-SA
         </div>
       </div>
     </aside>
-    <script src="/420-410/js/clipboard.min.js?1737563165" defer></script>
-    <script src="/420-410/js/perfect-scrollbar.min.js?1737563165" defer></script>
-    <script src="/420-410/js/theme.js?1737563165" defer></script>
+    <script src="/420-410/js/clipboard.min.js?1737577242" defer></script>
+    <script src="/420-410/js/perfect-scrollbar.min.js?1737577242" defer></script>
+    <script src="/420-410/js/theme.js?1737577242" defer></script>
   </body>
 </html>

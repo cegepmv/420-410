@@ -79,51 +79,18 @@ pip install -r requirements.txt
 
 Cette commande installera la liste des paquets et et les dépendances du fichier `requirements.txt`. 
 
-## Librairies GPIO
+## Module GPIO
 Le _RaspberryPi_ est équipé de 40 broches GPIO utilisées pour communiquer avec différents périphériques: senseurs, actuateurs, moteurs, LED, etc.
 
 ![pinoutpi](/420-410/images/pinoutpi.png?height=300px)
 (source: https://pinout.xyz/)
 
-Pour utiliser cette interface à partir d'un programme en Python une librairie est disponible **pigpio**. 
+Pour communiquer avec cette interface à partir d'un programme en Python on utilise le module **pigpio**. 
 
-<!-- #### WiringPi
-Cette librairie semble très populaire et est utilisée dans de nombreux projets; cependant elle n'est plus activement maintenue par son développeur d'origine (https://projects.drogon.net/raspberry-pi/wiringpi/) et n'est plus supportée par les versions plus récentes de _RaspberryPi OS_. Il n'est donc pas recommandé de l'utiliser.
+> La documentation de _pigpio_ est ici: https://abyz.me.uk/rpi/pigpio/python.html 
 
-Pour installer _WiringPi_, téléchargez le paquet **.deb** puis installez-le à l'aide des commandes suivantes:
-```bash
-wget https://project-downloads.drogon.net/wiringpi-latest.deb
-sudo dpkg -i wiringpi-latest.deb
-```
+Normalement il est déjà disponible sur _Raspberry Pi OS_, mais au besoin on peut aussi l'installer à partir des dépôts de comme suit:
 
-Le programme suivant envoit un courant de 3.3V durant 1 seconde sur la broche 11 du Pi (qui correspond à l'identifiant GPIO `0` dans _WiringPi_):
-
-```c
-// testWiring.c
-#include <wiringPi.h>
-int main (void) 
-{
-    wiringPiSetup();
-    pinMode(0,OUTPUT);
-    
-    digitalWrite(0,HIGH);
-    delay(1000);
-    digitalWrite(0,LOW);
-    
-    return 0 ;
-}
-```
-
-Au moment de la compilation il faut lier l'exécutable à la librairie _wiringpi_. Pour ce faire on utilise  l'option `-l`. La commande pour compiler le programme `testWiring.c` et générer l'exécutable `test` est donc la suivante:
-```bash
-gcc testWiring.c -o test -lwiringPi
-```
-La documentation de _WiringPi_ est ici: https://projects.drogon.net/raspberry-pi/wiringpi/functions/ -->
-<!---->
-#### pigpio
-Cette librairie est réputée performante, et semble être bien maintenue. Elle inclut également un "wrapper" qui permet de l'importer en python comme un module. On peut aussi y accéder via un service linux nommé _pigpiod_.
-
-On peut l'installer à partir des dépôts de _Raspberry Pi OS_ comme suit:
 ```bash
 sudo apt update
 sudo apt install pigpio
