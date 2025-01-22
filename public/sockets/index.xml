@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sockets :: Introduction aux plateformes IdO</title>
+    <link>http://localhost:1313/420-410/sockets/index.html</link>
+    <description>Affichage et saisie TCP-UDP</description>
+    <generator>Hugo</generator>
+    <language>fr-ca</language>
+    <lastBuildDate>Tue, 06 Feb 2024 12:05:07 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/420-410/sockets/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCP et UDP</title>
+      <link>http://localhost:1313/420-410/sockets/tcp-udp/index.html</link>
+      <pubDate>Tue, 06 Feb 2024 12:05:07 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/sockets/tcp-udp/index.html</guid>
+      <description>Pour établir une communication entre un Raspberry Pi et un autre hôte sur le réseau, on peut adopter l’approche client-serveur:&#xA;Le serveur est celui qui reçoit les messages Le client est celui qui envoit les messages Tout dépendant des applications, le Pi peut être n’importe lequel des deux.&#xA;Deux protocoles réseau peuvent être utilisés pour envoyer des messages entre un client et un serveur, soit TCP et UDP.&#xA;TCP: une connexion est établie entre client et serveur. Cette connexion est ensuite utilisée pour que les deux s’échangent des messages. Lorsqu’un des deux termine la connexion, celle-ci est fermée. UDP: le client envoit des messages au serveur sans établir de connexion préalable. Il n’est donc pas possible de savoir si le serveur est en ligne et prêt à recevoir les messages. Pour communiquer en utilisant TCP ou UDP, il faut utiliser les sockets.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Préparation :: Introduction aux plateformes IdO</title>
+    <link>http://localhost:1313/420-410/pr%C3%A9paration/index.html</link>
+    <description>Configuration du RaspberryPi pour le cours.&#xA;Connexion Développement en C Logiciels requis</description>
+    <generator>Hugo</generator>
+    <language>fr-ca</language>
+    <lastBuildDate>Sat, 10 Feb 2024 12:08:31 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/420-410/pr%C3%A9paration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Connexion</title>
+      <link>http://localhost:1313/420-410/pr%C3%A9paration/connexion/index.html</link>
+      <pubDate>Sat, 10 Feb 2024 12:08:31 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/pr%C3%A9paration/connexion/index.html</guid>
+      <description>Dans cette section nous verrons comment accéder au RaspberryPi à distance avec VSCode.&#xA;Activer le service ssh Le service SSH doit s’exécuter sur le Pi pour que la connexion de VSCode soit possible. Aussi, il est utilise de faire en sorte qu’il démarre automatiquement chaque fois que la Pi est allumé. Pour ce faire, lancez les deux commandes suivantes:&#xA;sudo systemctl enable ssh sudo systemctl start ssh Changer le nom d’hôte Il est possible de se connecter sur le Pi en utilisant son adresse IP, mais il est souvent plus pratique d’utiliser un nom pour y référer. Pour y arriver il faut modifier deux fichiers.</description>
+    </item>
+    <item>
+      <title>Logiciels requis</title>
+      <link>http://localhost:1313/420-410/pr%C3%A9paration/logiciels/index.html</link>
+      <pubDate>Wed, 31 Jan 2024 08:30:37 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/pr%C3%A9paration/logiciels/index.html</guid>
+      <description>Pour programmer en langage C sur un RaspberryPi, il est essentiel d’installer quelques logiciels.&#xA;Outils de développement Les programmes requis sont les suivants:&#xA;Le compilateur C gcc; Les librairies C standard; L’utilitaire make; Le débogueur gdb Normalement, ces programmes devraient déjà être installés dans RaspberryPi OS. Toutefois si ce n’est pas le cas il est possible de le faire manuellement en installant le paquet build-essential qu’on installe avec la commande suivante:</description>
+    </item>
+    <item>
+      <title>Développement en C</title>
+      <link>http://localhost:1313/420-410/pr%C3%A9paration/develop/index.html</link>
+      <pubDate>Sun, 21 Jan 2024 19:36:31 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/pr%C3%A9paration/develop/index.html</guid>
+      <description>Dans cette section nous verrons les outils courants pour développer des programmes en C sur RaspberryPi.&#xA;Compilation La compilation d’un programme est la traduction du code source en code machine. Le code machine se compose de différentes instructions qui peuvent varier selon le CPU ou le système d’exploitation; c’est pourquoi le fichier exécutable d’un programme pour Windows ne pourra pas être exécuté sur un RaspberryPi (par exemple).&#xA;Lorsqu’on compile un programme, le code source est analysé, optimisé et les instructions (qui peuvent se trouver dans différents fichiers) sont regroupées en un exécutable unique.</description>
+    </item>
+  </channel>
+</rss>

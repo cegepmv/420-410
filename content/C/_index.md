@@ -3,6 +3,7 @@ archetype = "chapter"
 pre = "2. "
 title = "Le langage C"
 weight = 2
+draft = true
 +++
 
 {{% button href="/420-410/c/affichagesaisie/" style="primary" %}}Affichage et saisie{{% /button %}}

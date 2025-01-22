@@ -135,43 +135,32 @@ sudo systemctl start pigpiod
 sudo systemctl enable pigpiod
 ```
 
-Le programme suivant est similaire à celui de l'exemple précédent: un courant de 3.3V  est envoyé durant 1 seconde sur la broche 11 du Pi (qui correspond à l'identifiant GPIO `17` dans _pigpio_):
+Dans le programme suivant un courant de 3.3V  est envoyé durant 1 seconde sur la broche 11 du Pi (qui correspond à l'identifiant GPIO `17` dans _pigpio_):
 
-```c
-// testPig.c
-#include <stdio.h>
-#include <pigpio.h>
+```python
+import pigpio
+import time
 
-int main() {
-    // Initialiser
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+# Initialisation
+pi = pigpio.pi()
 
-    // Définir en mode output
-    gpioSetMode(17, PI_OUTPUT);
+# Définir le mode du GPIO 17
+LED = 17
+pi.set_mode(LED, pigpio.OUTPUT)
 
-    // Allumer 1 s
-    gpioWrite(17, 1);
-    time_sleep(1);  
-
-    // Éteindre 1 s
-    gpioWrite(17, 0);
-    time_sleep(1);  
+try:
+    # Allumer 1 seconde
+    pi.write(LED, 1)
+    time.sleep(1)
     
-    // Libérer les ressources
-    gpioTerminate();
+    # Éteindre
+    pi.write(LED, 0)
 
-    return 0;
-}
+finally:
+    pi.stop()
 ```
 
-Au moment de la compilation il faut lier l'exécutable à la librairie _pigpio_. Pour ce faire on utilise  l'option `-l`. La commande pour compiler le programme `testPig.c` et générer l'exécutable `test` est donc la suivante:
-```bash
-gcc testPig.c -o test -lpigpio
-```
-La documentation de l'API C de _pigpio_ est ici: http://abyz.me.uk/rpi/pigpio/cif.html
+
 
 
 

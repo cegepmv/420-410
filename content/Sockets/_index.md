@@ -3,6 +3,7 @@ archetype = "chapter"
 pre = "3. "
 title = "Sockets"
 weight = 3
+draft = true
 +++
 
 {{% button href="/420-410/c/affichagesaisie/" style="primary" %}}Affichage et saisie{{% /button %}}

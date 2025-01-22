@@ -3,6 +3,7 @@ archetype = "chapter"
 pre = "5. "
 title = "Projet 1"
 weight = 5
+draft = true
 +++
 
 Clonez le projet suivant: https://github.com/cegepmv/projet1.git.

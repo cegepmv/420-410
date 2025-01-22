@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Le langage C :: Introduction aux plateformes IdO</title>
+    <link>http://localhost:1313/420-410/c/index.html</link>
+    <description>Affichage et saisie Pointers Divers Exercices</description>
+    <generator>Hugo</generator>
+    <language>fr-ca</language>
+    <lastBuildDate>Wed, 14 Feb 2024 18:26:55 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/420-410/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Affichage et saisie</title>
+      <link>http://localhost:1313/420-410/c/affichagesaisie/index.html</link>
+      <pubDate>Sun, 21 Jan 2024 19:43:03 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/c/affichagesaisie/index.html</guid>
+      <description>Affichage int printf() Cette fonction affiche des informations sur la sortie standard (par défaut, l’écran). Avec une seule chaîne de caractères comme argument, elle l’affiche telle quelle:&#xA;printf(&#34;Bonjour tout le monde&#34;); La fonction retourne un entier qui représente le nombre de caractères affichés; une valeur négative signifie qu’une erreur est survenue lors de l’exécution.&#xA;Il est possible d’insérer des valeurs ou des variables dans la chaîne de caractères affichée et de spécifier leur format. Par exemple:</description>
+    </item>
+    <item>
+      <title>Pointeurs</title>
+      <link>http://localhost:1313/420-410/c/pointeurs/index.html</link>
+      <pubDate>Sun, 21 Jan 2024 19:49:58 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/c/pointeurs/index.html</guid>
+      <description>Variables et mémoire Lorsqu’on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c’est l’adresse qui se trouve au début des données contenues dans la variable qui est utilisée.&#xA;Dans l’exemple suivant, la variable nommée mot contient la chaîne de caractères “abcd” et est à l’adresse 0x77fe00:</description>
+    </item>
+    <item>
+      <title>Divers</title>
+      <link>http://localhost:1313/420-410/c/fichiers/index.html</link>
+      <pubDate>Sun, 21 Jan 2024 19:49:14 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/c/fichiers/index.html</guid>
+      <description>Dans cette section on verra comment lire et écrire dans les fichiers, passer des arguments à un programme et gérer la mémoire avec malloc(), realloc() et free().&#xA;Lecture et écriture dans des fichiers Lien vers w3school pour les fichiers en C, dont les notes sont très fortement inspirée&#xA;Écriture Inclusion de la bibliothèque standard C : Assurez-vous d’inclure la bibliothèque standard C en ajoutant la directive #include &lt;stdio.h&gt; au début de votre programme.</description>
+    </item>
+    <item>
+      <title>Exercices</title>
+      <link>http://localhost:1313/420-410/c/exercices/index.html</link>
+      <pubDate>Wed, 14 Feb 2024 18:26:55 -0500</pubDate>
+      <guid>http://localhost:1313/420-410/c/exercices/index.html</guid>
+      <description>Exercice 1 Soit les variables suivantes:&#xA;int liste[] = {23,66,1,21} // supposez que &#39;23&#39; est à l&#39;adresse 0x77770210 int* p = liste; Quelles sont les valeurs des expressions suivantes?&#xA;liste[2]+3 *p+liste[0] p+3 *p+3 *(p+3) Exercice 2 Faites un programme qui prend deux arguments, un mot et un caractère, et affiche le nombre de fois que le caractère apparaît dans la chaîne. Un exemple d’appel du programme:&#xA;pi@raspberry:~$ ./exo2 bonjour o 2 Exercice 3 Faites un programme qui prend un mot en argument, met la première moitié dans un tableau de char et la deuxième moitié dans un autre tableau de char. Utilisez malloc() pour définir leurs tailles. Par exemple, le mot bonjour sera retranscrit comme bonj et our.</description>
+    </item>
+  </channel>
+</rss>

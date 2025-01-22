@@ -3,6 +3,6 @@ archetype = "chapter"
 pre = "4. "
 title = "Threads"
 weight = 4
+draft = true
 +++
 
-{{% button href="/420-410/threads/parallel/" style="primary" %}}Processus en parallèle{{% /button %}}

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr-ca" dir="ltr" itemscope itemtype="http://schema.org/Article" data-r-output-format="html">
+  <head><script src="/420-410/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=420-410/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.142.0">
+    <meta name="generator" content="Relearn 7.3.1+80e448e5bdaa92c87ee0d0d86f1125c8606ebf5f">
+    <meta name="description" content="Variables et mémoire Lorsqu’on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c’est l’adresse qui se trouve au début des données contenues dans la variable qui est utilisée.
+Dans l’exemple suivant, la variable nommée mot contient la chaîne de caractères “abcd” et est à l’adresse 0x77fe00:">
+    <meta name="author" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pointeurs :: Introduction aux plateformes IdO">
+    <meta name="twitter:description" content="Variables et mémoire Lorsqu’on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c’est l’adresse qui se trouve au début des données contenues dans la variable qui est utilisée.
+Dans l’exemple suivant, la variable nommée mot contient la chaîne de caractères “abcd” et est à l’adresse 0x77fe00:">
+    <meta property="og:url" content="http://localhost:1313/420-410/c/pointeurs/index.html">
+    <meta property="og:site_name" content="Introduction aux plateformes IdO">
+    <meta property="og:title" content="Pointeurs :: Introduction aux plateformes IdO">
+    <meta property="og:description" content="Variables et mémoire Lorsqu’on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c’est l’adresse qui se trouve au début des données contenues dans la variable qui est utilisée.
+Dans l’exemple suivant, la variable nommée mot contient la chaîne de caractères “abcd” et est à l’adresse 0x77fe00:">
+    <meta property="og:locale" content="fr_ca">
+    <meta property="og:type" content="article">
+    <meta property="article:section" content="Le langage C">
+    <meta property="article:published_time" content="2024-01-21T19:49:58-05:00">
+    <meta property="article:modified_time" content="2024-01-21T19:49:58-05:00">
+    <meta itemprop="name" content="Pointeurs :: Introduction aux plateformes IdO">
+    <meta itemprop="description" content="Variables et mémoire Lorsqu’on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c’est l’adresse qui se trouve au début des données contenues dans la variable qui est utilisée.
+Dans l’exemple suivant, la variable nommée mot contient la chaîne de caractères “abcd” et est à l’adresse 0x77fe00:">
+    <meta itemprop="datePublished" content="2024-01-21T19:49:58-05:00">
+    <meta itemprop="dateModified" content="2024-01-21T19:49:58-05:00">
+    <meta itemprop="wordCount" content="1695">
+    <title>Pointeurs :: Introduction aux plateformes IdO</title><link rel="icon" href="/420-410/images/favicon.png" type="image/png">
+
+    <link href="/420-410/css/fontawesome-all.min.css?1737563165" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/fontawesome-all.min.css?1737563165" rel="stylesheet"></noscript>
+    <link href="/420-410/css/auto-complete.css?1737563165" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="/420-410/css/auto-complete.css?1737563165" rel="stylesheet"></noscript>
+    <link href="/420-410/css/perfect-scrollbar.min.css?1737563165" rel="stylesheet">
+    <link href="/420-410/css/theme.css?1737563165" rel="stylesheet">
+    <link href="/420-410/css/format-html.css?1737563165" rel="stylesheet" id="R-format-style">
+    <script>
+      window.relearn = window.relearn || {};
+      window.relearn.relBasePath='..\/..';
+      window.relearn.relBaseUri='..\/..\/..';
+      window.relearn.absBaseUri='http:\/\/localhost:1313\/420-410';
+      window.relearn.min = ``;
+      window.relearn.disableAnchorCopy=false;
+      window.relearn.disableAnchorScrolling=false;
+      // variant stuff
+      window.relearn.themevariants = [ 'green' ];
+      window.relearn.customvariantname = "my-custom-variant";
+      window.relearn.changeVariant = function(variant) {
+        var oldVariant = document.documentElement.dataset.rThemeVariant;
+        window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
+        document.documentElement.dataset.rThemeVariant = variant;
+        if (oldVariant != variant) {
+          document.dispatchEvent( new CustomEvent('themeVariantLoaded', { detail: { variant, oldVariant } }) );
+        }
+      }
+      window.relearn.markVariant = function() {
+        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant");
+        var select = document.querySelector("#R-select-variant");
+        if (select) {
+          select.value = variant;
+        }
+      }
+      window.relearn.initVariant = function() {
+        var variant = window.localStorage.getItem(window.relearn.absBaseUri + "/variant") ?? "";
+        if( variant == window.relearn.customvariantname ){
+        }else if( !variant || !window.relearn.themevariants.includes(variant) ){
+          variant = window.relearn.themevariants[0];
+          window.localStorage.setItem(window.relearn.absBaseUri + "/variant", variant);
+        }
+        document.documentElement.dataset.rThemeVariant = variant;
+      }
+      window.relearn.initVariant();
+      window.relearn.markVariant();
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+  </head>
+  <body class="mobile-support html disableInlineCopyToClipboard" data-url="/420-410/c/pointeurs/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Le langage C</span><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Pointeurs</span><meta itemprop="position" content="2"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-more" data-content-empty="hide" data-width-s="show" data-width-m="show" data-width-l="show"><button class="topbar-control" onclick="toggleTopbarFlyout(this)" type="button" title="More"><i class="fa-fw fas fa-ellipsis-v"></i></button>
+              <div class="topbar-content">
+                <div class="topbar-content-wrapper">
+                  <div class="topbar-area topbar-area-more" data-area="more">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable c" tabindex="-1">
+        <div class="flex-block-wrapper">
+<article class="default">
+  <header class="headline">
+  </header>
+
+<h1 id="pointeurs">Pointeurs</h1>
+
+<h2 id="variables-et-mémoire">Variables et mémoire</h2>
+<p>Lorsqu&rsquo;on déclare une variable dans un programme, elle est stockée à un endroit précis de la mémoire. Cet endroit a une adresse, notée en hexadécimal, et c&rsquo;est l&rsquo;adresse qui se trouve au début des données contenues dans la variable qui est utilisée.</p>
+<p>Dans l&rsquo;exemple suivant, la variable nommée <strong>mot</strong> contient la chaîne de caractères &ldquo;abcd&rdquo; et est à l&rsquo;adresse <code>0x77fe00</code>:</p>
+<p><a href="#R-image-0e151689a5bede5716f0bd294b61252a" class="lightbox-link"><img alt="abcd" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/abcd.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-0e151689a5bede5716f0bd294b61252a"><img alt="abcd" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/abcd.png"></a></p>
+<p>L&rsquo;espace occupé par une variable dans la mémoire dépend de ce qu&rsquo;elle contient: dans l&rsquo;exemple, plus la chaîne de caractères contenue dans <strong>mot</strong> est longue, plus l&rsquo;espace occupé par la variable sera grand. Mais le <em>type</em> d&rsquo;une variable a aussi un effet sur l&rsquo;espace qu&rsquo;elle occupe.</p>
+<h4 id="types">Types</h4>
+<p>Dans le langage C, les variables peuvent avoir les types <em>char</em>, <em>int</em>, <em>long</em>, <em>float</em> et <em>double</em>. Ces types permettent de stocker des valeurs numériques de tailles différentes car le nombre d&rsquo;octets qu&rsquo;ils utilisent pour stocker les variables sont différents. Le tableau suivant compare les types pour les nombres entiers:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">Type</th>
+          <th style="text-align: center">Nombre d&rsquo;octets</th>
+          <th style="text-align: center">Valeurs possibles</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center"><em>char</em></td>
+          <td style="text-align: center">1</td>
+          <td style="text-align: center">256 (2⁸)</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"><em>int</em></td>
+          <td style="text-align: center">4</td>
+          <td style="text-align: center">4,3 milliards (2³²)</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"><em>long</em></td>
+          <td style="text-align: center">8</td>
+          <td style="text-align: center">plein (2⁶⁴)</td>
+      </tr>
+  </tbody>
+</table>
+<p>Les types peuvent être <em>signés</em>, c&rsquo;est-à-dire qu&rsquo;ils acceptent les valeurs négatives, ou <em>non-signés</em> (soit 0 ou une valeur positive). Dans les deux cas, le nombre de valeurs différentes possibles demeure le même: par exemple, une variable de type <em>int</em> non-signé peut avoir une valeur de 0 à 4 294 967 295; un <em>int</em> signé peut avoir une valeur de -2 147 483 648 à 2 147 483 647.</p>
+<p>Par défaut, les variables sont toujours signées à moins d&rsquo;ajouter le mot-clé <em>unsigned</em> devant leur type au moment de leur déclaration.</p>
+<p>La mémoire peut ainsi contenir des variables de divers types occupant des blocs de taille différentes:</p>
+<p><a href="#R-image-23186383419b021dd228afc51c04f64d" class="lightbox-link"><img alt="memblock" class="noborder lazy lightbox noshadow figure-image" loading="lazy" src="/420-410/images/memblock.png" style=" height: auto; width: auto;"></a>
+<a href="javascript:history.back();" class="lightbox-back" id="R-image-23186383419b021dd228afc51c04f64d"><img alt="memblock" class="noborder lazy lightbox noshadow lightbox-image" loading="lazy" src="/420-410/images/memblock.png"></a></p>
+<p>Dans cet exemple:</p>
+<ul>
+<li>Une variable de type <em>long</em> est à l&rsquo;adresse <code>0x77fe00</code> et a la valeur 5655434;</li>
+<li>Une variable de type <em>char</em> est à l&rsquo;adresse <code>0x77fe08</code> et a la valeur 119, ce qui correspond à &ldquo;w&rdquo; selon le standard ASCII;</li>
+<li>Une variable de type <em>int</em> est à l&rsquo;adresse <code>0x77fe09</code> et a la valeur 23112.</li>
+</ul>
+<h4 id="exercices">Exercices</h4>
+<ol>
+<li>Quelle est la valeur numérique maximale qu&rsquo;on peut donner à une variable de type <em>char</em> signée?</li>
+<li>Quelle est la valeur minimale qu&rsquo;on peut donner à une variable <em>long</em> non signée?</li>
+<li>Quels types peut-on donner à une variable si on veut qu&rsquo;elle contienne le nombre <code>0xb2d05e00</code>?</li>
+</ol>
+
+<details class=" box cstyle notices transparent expand">
+  <summary class="box-label">
+    <i class="expander-icon fa-fw fas fa-chevron-right"></i> 
+    Réponses
+  </summary>
+  <div class="box-content">
+<ol>
+<li>127</li>
+<li>0</li>
+<li>unsigned int, long</li>
+</ol>
+  </div>
+</details>
+<h2 id="pointeurs">Pointeurs</h2>
+<p>Un pointeur est une variable dont le comportement est différent des variables ordinaires.</p>
+<p>Normalement lorsqu&rsquo;on utilise une variable, ce qui nous intéresse est sa valeur:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,a);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,a<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>a;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Ce code sera répété &#39;a&#39; fois
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Dans cet exemple, on donne à la variable <em>a</em> la valeur 10, et par la suite chaque fois qu&rsquo;on réfère à <em>a</em> dans le programme c&rsquo;est en fait sa valeur (10) qui est utilisée.</p>
+<p>Dans certains cas par contre, ce qui serait utile au programme serait de connaitre <em>l&rsquo;adresse</em> d&rsquo;une variable. Dans cette situation, il faut déclarer la variable différemment:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;  
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>p); <span style="color:#75715e">//Affiche 10 (ce qu&#39;il y a à l&#39;adresse de &#39;a&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,p);  <span style="color:#75715e">//Affiche 0x7fff206ab37c (l&#39;adresse de &#39;a&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">&amp;</span>a);  <span style="color:#75715e">//Affiche 0x7fff206ab37c (l&#39;adresse de &#39;a&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Dans cet exemple, <code>&amp;a</code> désigne l&rsquo;adresse de <em>a</em> (pas sa valeur). Si on veut conserver cette adresse dans une autre variable, il faut que cette autre variable soit déclarée comme un <em>pointeur</em>. Pour ce faire, on la précède par <code>*</code> à sa déclaration; et attention, un pointeur doit avoir le même type que la variable qu&rsquo;il pointe.</p>
+<blockquote>
+<p>Un pointeur est simplement une variable dont la valeur est une adresse mémoire, ce qui lui permet de <strong>pointer</strong> sur une valeur sans vraiment la contenir.</p>
+</blockquote>
+<p>Dans l&rsquo;exemple, on utilise le pointeur de deux façons:</p>
+<ul>
+<li><code>p</code>, qui affcihe l&rsquo;<em>adresse</em> de la variable <em>a</em>;</li>
+<li><code>*p</code>, qui affiche la <em>valeur</em> à l&rsquo;adresse de la variable &lsquo;a&rsquo;</li>
+</ul>
+<p>L&rsquo;exemple suivant utilise les pointeurs pour montrer que l&rsquo;adresse d&rsquo;une variable ne change pas lorsque sa valeur change:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>p);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;adresse %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,p);
+</span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>p);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;adresse %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,p);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h4 id="exercices-1">Exercices</h4>
+<blockquote>
+<p>Attention, pour afficher l&rsquo;adresse d&rsquo;un pointeur avec <code>printf()</code>on doit utiliser le spécifieur <code>%p</code>.</p>
+</blockquote>
+<ol>
+<li>Faites un programme qui déclare la variable <strong>n</strong> de type <em>long</em> dont la valeur est 1000, puis affichez l&rsquo;adresse de la variable et sa valeur à l&rsquo;aide d&rsquo;un pointeur.</li>
+<li>Faites un programme qui déclare (sans lui donner de valeur) une variable <em>int</em> nommée <strong>i</strong>. Affichez ensuite son adresse et sa valeur à l&rsquo;aide d&rsquo;un pointeur.</li>
+<li>Faites un programme qui déclare (sans lui donner de valeur) un pointeur <em>int</em> nommé <strong>p</strong>. Affichez ensuite son adresse et sa valeur. int *p; print p (nil)</li>
+</ol>
+<h2 id="déréférencement">Déréférencement</h2>
+<p>Comme on l&rsquo;a vu plus haut, le pointeur donne accès à deux choses:</p>
+<ul>
+<li>L&rsquo;adresse d&rsquo;une information en mémoire</li>
+<li>L&rsquo;information elle-même</li>
+</ul>
+<p>Comme un pointeur est à la base une façon de stocker des adresses, lorsqu&rsquo;on affiche un pointeur on verra une adresse:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>pointeur <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,pointeur);</span></span></code></pre></div>
+<p>En utilisant l&rsquo;opérateur <code>*</code>, le pointeur va à l&rsquo;adresse qu&rsquo;il contient lire la valeur:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>pointeur <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>pointeur);</span></span></code></pre></div>
+<p>On appelle ce <code>*</code> &ldquo;opérateur de déréférencement&rdquo;.</p>
+<p>Puisqu&rsquo;un pointeur déréférencé donne accès à la valeur, il est possible de changer celle-ci sans passer par la variable d&rsquo;origine:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,a);
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,a);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h4 id="exercices-2">Exercices</h4>
+<ol>
+<li>Dans le programme suivant:</li>
+</ol>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> a;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Les variables <em>a</em> et <em>b</em> ont-elles la meme adresse? Prouvez-votre réponse en affichant ces adresses avec des pointeurs.</p>
+<ol start="2">
+<li>Compléter le code suivant pour multiplier la valeur de <em>a</em> par 10 sans utiliser la variable <em>a</em> elle-même.</li>
+</ol>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Votre code ici
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,a);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<h2 id="déplacement-des-pointeurs">Déplacement des pointeurs</h2>
+<p>Les pointeurs sont souvent utilisés comme des marque-pages, c&rsquo;est-à-dire qu&rsquo;ils permettent de conserver à quelle position le programme se trouve dans une structure de données qu&rsquo;il utilise.</p>
+<p>Puisqu&rsquo;un pointeur contient une adresse mémoire, changer sa valeur équivaut à le déplacer dans l&rsquo;espace-mémoire. Par exemple, avec une variable de type <em>int</em>, l&rsquo;opérateur <code>++</code> incrémente sa valeur de 1. Dans le cas d&rsquo;un pointeur, le même opérateur déplace le pointeur de 1:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> a;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">4</span>;i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        p<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;adresse %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,p);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Comme le type <em>char</em> a une taille de 1 octet, la boucle dans ce programme incrémente le pointeur de 1 octet à chaque itération; c&rsquo;est pourquoi les valeurs affichées sont successives. Mais attention, <strong>l&rsquo;incrémentation dépend du type du pointeur</strong>. En effet pour un pointeur de type <em>int</em>, le déplacement sera de 4 octets à la fois; pour <em>long</em>, de 8 octets.</p>
+<blockquote>
+<p>Lancez le programme en changeant le type de <strong>a</strong> et *<strong>p</strong> en <em>int</em>, vous verrez que les adresses affichées ont des intervalles de 4 octets.</p>
+</blockquote>
+<p>Il faut être prudent lorsqu&rsquo;on déplace un pointeur de cette manière: le langage C ne nous prévient pas lorsque le pointeur est dans une zone de mémoire non-initialisée. En effet, nous avons vu plus haut qu&rsquo;on peut déréférencer un pointeur pour changer la valeur à l&rsquo;adresse qu&rsquo;il contient, mais ceci n&rsquo;est possible que lorsque l&rsquo;adresse contient effectivemnt une valeur.</p>
+<p>Dans l&rsquo;exemple suivant, on déréférence un pointeur pour changer la valeur à l&rsquo;adresse qu&rsquo;il contient, mais on voit que cela cause une erreur lorsque le pointeur ne pointe sur aucune valeur:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>a;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>p);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;adresse %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,p);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">433</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;nouvelle valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>p);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    p<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;nouvelle adresse %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,p);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#ae81ff">261</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;nouvelle valeur %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>p); <span style="color:#75715e">//Erreur
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Ceci survient car la nouvelle adresse (où on essaie d&rsquo;insérer <code>261</code>) n&rsquo;a jamais été initialisée comme <em>int</em>. Elle contient peut-être des données de types différents (donc des blocs de mémoire de taille différente), ce qui cause un <em>erreur de segmentation</em>.</p>
+<h2 id="pointeurs-et-listes">Pointeurs et listes</h2>
+<p>On utilise souvent les pointeurs pour parcourir les tableaux. Dans l&rsquo;exemple suivant, le tableau <code>liste</code> contient une séquence d&rsquo;entiers, chacun occupant des blocs de mémoire contigus de 4 octets chacuns. Déplacer un pointeur dans cette liste permet donc d&rsquo;accéder à chacun de ses éléments:</p>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> liste[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>};
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>liste[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">10</span>;i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,&#34;</span>,<span style="color:#f92672">*</span>p);
+</span></span><span style="display:flex;"><span>        p<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Dans ce programme, on déclare un tableau nommé <em>liste</em>. Ce tableau est de type <em>int</em>, ce qui signifie qu&rsquo;il se compose d&rsquo;une séquence de blocs mémoire de 4 octets (où chaque bloc est une donnée de type <em>int</em>).</p>
+<p>On place ensuite le pointeur au début du tableau en lui donnant l&rsquo;adresse du premier élément, <code>&amp;liste[0]</code>. L&rsquo;incrémentation du pointeur sur les blocs de mémoire permet ainsi de parcourir le tableau.</p>
+<p>Si on déplace le pointeur à des adresses plus loin que le dernier <em>int</em> de la séquence, par exemple avec une boucle <code>for (int i=0;i&lt;100;i++)</code>, lire les valeurs à ces adresses ne provoquera pas l&rsquo;erreur de <em>Segmentation fault</em> vue plus haut mais les données ne sont pas significatives. Essayez!</p>
+<h4 id="exercices-3">Exercices</h4>
+<ol>
+<li>Modifier le programme de l&rsquo;exemple précédent pour afficher les nombres 10, 8, 6, 4, 2 en utilisant uniquement le déplacement du pointeur.</li>
+<li>Affichez chaque lettre du mot &lsquo;bonjour&rsquo; en déplacant un pointeur. Rappelez-vous: un mot est en fait un tableau de caractères.</li>
+<li>Complétez le programme suivant qui demande deux nombres à l&rsquo;utilisateur et utilise les pointeurs pour les additionner et afficher le résultat:</li>
+</ol>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i,j;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Votre code ici
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;La somme %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>pi<span style="color:#f92672">+*</span>pj);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<ol start="4">
+<li>Faites un tableau qui contient 6 nombres entiers et utilisez un pointeur pour vous déplacer dans le tableau et calculer la somme de ses éléments.</li>
+<li>Pour les variables suivantes:</li>
+</ol>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> N[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">51</span>,<span style="color:#ae81ff">21</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">18</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p;
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> N;</span></span></code></pre></div>
+<p>Trouvez la valeur de:</p>
+<ul>
+<li>*p+3</li>
+<li>*(p+3)</li>
+<li>p+3 (trouvez un équivalent avec <code>N</code>)</li>
+<li>&amp;N[5]-3 (trouvez un équivalent avec <code>p</code>)</li>
+<li>*(p+(*p-50))</li>
+</ul>
+<ol start="7">
+<li>Faites un programme pour mettre en ordre dans le tableau <strong>R</strong> tous les éléments de <strong>T1</strong> et <strong>T2</strong>. À la fin, <code>R = {3,7,10,12,12,34,39,41,59,61}</code>.</li>
+</ol>
+<div class="highlight wrap-code"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> T1[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">34</span>,<span style="color:#ae81ff">39</span>,<span style="color:#ae81ff">61</span>};
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> T2[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">12</span>,<span style="color:#ae81ff">41</span>,<span style="color:#ae81ff">59</span>};
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> R[<span style="color:#ae81ff">10</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p1;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p2;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Votre code ici
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+
+  <footer class="footline">
+  </footer>
+</article>
+        </div>
+      </main>
+    </div>
+    <aside id="R-sidebar" class="default-animation">
+      <div id="R-header-topbar" class="default-animation"></div>
+      <div id="R-header-wrapper" class="default-animation">
+        <div id="R-header" class="default-animation">
+<svg width="255" height="68.003" viewBox="0 0 350 68.003" xmlns="http://www.w3.org/2000/svg"><g id="svgGroup" stroke-linecap="round" fill-rule="evenodd" font-size="9pt" stroke="#ffffff" stroke-width="0.25mm" fill="#ffffff" style="stroke:#ffffff;stroke-width:0.25mm;fill:#ffffff"><path d="M 100.4 67.002 L 56.6 67.002 L 56.6 65.602 Q 65.5 58.202 72.7 52.002 A 220.885 220.885 0 0 0 79.022 46.354 Q 81.944 43.635 84.444 41.079 A 132.81 132.81 0 0 0 85.15 40.352 Q 89.831 35.492 92.564 30.912 A 35.666 35.666 0 0 0 93.2 29.802 Q 96 24.702 96 19.502 A 23.026 23.026 0 0 0 95.376 13.982 A 15.644 15.644 0 0 0 90.95 6.202 Q 85.9 1.402 77.2 1.402 A 23.25 23.25 0 0 0 70.975 2.193 A 17.307 17.307 0 0 0 63.1 6.802 A 19.378 19.378 0 0 0 58.069 16.175 A 27.398 27.398 0 0 0 57.4 21.202 L 55.9 20.602 A 27.734 27.734 0 0 1 56.698 15.069 A 21.147 21.147 0 0 1 58.85 9.702 Q 61.5 5.102 66.2 2.552 A 20.811 20.811 0 0 1 72.968 0.317 A 27.399 27.399 0 0 1 77.2 0.002 A 29.218 29.218 0 0 1 81.794 0.347 A 22.6 22.6 0 0 1 85.65 1.302 A 17.842 17.842 0 0 1 90.38 3.748 A 16.244 16.244 0 0 1 92.05 5.152 Q 94.7 7.702 96.1 11.302 A 20.224 20.224 0 0 1 97.269 15.929 A 26.583 26.583 0 0 1 97.5 19.502 A 23.288 23.288 0 0 1 94.81 30.249 A 30.041 30.041 0 0 1 92.9 33.452 Q 88.3 40.202 79.75 47.852 Q 73.872 53.111 66.41 59.481 A 1196.423 1196.423 0 0 1 59.3 65.502 L 59.3 65.602 L 60.25 65.602 L 61.2 65.602 L 62.1 65.602 L 100.4 65.602 L 100.4 67.002 Z M 35 67.002 L 33.4 67.002 L 33.4 46.502 L 0 46.502 L 0 45.102 L 32.8 1.002 L 35 1.002 L 35 45.102 L 48.9 45.102 L 48.9 46.502 L 35 46.502 L 35 67.002 Z M 244.1 67.002 L 242.5 67.002 L 242.5 46.502 L 209.1 46.502 L 209.1 45.102 L 241.9 1.002 L 244.1 1.002 L 244.1 45.102 L 258 45.102 L 258 46.502 L 244.1 46.502 L 244.1 67.002 Z M 134.1 68.002 Q 122.8 68.002 116.7 59.202 A 29.95 29.95 0 0 1 112.765 50.844 Q 111.549 46.872 111.016 42.051 A 73.401 73.401 0 0 1 110.6 34.002 Q 110.6 23.331 113.182 15.878 A 29.029 29.029 0 0 1 116.7 8.802 Q 122.8 0.002 134.1 0.002 Q 145.4 0.002 151.5 8.802 A 29.95 29.95 0 0 1 155.435 17.16 Q 156.651 21.131 157.184 25.953 A 73.401 73.401 0 0 1 157.6 34.002 Q 157.6 44.672 155.018 52.125 A 29.029 29.029 0 0 1 151.5 59.202 Q 145.4 68.002 134.1 68.002 Z M 321.4 68.002 Q 310.1 68.002 304 59.202 A 29.95 29.95 0 0 1 300.065 50.844 Q 298.849 46.872 298.316 42.051 A 73.401 73.401 0 0 1 297.9 34.002 Q 297.9 23.331 300.482 15.878 A 29.029 29.029 0 0 1 304 8.802 Q 310.1 0.002 321.4 0.002 Q 332.7 0.002 338.8 8.802 A 29.95 29.95 0 0 1 342.735 17.16 Q 343.951 21.131 344.484 25.953 A 73.401 73.401 0 0 1 344.9 34.002 Q 344.9 44.672 342.318 52.125 A 29.029 29.029 0 0 1 338.8 59.202 Q 332.7 68.002 321.4 68.002 Z M 282.7 67.002 L 281.1 67.002 L 281.1 10.202 L 281.1 7.102 L 281.1 4.002 Q 278.1 8.902 273.35 12.152 A 39.094 39.094 0 0 1 266.547 15.906 A 34.337 34.337 0 0 1 263.6 17.002 L 263.1 15.702 Q 265.8 14.702 268.45 13.302 Q 271.1 11.902 273.5 10.052 Q 275.9 8.202 277.85 5.952 Q 279.8 3.702 281.1 1.002 L 282.7 1.002 L 282.7 67.002 Z M 134.1 66.602 A 22.253 22.253 0 0 0 139.882 65.884 A 17.301 17.301 0 0 0 146.05 62.852 A 19.885 19.885 0 0 0 150.779 57.51 Q 152.334 54.995 153.45 51.802 A 41.889 41.889 0 0 0 155.193 44.802 Q 155.773 41.284 155.936 37.244 A 80.409 80.409 0 0 0 156 34.002 Q 156 23.402 153.45 16.152 Q 150.9 8.902 146.05 5.152 Q 141.2 1.402 134.1 1.402 A 21.727 21.727 0 0 0 128.093 2.198 A 17.569 17.569 0 0 0 122.2 5.152 A 20.005 20.005 0 0 0 117.32 10.657 Q 115.919 12.941 114.886 15.772 A 34.522 34.522 0 0 0 114.75 16.152 Q 112.664 22.084 112.284 30.258 A 80.802 80.802 0 0 0 112.2 34.002 A 72.19 72.19 0 0 0 112.589 41.716 Q 113.006 45.592 113.871 48.905 A 37.497 37.497 0 0 0 114.75 51.802 A 29.135 29.135 0 0 0 117.155 57.055 Q 119.252 60.596 122.2 62.852 A 18.121 18.121 0 0 0 131.112 66.419 A 23.774 23.774 0 0 0 134.1 66.602 Z M 321.4 66.602 A 22.253 22.253 0 0 0 327.182 65.884 A 17.301 17.301 0 0 0 333.35 62.852 A 19.885 19.885 0 0 0 338.079 57.51 Q 339.634 54.995 340.75 51.802 A 41.889 41.889 0 0 0 342.493 44.802 Q 343.073 41.284 343.236 37.244 A 80.409 80.409 0 0 0 343.3 34.002 Q 343.3 23.402 340.75 16.152 Q 338.2 8.902 333.35 5.152 Q 328.5 1.402 321.4 1.402 A 21.727 21.727 0 0 0 315.393 2.198 A 17.569 17.569 0 0 0 309.5 5.152 A 20.005 20.005 0 0 0 304.62 10.657 Q 303.219 12.941 302.186 15.772 A 34.522 34.522 0 0 0 302.05 16.152 Q 299.964 22.084 299.584 30.258 A 80.802 80.802 0 0 0 299.5 34.002 A 72.19 72.19 0 0 0 299.889 41.716 Q 300.306 45.592 301.171 48.905 A 37.497 37.497 0 0 0 302.05 51.802 A 29.135 29.135 0 0 0 304.455 57.055 Q 306.552 60.596 309.5 62.852 A 18.121 18.121 0 0 0 318.412 66.419 A 23.774 23.774 0 0 0 321.4 66.602 Z M 1.8 45.102 L 33.4 45.102 L 33.4 8.802 L 33.4 5.752 L 33.4 2.702 L 33.3 2.702 Q 32.3 4.202 31.15 5.702 A 110.715 110.715 0 0 0 29.509 7.895 A 96.037 96.037 0 0 0 29 8.602 L 1.8 45.102 Z M 210.9 45.102 L 242.5 45.102 L 242.5 8.802 L 242.5 5.752 L 242.5 2.702 L 242.4 2.702 Q 241.4 4.202 240.25 5.702 A 110.715 110.715 0 0 0 238.609 7.895 A 96.037 96.037 0 0 0 238.1 8.602 L 210.9 45.102 Z M 170.4 39.202 L 198.5 39.202 L 198.5 40.802 L 170.4 40.802 L 170.4 39.202 Z" vector-effect="non-scaling-stroke"/></g></svg>
+
+        </div>
+        <script>
+          window.index_js_url="/420-410/searchindex.en.js?1737563165";
+        </script>
+        <search><form action="/420-410/search/index.html" method="get">
+          <div class="searchbox default-animation">
+            <button class="search-detail" type="submit" title="Search (CTRL+ALT+f)"><i class="fas fa-search"></i></button>
+            <label class="a11y-only" for="R-search-by">Search</label>
+            <input data-search-input id="R-search-by" name="search-by" class="search-by" type="search" placeholder="Search...">
+            <button class="search-clear" type="button" data-search-clear="" title="Clear search"><i class="fas fa-times" title="Clear search"></i></button>
+          </div>
+        </form></search>
+        <script>
+          var contentLangs=['fr'];
+        </script>
+        <script src="/420-410/js/auto-complete.js?1737563165" defer></script>
+        <script src="/420-410/js/lunr/lunr.min.js?1737563165" defer></script>
+        <script src="/420-410/js/lunr/lunr.stemmer.support.min.js?1737563165" defer></script>
+        <script src="/420-410/js/lunr/lunr.multi.min.js?1737563165" defer></script>
+        <script src="/420-410/js/lunr/lunr.fr.min.js?1737563165" defer></script>
+        <script src="/420-410/js/search.js?1737563165" defer></script>
+      </div>
+      <div id="R-homelinks" class="default-animation">
+        <hr class="padding">
+      </div>
+      <div id="R-content-wrapper" class="highlightable">
+        <div id="R-shortcutmenu-home" class="R-sidebarmenu">
+          <ul class="enlarge morespace collapsible-menu">
+            <li class="" data-nav-id="/420-410/pr%C3%A9paration/index.html"><a class="padding" href="/420-410/pr%C3%A9paration/index.html">1. Préparation</a><ul id="R-subsections-481e5bcc4180197d50b8ef2fafbb3420" class="collapsible-menu"></ul></li>
+          </ul>
+        </div>
+    
+        <div class="padding footermargin footerLangSwitch footerVariantSwitch footerVisitedLinks footerFooter showFooter"></div>
+        <div id="R-menu-footer">
+          <hr class="padding default-animation footerLangSwitch footerVariantSwitch footerVisitedLinks footerFooter showFooter">
+          <div id="R-prefooter" class="footerLangSwitch footerVariantSwitch footerVisitedLinks">
+            <ul>
+              <li id="R-select-language-container" class="footerLangSwitch">
+                <div class="padding menu-control">
+                  <i class="fa-fw fas fa-language"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <label class="a11y-only" for="R-select-language">Language</label>
+                    <select id="R-select-language" onchange="location = this.querySelector( this.value ).dataset.url;">
+                      <option id="R-select-language-en" value="#R-select-language-en" data-url="/420-410/c/pointeurs/index.html" lang="fr-ca" selected></option>
+                    </select>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </li>
+              <li id="R-select-variant-container" class="footerVariantSwitch">
+                <div class="padding menu-control">
+                  <i class="fa-fw fas fa-paint-brush"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <label class="a11y-only" for="R-select-variant">Theme</label>
+                    <select id="R-select-variant" onchange="window.relearn.changeVariant( this.value );">
+                      <option id="R-select-variant-green" value="green" selected>Green</option>
+                    </select>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <script>window.relearn.markVariant();</script>
+              </li>
+              <li class="footerVisitedLinks">
+                <div class="padding menu-control">
+                  <i class="fa-fw fas fa-history"></i>
+                  <span>&nbsp;</span>
+                  <div class="control-style">
+                    <button onclick="clearHistory();">Clear History</button>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="R-footer" class="footerFooter showFooter"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons"
+        style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br>Creative Commons
+BY-NC-SA
+          </div>
+        </div>
+      </div>
+    </aside>
+    <script src="/420-410/js/clipboard.min.js?1737563165" defer></script>
+    <script src="/420-410/js/perfect-scrollbar.min.js?1737563165" defer></script>
+    <script src="/420-410/js/theme.js?1737563165" defer></script>
+  </body>
+</html>
