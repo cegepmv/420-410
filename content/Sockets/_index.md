@@ -1,13 +1,10 @@
 +++
 archetype = "chapter"
-pre = "3. "
+pre = "2. "
 title = "Sockets"
-weight = 3
-draft = true
+weight = 2
+draft = false
 +++
 
-{{% button href="/420-410/c/affichagesaisie/" style="primary" %}}Affichage et saisie{{% /button %}}
 
-
-{{% button href="/420-410/c/tcp-udp/" style="primary" %}}TCP-UDP{{% /button %}}
-
+Communication sur les réseaux TCP/IP.
