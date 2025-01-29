@@ -1,5 +1,5 @@
 +++
-archetype = "chapter"
+type = "chapter"
 pre = "2. "
 title = "Sockets"
 weight = 2

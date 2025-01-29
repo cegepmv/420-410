@@ -2,6 +2,7 @@
 title = 'Exercices'
 date = 2025-01-26T15:07:06-05:00
 draft = false
+weight = 21
 +++
 
 

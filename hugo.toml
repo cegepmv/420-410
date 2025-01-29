@@ -2,9 +2,17 @@ baseURL = 'https://cegepmv.github.io/420-410'
 languageCode = 'fr-ca'
 title = 'Introduction aux plateformes IdO'
 theme = 'hugo-theme-relearn'
+defaultContentLanguage = "fr"
+[languages]
+  [languages.fr]
+    languageCode = 'fr'
+    languageName = 'Français'
+    title = 'Introduction aux plateformes IdO'
+    weight = 1
 [params]
   # Change default color scheme with a variant one. Can be empty, "red", "blue", "green".
-  themeVariant = "green"
+  # "relearn-light" "relearn-dark" "relearn-bright" "zen-light" "zen-dark" 
+  themeVariant = ["relearn-light","relearn-dark"]   
   disableLandingPageButton = true
   alwaysopen = false
   # Set this to true to disable copy-to-clipboard button for inline code.
