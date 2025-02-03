@@ -7,50 +7,65 @@ draft = false
 Dans les applications connectées, il est fréquent qu'un même programme doive gérer plusieurs processus simultanément. Cela peut poser des problèmes lorsqu'une tâche monopolise le processeur et que pendant ce temps, d'autres processus attendent leur tour. 
 
 Dans un programme ordinaire, les instructions sont exécutées en séquence:
-```c
-long double pi;
-
+```python
 pi = calculerPiALaMillioniemeDecimale()
-printf("SVP Patientez");
+print("SVP Patientez")
 ```
 
-Dans cet exemple, le message "SVP Patientez" est assez inutile car l'instruction `printf()` ne s'exécutera pas tant que la fonction de la ligne précédente ne sera pas terminée. 
+Dans cet exemple, le message "SVP Patientez" est assez inutile car l'instruction `print()` ne s'exécutera pas tant que la fonction de la ligne précédente ne sera pas terminée. 
 
 Prenons un programme simple qui fait clignoter indéfiniment un module LED toutes les 250ms:
-```c
-#include <stdio.h>
-#include <pigpio.h>
-#include <unistd.h>
+```python
+import pigpio
+import time
 
-#define LED 17
+pi = pigpio.pi()
+pi.set_mode(16,pigpio.OUTPUT)
 
-int main() {
-    // Initialiser
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+while True:
+    pi.write(16,1)
+    time.sleep(0.25)
+    pi.write(16,0)
 
-    // Définir en mode output
-    gpioSetMode(LED, PI_OUTPUT);
-
-    while (1) {
-        // Allumer 1 s
-        gpioWrite(LED, 1);
-        usleep(250000);  
-
-        // Éteindre 1 s
-        gpioWrite(LED, 0);
-        usleep(250000);  
-    }
-    
-    // Libérer les ressources
-    gpioTerminate();
-    return 0;
-}
+pi.stop()
 ```
 
+
 Comment peut-on modifier ce programme pour faire clignoter 2 modules LED, 1 chaque 250ms et l'autre chaque 500ms?
+```python
+import pigpio
+import time
+
+LED1 = 17
+LED2 = 24
+
+# Initialiser
+pi = pigpio.pi()
+
+# Définir en mode output
+pi.set_mode(LED1,pigpio.OUTPUT)
+pi.set_mode(LED2,pigpio.OUTPUT)
+
+while True:
+    pi.write(LED1, 1)
+    pi.write(LED2, 1)
+
+    time.sleep(0.25)
+    pi.write(LED1, 0)
+
+    time.sleep(0.25)
+    pi.write(LED1, 1)
+    pi.write(LED2, 0)
+
+    time.sleep(0.25)
+    pi.write(LED1, 0)
+
+    time.sleep(0.25)
+
+pi.stop()
+
+```
+<!-- 
 ```c
 #include <stdio.h>
 #include <pigpio.h>
@@ -94,199 +109,158 @@ int main() {
     return 0;
 }
 ```
+-->
+
 
 On voit immédiatement que cette solution n'est pas idéale car la structure de notre programme dépend des données. Si en effet on veut changer les durées, par exemple 1 LED qui clignote chaque 300ms et l'autre chaque 700ms, il faudra revoir tout ce que contient la boucle `while`.
 
 Intuitivement on voit qu'il serait préférable d'avoir deux boucles et que chacune définit sa propre durée. Le programme suivant est mieux construit:
 
-```c
-#include <stdio.h>
-#include <pigpio.h>
-#include <unistd.h>
-#define LED1 17
-#define LED2 24
+```python
+import pigpio
+import time
 
-void clignoter1() {
-    for (;;) {
-        gpioWrite(LED1, 1);
-        usleep(250000);
-        gpioWrite(LED1, 0);
-        usleep(250000);
-    }
-}
+LED1 = 17
+LED2 = 24
 
-void clignoter2() {
-    for (;;) {
-        gpioWrite(LED2, 1);
-        usleep(500000);
-        gpioWrite(LED2, 0);
-        usleep(500000);
-    }
-}
+def clignoter1():
+    while True:
+        pi.write(LED1, 1)
+        time.sleep(0.3)
+        pi.write(LED1, 0)
+        time.sleep(0.3)
 
-int main() {
-    // Faire clignoter LED 1 chaque 250ms et LED 2 chaque 500ms
+def clignoter2():
+    while True:
+        pi.write(LED2, 1)
+        time.sleep(0.7)
+        pi.write(LED2, 0)
+        time.sleep(0.7)
 
-    // Initialiser
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+if __name__ == "__main__":
+    # Initialiser
+    pi = pigpio.pi()
 
-    // Définir en mode output
-    gpioSetMode(LED1, PI_OUTPUT);
-    gpioSetMode(LED2, PI_OUTPUT);
+    # Définir en mode output
+    pi.set_mode(LED1,pigpio.OUTPUT)
+    pi.set_mode(LED2,pigpio.OUTPUT)
 
-    clignoter1();
-    clignoter2();
+    clignoter1()
+    clignoter2()
 
-    // Libérer les ressources
-    gpioTerminate();
+    pi.stop()
 
-    return 0;
-}
 ```
-Chacune des deux boucles est définie dans sa propre fonction, et même si il y a plusieurs répétitions, le programme est mieux structuré. Par contre il ne donne pas le résultat escompté car les deux fonctions vont s'éxécuter une après l'autre.
+
+Chacune des deux boucles `while` est définie dans sa propre fonction, et même si il y a plusieurs répétitions, le programme est mieux structuré. Par contre il ne donne pas le résultat escompté car les deux fonctions vont s'éxécuter une après l'autre.
 
 ## _Threads_
 En programmation, il est possible de créer des nouveaux processus plus ou moins indépendants du flot normal d'exécution du programme principal. On nomme ces processus "threads". 
 
 Lorsqu'on crée un thread, on lui associe une fonction. Cette fonction sera exécutée dans son propre processus et ainsi ne bloquera pas le processus principal. 
 
-Dans l'exemple suivant, on utilise la fonction `pthread_create()` pour lancer les fonctions "clignoter" dans leurs propres processus:
-```c
-#include <stdio.h>
-#include <pigpio.h>
-#include <unistd.h>
-#include <pthread.h>
-#define LED1 17
-#define LED2 24
+Dans l'exemple suivant, on crée un thread avec `threading.Thread()` puis on lance les fonctions "clignoter" dans leurs propres processus avec la fonction `.start()`:
 
-void *clignoter1() {
-    for (;;) {
-        gpioWrite(LED1, 1);
-        usleep(250000);
-        gpioWrite(LED1, 0);
-        usleep(250000);
-    }
-}
+```python
+import pigpio
+import time
+import threading
 
-void *clignoter2() {
-    for (;;) {
-        gpioWrite(LED2, 1);
-        usleep(500000);
-        gpioWrite(LED2, 0);
-        usleep(500000);
-    }
-}
+LED1 = 17
+LED2 = 24
 
-int main() {
-    // Faire clignoter LED 1 chaque 250ms et LED 2 chaque 500ms
+def clignoter1():
+    
+    while True:
+        pi.write(LED1, 1)
+        time.sleep(0.25)
+        pi.write(LED1, 0)
 
-    // Initialiser
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+def clignoter2():
+    
+    while True:
+        pi.write(LED2, 1)
+        time.sleep(0.5)
+        pi.write(LED2, 0)
 
-    // Définir en mode output
-    gpioSetMode(LED1, PI_OUTPUT);
-    gpioSetMode(LED2, PI_OUTPUT);
+if __name__ == "__main__":
+    
+    # Initialiser
+    pi = pigpio.pi()
 
-    // Créer les threads
-    pthread_t t_led1,t_led2;
+    # Définir en mode output
+    pi.set_mode(LED1,pigpio.OUTPUT)
+    pi.set_mode(LED2,pigpio.OUTPUT)
 
-    if (pthread_create(&t_led1,NULL,clignoter1,NULL) != 0) {
-        printf("Erreur à la création du thread pour LED 1.\n");
-        return 1;
-    }
-    if (pthread_create(&t_led2,NULL,clignoter2,NULL) != 0) {
-        printf("Erreur à la création du thread pour LED 2.\n");
-        return 1;
-    }
+    # Déclaration des threads
+    thread_led1 = threading.Thread(target=clignoter1)
+    thread_led2 = threading.Thread(target=clignoter2)
+    
+    # Lancement des threads
+    thread_led1.start()
+    thread_led2.start()
 
-    // Attendre la fin de l'exécution de chaque thread
-    pthread_join(t_led1, NULL);
-    printf("Fin du thread 1.\n");
-    pthread_join(t_led2, NULL);
-    printf("Fin du thread 2.\n");
+    # Attendre que les threads se terminent
+    # Dans ce programme les threads ne se terminent jamais
+    thread_led1.join()
+    print("Fin du thread 1")
+    thread_led2.join()
+    print("Fin du thread 2")
 
-    // Libérer les ressources
-    gpioTerminate();
-
-    return 0;
-}
 ```
 Les modifications apportées au code:
-+ Ajouté `#include <pthread.h>`
-+ Les fonctions sont déclarées comme des pointeurs
-+ Des variables de type `pthread_t` réfèrent aux threads créés
-+ La fonction `pthread_create()` crée les threads
-+ La fonction `pthread_join()` attend que les threads se terminent
++ Ajouté le module `threading` qui permet de créer et manipuler des thread
++ Deux variables de type `threading.Thread()` (`thread_led1` et `thread_led2`) qui réfèrenr aux threads créés
++ La fonction `.start()` crée les threads
++ La fonction `.join()` attend que les threads se terminent
 
-> ATTENTION: Au moment de la compilation, il faut ajouter l'option `-lpthread` à la commande **gcc**.
-> 
-##### `pthread_create()`
-Sert à créer un _thread_, le mettre dans une variable et l'associer à une fonction donnée. Dans le programme cette fonction a 4 paramètres:
-+ `&t_led1` : La référence au thread créé
-+ `NULL` : Les attributs qu'on veut lui donner (par exemple sa priorité, la taille de la mémoire allouée, etc.). Si NULL, le thread aura des valeurs par défaut. 
-+ `clignoter` : Le nom de la fonction que le processus doit appeler. Attention, il n'y a pas les parenthèses: on donne le nom seulement.
-+ `NULL` : Un pointeur vers les arguments de la fonction s'il y en a.
+##### `threading.Thread()`
+Sert à créer un _thread_, le mettre dans une variable et l'associer à une fonction donnée. Dans le programme cette fonction a 2 paramètres:
++ `target` : La fonction que le processus doit appeler. Attention, il n'y a pas les parenthèses: on donne le nom seulement. 
++ `args` : Les arguments de la fonction (s'il y en a). Peut être un tuple ou une liste.
 
-##### `pthread_join()`
+##### `.start()`
+Sert à commencer un _thread_.
+
+##### `.join()`
 Attend la fin de l'exécution du processus et revient au programme principal. Dans l'exemple, comme on a des boucles infinies on n'y arrivera jamais.
-+ `t_led1` : La référence au thread créé
-+ `NULL` : Une variable qui contiendra la valeur retournée par la fonction.
 
-{{% notice primary "Pause pour le prof" %}}
+
+{{% notice primary "Défis" %}}
 1. Modifier les fonctions pour que les LED clignotent 10 fois seulement.
-2. Comment changer la boucle FOR des fonctions pour que le thread 2 termine avant le premier?
+2. Comment changer la boucle `while` des fonctions pour que le thread 2 termine avant le premier?
 {{% /notice %}}
 
 #### Passage de paramètres
 On aurait un meilleur programme si on avait une seule fonction `clignoter()` à laquelle on passerait toutes les variables:
-```c
-// 'ms' est le nombre de millisecondes
-// 'gpio' est le numéro de broche GPIO
-void *clignoter(int ms, int gpio) {
-    for (int i=0;i<15;i++) {
-        gpioWrite(gpio, 1);
-        usleep(ms*000);
-        gpioWrite(gpio, 0);
-        usleep(ms*000);
-    }
+
+```python
+# 'ms' est le nombre de millisecondes
+# 'gpio' est le numéro de broche GPIO
+def clignoter(ms, gpio) {
+    rep = 10
+    counter = 0
+    
+    while counter <= 10:
+        pi.write(gpio, 1)
+        time.sleep(ms*0.001)
+        pi.write(gpio, 0)
+        counter += 1
 }
 ```
 
-Mais la fonction passée à `pthread_create()` ne peut pas avoir plusieurs arguments: elle n'a droit qu'à un seul. Celui-ci peut cependant être un pointeur, donc on peut passer à la fonction un tableau (ou une [struct](https://www.w3schools.com/c/c_structs.php)) qui contient autant d'éléments qu'on veut, simplement en passant un pointeur sur ce tableau.
-
-On réécrira donc la fonction pour que la variable passée soit un tableau de deux éléments; le premier est le nombre de millisecondes, et le deuxième est le numéro de GPIO:
-```c
-void *clignoter(int *args) {
-    for (int i=0;i<15;i++) {
-        gpioWrite(args[1], 1);
-        usleep(args[0]*000);
-        gpioWrite(args[1], 0);
-        usleep(args[0]*000);
-    }
-}
-```
 Il faut aussi modifier la partie du programme où on crée les threads:
-```c
-    pthread_t t_led1,t_led2;
+```python
 
-    int arg1[] = {250,LED1};
-    int arg2[] = {500,LED2};
+    thread_led1 = threading.Thread(target=clignoter, args=(250, LED1))
+    thread_led2 = threading.Thread(target=clignoter, args=(500, LED2))
 
-    if (pthread_create(&t_led1,NULL,clignoter,&arg1) != 0) {
-        printf("Erreur à la création du thread pour LED 1.\n");
-        return 1;
-    }
-    if (pthread_create(&t_led2,NULL,clignoter,&arg2) != 0) {
-        printf("Erreur à la création du thread pour LED 2.\n");
-        return 1;
-    }
+    thread_led1.start()
+    thread_led2.start()
 ```
+
+<!-- 
+
 Si on compile ce programme on aura une erreur. Pourquoi?
 
 La raison est la suivante: afin que la fonction passée à `pthread_create()` ne soit pas limitée dans les types d'arguments qu'elle peut avoir, le 4e paramètre (`&arg1` et `&arg2` dans l'exemple) sera passé à la fonction comme un pointeur de type `void *`. Puisque dans notre cas elle est définie avec un argument `int *`, on a une erreur.
@@ -305,21 +279,23 @@ void *clignoter(void *args) {
         usleep(ms*1000);
     }
 } 
-```
+``` 
+
 On crée un tableau d'entiers, par exemple `arg1[]`, mais ce tableau "perd" en quelque sorte son type lorsqu'il est passé à la fonction `pthread_create()`. Il est ensuite passé à `clignoter()` comme un pointeur _void_, et on lui redonne le type `int *` pour accéder aux valeurs qu'il contient.
 
 > `pthread_create()` travaille uniquement avec des **adresses**: celles de la fonction qu'elle doit appeler (c'est pourquoi `*clignoter()` est déclarée avec `*`) et celle d'un pointeur _void_ qui indique où se trouvent les arguments à passer à cette fonction. C'est à nous de s'assurer qu'on redonne ensuite le bon type à ce pointeur: si un pointeur a un type _void_, le compilateur ne sait pas quelle taille la variable occupe en mémoire et donc est incapable de lire sa valeur, de se déplacer à la prochaine valeur, etc.
-
+-->
 
 #### Exercice 1
 Pour l'instant dans notre fonction les LED clignotent 10 fois. Modifier le programme pour que le nombre de clignotements soit le 3e argument passé à la fonction.
 
 
 #### Exercice 2
-Changez la fonction pour que les LED clignotent toujours 10 fois à 100 ms d'intervalle, avec ces valeurs codées directement dans la fonction. La seule chose qu'il faut passer à `clignoter()` est donc un `int` qui désigne le GPIO. Refaites le programme pour que les variables `arg1` et `arg2` soient des nombres entiers.
+Changez la fonction pour que les LED clignotent 10 fois à 100 ms d'intervalle, avec ces valeurs codées directement dans la fonction. La seule chose qu'il faut passer à `clignoter()` est donc un entier qui désigne le GPIO.
 
 
 #### Exercice 3
+<!-- 
 On se base sur l'exercice du chapitre précédent:
 ```c
 #include <stdio.h>
@@ -337,12 +313,7 @@ On se base sur l'exercice du chapitre précédent:
 
 // Modifier cette fonction pour qu'elle puisse être passée à pthread_create()
 void clignoter(int gpio) {
-    for (;;) {
-        gpioWrite(gpio, 1);
-        usleep(100000);
-        gpioWrite(gpio, 0);
-        usleep(100000);
-    }
+    
 } 
 
 int main() {
@@ -399,6 +370,51 @@ int main() {
 
     return 0;
 }
+```
+-->
+
+
+```python
+import socket
+import pigpio
+
+LED_PIN = 17
+PORT = 9090
+BUFFER_SIZE = 1024
+
+# Définissez cette fonction
+def clignoter(gpio):
+    pass
+
+pi = pigpio.pi()
+
+socket_local = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+address = ('', PORT)  
+socket_local.bind(address)
+
+socket_local.listen(3)
+print(f"Écoute au port: {PORT}...")
+
+socket_desc, client_address = socket_local.accept()
+print(f"Socket distant: {client_address}")
+
+while True:
+    data = socket_desc.recv(BUFFER_SIZE)
+    if data:
+        message = data.decode().strip()
+        print(f"< {message}")
+        
+        if message == "allume":
+            pi.write(LED_PIN, 1)
+        elif message == "ferme":
+            pi.write(LED_PIN, 0)
+        elif message == "exit":
+            pi.write(LED_PIN, 0)
+            pi.stop()
+            break
+
+socket_desc.close()
+socket_local.close()
 ```
 
 Ajoutez à ce programme une commande "flash" qui aura pour effet de faire clignoter la LED en créant un thread.
