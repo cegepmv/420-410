@@ -209,18 +209,18 @@ if __name__ == "__main__":
 
 ```
 Les modifications apportées au code:
-+ Ajouté le module `threading` qui permet de créer et manipuler des thread
-+ Deux variables de type `threading.Thread()` (`thread_led1` et `thread_led2`) qui réfèrenr aux threads créés
-+ La fonction `.start()` crée les threads
++ Ajouté le module `threading` qui permet de créer et manipuler des threads ;
++ Deux variables de type `threading.Thread()` (`thread_led1` et `thread_led2`) qui permet de déclarer/créer des threads ;
++ La fonction `.start()` commence les threads
 + La fonction `.join()` attend que les threads se terminent
 
 ##### `threading.Thread()`
-Sert à créer un _thread_, le mettre dans une variable et l'associer à une fonction donnée. Dans le programme cette fonction a 2 paramètres:
+Sert à déclarer un _thread_, le mettre dans une variable et l'associer à une fonction donnée. Cette fonction prend 2 paramètres:
 + `target` : La fonction que le processus doit appeler. Attention, il n'y a pas les parenthèses: on donne le nom seulement. 
 + `args` : Les arguments de la fonction (s'il y en a). Peut être un tuple ou une liste.
 
 ##### `.start()`
-Sert à commencer un _thread_.
+Sert à lancer un _thread_.
 
 ##### `.join()`
 Attend la fin de l'exécution du processus et revient au programme principal. Dans l'exemple, comme on a des boucles infinies on n'y arrivera jamais.
