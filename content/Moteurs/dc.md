@@ -146,10 +146,13 @@ finally:
 {{% /expand %}}
 -->
 3. Changez le programme du numéro précédent pour qu'il augmente sa vitesse de rotation de 10% à toutes les secondes. Que se passe-t-il?
+
+<!--
 4. Faites un programme basé sur le [serveur UDP](/420-410/sockets/tcp-udp/#serveur) qui reçoit des messages UDP au port 2112 pour contrôler le moteur. Les messages doivent contenir 2 informations séparées par `:`: 
 - `fwd` ou `rwd`: Tourner en sens horaire ou antihoraire.
 - Un nombre qui représente le nombre de secondes avant que le moteur s'arrête.
 - Par exemple, `rwd:4` fera tourner le moteur 4 secondes en sens antihoraire. 
+-->
 
 <!--
 {{% expand "Solution" %}}
