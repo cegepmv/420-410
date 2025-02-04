@@ -25,3 +25,9 @@ defaultContentLanguage = "fr"
   disableToc = true
   # Hide Next and Previous page buttons normally displayed full height beside content
   disableNextPrev = true
+
+  [params.imageEffects]
+    border = false
+    lazy = true
+    lightbox = false
+    shadow = false
