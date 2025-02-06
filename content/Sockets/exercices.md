@@ -19,7 +19,7 @@ Créez ensuite le **client** UDP sur votre ordinateur (pas le Pi). Le client doi
 
 ### TCP
 
-1. Faites deux programmes (`serveur1.c` et `client1.c`) ayant les mêmes fonctionnalités que celui de l'exercice précédent, mais en utilisant une connexion TCP. Au message _exit_, la connexion TCP est fermée des deux côtés.
+1. Faites deux programmes (`serveur1.py` et `client1.py`) ayant les mêmes fonctionnalités que celui de l'exercice précédent, mais en utilisant une connexion TCP. Au message _exit_, la connexion TCP est fermée des deux côtés.
 {{% expand "Solution" %}}
 client1.py
 ```python
@@ -81,370 +81,220 @@ socket_desc.close()
 socket_local.close()
 ```
 {{% /expand %}}
-
-2. Ajoutez le fonctionnalité suivante: le serveur répond "OK" au client si la commande est _allume_, _ferme_ ou _exit_ ou "ERR" autrement (`serveur2.c` et `client2.c`).
-<!--
+2. Ajoutez le fonctionnalité suivante: le serveur répond "OK" au client si la commande est _allume_, _ferme_ ou _exit_ ou "ERR" autrement (`serveur2.py` et `client2.py`).
 {{% expand "Solution" %}}
-client2.c
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+client2.py
+```python
+import socket
 
-#define PORT 9090
-#define DEST_IP "10.10.20.245"
-#define ANSWER_LEN 4                // ** AJOUTE ** //
+PORT = 9090
+DEST_IP = "192.168.50.190"
+BUFFER_SIZE = 1024
 
-int main() {
-    int sock = 0;
-    struct sockaddr_in dest_addr;
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+dest_addr = (DEST_IP, PORT)
+sock.connect(dest_addr)
+
+while True:
+    message = input("> ")
+    sock.send(message.encode() + b'\n')
     
-    // Créer le socket
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    
-    // Initialiser la struct de l'adresse IP 
-    memset(&dest_addr, '0', sizeof(dest_addr));
-    dest_addr.sin_family = AF_INET;
-    dest_addr.sin_addr.s_addr = inet_addr(DEST_IP);
-    dest_addr.sin_port = htons(PORT);
+    # Réception de la réponse
+    data = sock.recv(BUFFER_SIZE)
+    if data:
+        reponse = data.decode().strip()
+        print("<",reponse)
+        
+    if message == "exit":
+        break
 
-    // Créer la connexion
-    connect(sock, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
-    
-    while (1) {
-        printf("> ");
-        char message[100];
-        char answer[4];
-
-        fgets(message,sizeof(message),stdin);
-        send(sock, message, strlen(message), 0);
-
-        if(strcmp(message,"exit\n") == 0){
-            break;
-        } else {                                // ** ELSE AJOUTE ** //
-            // Afficher réponse
-            recv(sock, answer, ANSWER_LEN, 0);
-            printf("< %s\n",answer);
-        }
-    }
-    
-    close(sock);
-    return 0;
-}
+sock.close()
 ```
-serveur2.c
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <pigpio.h>
+serveur2.py
+```python
+import socket
+import pigpio
 
-#define LED_PIN 17
-#define PORT 9090
-#define BUFFER_SIZE 1024
-#define ANSWER_LEN 4                            // ** AJOUTE ** //
+LED_PIN = 17
+PORT = 9090
+BUFFER_SIZE = 1024
 
-int main() {
-    int socket_local, socket_desc;
-    struct sockaddr_in address;
-    int addrlen = sizeof(address);
-    char buffer[BUFFER_SIZE] = {0};
-    char answer[4];
+pi = pigpio.pi()
 
-    // Initialiser GPIO
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+socket_local = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+address = ('', PORT)  
+socket_local.bind(address)
 
-    // Créer le socket et initialiser l'adresse
-    socket_local = socket(AF_INET, SOCK_STREAM, 0);
-    memset(&address, 0, sizeof(address));
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+socket_local.listen(3)
+print(f"Écoute au port: {PORT}...")
 
-    // Associer le socket à l'adresse de l'interface
-    bind(socket_local, (struct sockaddr *)&address, sizeof(address));
-    
-    // Attendre une connexion entrante
-    listen(socket_local, 3);
-    socket_desc = accept(socket_local, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+socket_desc, client_address = socket_local.accept()
+print(f"Socket distant: {client_address}")
 
-    // Réception des messages
-    while(1) {
-        int datalen;
-        strcpy(answer,"OK");                        // ** AJOUTE ** //
+while True:
+    data = socket_desc.recv(BUFFER_SIZE)
+    if data:
+        message = data.decode().strip()
+        print(f"< {message}")
+        
+        reponse = "OK"
+        if message == "allume":
+            pi.write(LED_PIN, 1)
+        elif message == "ferme":
+            pi.write(LED_PIN, 0)
+        elif message == "exit":
+            pi.write(LED_PIN, 0)
+            pi.stop()
+        else:
+            reponse = "ERR"
+        
+        # Envoyer la réponse
+        socket_desc.send(reponse.encode() + b'\n')
 
-        // Stocker le message
-        datalen = read(socket_desc, buffer, BUFFER_SIZE);
-        if (datalen != 0) {
-            printf("< %s",buffer);
-            if(strcmp(buffer,"allume\n") == 0){
-                gpioWrite(LED_PIN, 1);
-            }
-            else if(strcmp(buffer,"ferme\n") == 0){
-                gpioWrite(LED_PIN, 0);
-            }
-            else if(strcmp(buffer,"exit\n") == 0){
-                gpioWrite(LED_PIN, 0);
-                gpioTerminate();
-                break;
-            } else {                                // ** AJOUTE ** //
-                strcpy(answer,"ERR");
-            }
-            send(socket_desc, answer, ANSWER_LEN, 0);
-        }
-        memset(buffer, 0, BUFFER_SIZE); 
-    }
-
-    close(socket_desc);
-    close(socket_local);
-    return 0;
-}
+        if message == "exit":
+            pi.stop()
+            break
+        
+socket_desc.close()
+socket_local.close()
 ```
 {{% /expand %}}
--->
-
-3. Modifiez votre programme: lorsque le client envoit _exit_, la connexion TCP est terminée, le client se termine, mais le serveur continue à attendre d'autres connexions TCP (`serveur3.c` et `client3.c`).
-
-<!--
+3. Modifiez votre programme: lorsque le client envoit _exit_, la connexion TCP est terminée, le client se termine, mais le serveur continue à attendre d'autres connexions TCP (`serveur3.py` et `client3.py`).
 {{% expand "Solution" %}}
-client3.c
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+client3.py
+```python
+import socket
 
-#define PORT 9090
-#define DEST_IP "10.10.20.245"
-#define ANSWER_LEN 4                
+PORT = 9090
+DEST_IP = "192.168.50.190"
+BUFFER_SIZE = 1024
 
-int main() {
-    int sock = 0;
-    struct sockaddr_in dest_addr;
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+dest_addr = (DEST_IP, PORT)
+sock.connect(dest_addr)
+
+while True:
+    message = input("> ")
+    sock.send(message.encode() + b'\n')
     
-    // Créer le socket
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    
-    // Initialiser la struct de l'adresse IP 
-    memset(&dest_addr, '0', sizeof(dest_addr));
-    dest_addr.sin_family = AF_INET;
-    dest_addr.sin_addr.s_addr = inet_addr(DEST_IP);
-    dest_addr.sin_port = htons(PORT);
+    # Réception de la réponse
+    data = sock.recv(BUFFER_SIZE)
+    if data:
+        reponse = data.decode().strip()
+        print("<",reponse)
+        
+    if message == "exit":
+        break
 
-    // Créer la connexion
-    connect(sock, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
-    
-    while (1) {
-        printf("> ");
-        char message[100];
-        char answer[4];
-
-        fgets(message,sizeof(message),stdin);
-        send(sock, message, strlen(message), 0);
-
-        // Afficher réponse                     // ** MODIFIE ** //
-        recv(sock, answer, ANSWER_LEN, 0);
-        printf("< %s\n",answer);
-        if(strcmp(answer,"BYE") == 0) {
-            break;
-        }
-    }
-    
-    close(sock);
-    return 0;
-}
+sock.close()
 ```
-serveur3.c
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <pigpio.h>
+serveur3.py
+```python
+import socket
+import pigpio
 
-#define LED_PIN 17
-#define PORT 9090
-#define BUFFER_SIZE 1024
-#define ANSWER_LEN 4                            
+LED_PIN = 17
+PORT = 9090
+BUFFER_SIZE = 1024
 
-int main() {
-    int socket_local, socket_desc;
-    struct sockaddr_in address;
-    int addrlen = sizeof(address);
-    char buffer[BUFFER_SIZE] = {0};
-    char answer[4];
+pi = pigpio.pi()
 
-    // Initialiser GPIO
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+socket_local = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+address = ('', PORT)  
+socket_local.bind(address)
 
-    // Créer le socket et initialiser l'adresse
-    socket_local = socket(AF_INET, SOCK_STREAM, 0);
-    memset(&address, 0, sizeof(address));
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+# Ajout d'une boucle pour écouter les demandes de connexions entrantes
+while True:
+    socket_local.listen(3)
+    print(f"Écoute au port: {PORT}...")
 
-    // Associer le socket à l'adresse de l'interface
-    bind(socket_local, (struct sockaddr *)&address, sizeof(address));
-    
-    while (1) {                                     // ** AJOUTE WHILE ** //
-        // Attendre une connexion entrante
-        listen(socket_local, 3);
-        socket_desc = accept(socket_local, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+    socket_desc, client_address = socket_local.accept()
+    print(f"Socket distant: {client_address}")
 
-    
-        // Réception des messages
-        while(1) {
-            int datalen;
-            strcpy(answer,"OK");
+    while True:
+        data = socket_desc.recv(BUFFER_SIZE)
+        if data:
+            message = data.decode().strip()
+            print(f"< {message}")
+            
+            reponse = "OK"
+            if message == "allume":
+                pi.write(LED_PIN, 1)
+            elif message == "ferme":
+                pi.write(LED_PIN, 0)
+            elif message == "exit":
+                pi.write(LED_PIN, 0)
+                # Sortir de le boucle WHILE interne 
+                break
+            else:
+                reponse = "ERR"
+            
+            # Envoyer la réponse
+            socket_desc.send(reponse.encode() + b'\n')
 
-            // Stocker le message
-            datalen = read(socket_desc, buffer, BUFFER_SIZE);
-            if (datalen != 0) {
-                printf("< %s",buffer);
-                if(strcmp(buffer,"allume\n") == 0){
-                    gpioWrite(LED_PIN, 1);
-                }
-                else if(strcmp(buffer,"ferme\n") == 0){
-                    gpioWrite(LED_PIN, 0);
-                }
-                else if(strcmp(buffer,"exit\n") == 0){
-                    gpioWrite(LED_PIN, 0);
-                    strcpy(answer,"BYE");                       // ** AJOUTE ** //
-                    send(socket_desc, answer, ANSWER_LEN, 0);   // ** AJOUTE ** //
-                    break;
-                } else {
-                    strcpy(answer,"ERR");
-                }
-                send(socket_desc, answer, ANSWER_LEN, 0);
-            }
-            memset(buffer, 0, BUFFER_SIZE); 
-        }
-
-        close(socket_desc);                     // ** MODIFIÉ ** //
-    }
-    close(socket_local);
-    gpioTerminate();
-    return 0;
-}
+    # Fermer la connexion
+    socket_desc.close()
 ```
 {{% /expand %}}
--->
-
 4. Ajoutez une 2e LED sur votre Pi. Modifiez le programme serveur pour que les commandes envoyées permettent de spécifier laquelle des 2 LED allumer (les messages "led1" et "led2" doivent être envoyés au serveur pour qu'il sache quelle LED allumer ou éteindre). Le programme client n'a pas besoin d'être modifié. Les messages possibles du client sont donc: `led1, led2, allume, ferme, exit`. Les messages du serveur sont `OK, ERR, BYE`.
-
-<!--
 {{% expand "Solution" %}}
-client4.c
+serveur4.py
+```python
+import socket
+import pigpio
 
-_Pas de changements_
+LED1 = 17
+LED2 = 27
+PORT = 9090
+BUFFER_SIZE = 1024
 
-serveur4.c
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <pigpio.h>
+pi = pigpio.pi()
 
-#define LED_PIN 17
-#define PORT 9090
-#define BUFFER_SIZE 1024
-#define ANSWER_LEN 4                
-#define LED_1 17                    // ** AJOUTE ** //
-#define LED_2 24                    // ** AJOUTE ** //
+socket_local = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+address = ('', PORT)  
+socket_local.bind(address)
 
-int main() {
-    int socket_local, socket_desc;
-    struct sockaddr_in address;
-    int addrlen = sizeof(address);
-    char buffer[BUFFER_SIZE] = {0};
-    char answer[4];
-    int led_pin = LED_1;            // ** AJOUTE ** //
+# Ajout d'une boucle pour écouter les demandes de connexions entrantes
+while True:
+    socket_local.listen(3)
+    print(f"Écoute au port: {PORT}...")
 
-    // Initialiser GPIO
-    if (gpioInitialise() < 0) {
-        fprintf(stderr, "Erreur d'initialisation pigpio\n");
-        return 1;
-    }
+    socket_desc, client_address = socket_local.accept()
+    print(f"Socket distant: {client_address}")
 
-    // Créer le socket et initialiser l'adresse
-    socket_local = socket(AF_INET, SOCK_STREAM, 0);
-    memset(&address, 0, sizeof(address));
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    # Donner une valeur par défaut à la LED active pour éviter les erreurs
+    led_active = LED1
 
-    // Associer le socket à l'adresse de l'interface
-    bind(socket_local, (struct sockaddr *)&address, sizeof(address));
-    
-    while (1) {
-        // Attendre une connexion entrante
-        listen(socket_local, 3);
-        socket_desc = accept(socket_local, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+    while True:
+        data = socket_desc.recv(BUFFER_SIZE)
+        if data:
+            message = data.decode().strip()
+            print(f"< {message}")
+            
+            reponse = "OK"
+            if message == "led1":
+                led_active = LED1
+            elif message == "led2":
+                led_active = LED2
+            elif message == "allume":
+                pi.write(led_active, 1)
+            elif message == "ferme":
+                pi.write(led_active, 0)
+            elif message == "exit":
+                # Tout éteindre et sortir de le boucle WHILE interne
+                pi.write(LED1, 0)
+                pi.write(LED2, 0) 
+                reponse = "BYE"
+                socket_desc.send(reponse.encode() + b'\n')
+                break
+            else:
+                reponse = "ERR"
+            
+            # Envoyer la réponse
+            socket_desc.send(reponse.encode() + b'\n')
 
-        // Réception des messages
-        while(1) {
-            int datalen;
-            strcpy(answer,"OK");
-
-            // Stocker le message
-            datalen = read(socket_desc, buffer, BUFFER_SIZE);
-            if (datalen != 0) {
-                printf("< %s",buffer);
-                if(strcmp(buffer,"allume\n") == 0){
-                    gpioWrite(led_pin, 1);
-                }
-                else if(strcmp(buffer,"ferme\n") == 0){
-                    gpioWrite(led_pin, 0);
-                }
-                else if(strcmp(buffer,"exit\n") == 0){
-                    gpioWrite(LED_1, 0);                // ** AJOUTE ** //
-                    gpioWrite(LED_2, 0);                // ** AJOUTE ** //
-                    strcpy(answer,"BYE");
-                    send(socket_desc, answer, ANSWER_LEN, 0);
-                    break;
-                }
-                else if(strcmp(buffer,"led1\n") == 0){  // ** AJOUTE ** //
-                    led_pin = LED_1;
-                }
-                else if(strcmp(buffer,"led2\n") == 0){  // ** AJOUTE ** //
-                    led_pin = LED_2;
-                }
-                else {
-                    strcpy(answer,"ERR");
-                }
-                send(socket_desc, answer, ANSWER_LEN, 0);
-            }
-            memset(buffer, 0, BUFFER_SIZE); 
-        }
-
-        close(socket_desc);
-    }
-    close(socket_local);
-    gpioTerminate();
-    return 0;
-}
+    # Fermer la connexion
+    socket_desc.close()
 ```
 {{% /expand %}}
--->
+
