@@ -19,15 +19,21 @@ Prenons un programme simple qui fait clignoter indéfiniment un module LED toute
 import pigpio
 import time
 
-pi = pigpio.pi()
-pi.set_mode(16,pigpio.OUTPUT)
+try:
+    pi = pigpio.pi()
+    pi.set_mode(16,pigpio.OUTPUT)
+    
+    while True:
+        pi.write(16,1)
+        time.sleep(0.25)
+        pi.write(16,0)
 
-while True:
-    pi.write(16,1)
-    time.sleep(0.25)
+except KeyboardInterrupt:
+    print("Arrêt du programme")
+
+finally:
     pi.write(16,0)
-
-pi.stop()
+    pi.stop()
 ```
 
 
@@ -39,14 +45,14 @@ import time
 LED1 = 17
 LED2 = 24
 
-# Initialiser
-pi = pigpio.pi()
-
-# Définir en mode output
-pi.set_mode(LED1,pigpio.OUTPUT)
-pi.set_mode(LED2,pigpio.OUTPUT)
-
 while True:
+    # Initialiser
+    pi = pigpio.pi()
+
+    # Définir en mode output
+    pi.set_mode(LED1,pigpio.OUTPUT)
+    pi.set_mode(LED2,pigpio.OUTPUT)
+
     pi.write(LED1, 1)
     pi.write(LED2, 1)
 
@@ -61,8 +67,13 @@ while True:
     pi.write(LED1, 0)
 
     time.sleep(0.25)
+except KeyboardInterrupt:
+    print("Arrêt du programme")
 
-pi.stop()
+finally:
+    pi.write(LED1,0)
+    pi.write(LED2,0)
+    pi.stop()
 
 ```
 <!-- 
@@ -137,7 +148,7 @@ def clignoter2():
         pi.write(LED2, 0)
         time.sleep(0.7)
 
-if __name__ == "__main__":
+try:
     # Initialiser
     pi = pigpio.pi()
 
@@ -148,6 +159,12 @@ if __name__ == "__main__":
     clignoter1()
     clignoter2()
 
+except KeyboardInterrupt:
+    print("Arrêt du programme")
+
+finally:
+    pi.write(LED1, 0)
+    pi.write(LED2, 0)
     pi.stop()
 
 ```
@@ -170,21 +187,20 @@ LED1 = 17
 LED2 = 24
 
 def clignoter1():
-    
     while True:
         pi.write(LED1, 1)
         time.sleep(0.25)
         pi.write(LED1, 0)
+        time.sleep(0.25)
 
 def clignoter2():
-    
     while True:
         pi.write(LED2, 1)
         time.sleep(0.5)
         pi.write(LED2, 0)
+        time.sleep(0.5)
 
-if __name__ == "__main__":
-    
+try: 
     # Initialiser
     pi = pigpio.pi()
 
@@ -193,9 +209,9 @@ if __name__ == "__main__":
     pi.set_mode(LED2,pigpio.OUTPUT)
 
     # Déclaration des threads
-    thread_led1 = threading.Thread(target=clignoter1)
-    thread_led2 = threading.Thread(target=clignoter2)
-    
+    thread_led1 = threading.Thread(target=clignoter1, daemon=True)
+    thread_led2 = threading.Thread(target=clignoter2, daemon=True)
+
     # Lancement des threads
     thread_led1.start()
     thread_led2.start()
@@ -206,6 +222,17 @@ if __name__ == "__main__":
     print("Fin du thread 1")
     thread_led2.join()
     print("Fin du thread 2")
+
+except KeyboardInterrupt:
+    print("Fin du programme")
+
+finally:
+    pi.write(LED2, 0)
+    pi.write(LED1, 0)
+    pi.stop()
+
+
+
 
 ```
 Les modifications apportées au code:
@@ -218,6 +245,7 @@ Les modifications apportées au code:
 Sert à déclarer un _thread_, le mettre dans une variable et l'associer à une fonction donnée. Cette fonction prend 2 paramètres:
 + `target` : La fonction que le processus doit appeler. Attention, il n'y a pas les parenthèses: on donne le nom seulement. 
 + `args` : Les arguments de la fonction (s'il y en a). Peut être un tuple ou une liste.
++ `daemon` : Spéficie si le thread créée est en mode "démon". Si cet argument est à `True`, le thread créée se terminera lorsque le thread parent (i.e. le programme principal) se termine.
 
 ##### `.start()`
 Sert à lancer un _thread_.
@@ -239,21 +267,21 @@ On aurait un meilleur programme si on avait une seule fonction `clignoter()` à 
 # 'gpio' est le numéro de broche GPIO
 def clignoter(ms, gpio) {
     rep = 10
-    counter = 0
+    compteur = 0
     
     while counter <= 10:
         pi.write(gpio, 1)
-        time.sleep(ms*0.001)
+        time.sleep(ms)
         pi.write(gpio, 0)
-        counter += 1
+        compteur += 1
 }
 ```
 
 Il faut aussi modifier la partie du programme où on crée les threads:
 ```python
 
-    thread_led1 = threading.Thread(target=clignoter, args=(250, LED1))
-    thread_led2 = threading.Thread(target=clignoter, args=(500, LED2))
+    thread_led1 = threading.Thread(target=clignoter, args=(0.25, LED1))
+    thread_led2 = threading.Thread(target=clignoter, args=(0.50, LED2))
 
     thread_led1.start()
     thread_led2.start()
