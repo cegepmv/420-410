@@ -68,8 +68,6 @@ finally:
 
 ## Exercices
 1. Faites un programme qui fait tourner le moteur 1 seonde dans un sens et 1 seconde dans l'autre sens, et qui se termine en arrêtant le moteur.
-
-<!--
 {{% expand "Solution" %}}
 ```python
 import pigpio
@@ -106,10 +104,9 @@ finally:
     pi.stop()
 ```
 {{% /expand %}}
--->
+
 
 2. En utilisant la fonction ***set_PWM_dutycycle()***, démarrez le moteur à sa vitesse maximale puis diminuez-la de 10% à chaque seconde jusqu'à l'arrêt. 
-<!--
 {{% expand "Solution" %}}
 ```python
 import pigpio
@@ -144,17 +141,13 @@ finally:
     pi.stop()
 ```
 {{% /expand %}}
--->
+
 3. Changez le programme du numéro précédent pour qu'il augmente sa vitesse de rotation de 10% à toutes les secondes. Que se passe-t-il?
 
-<!--
 4. Faites un programme basé sur le [serveur UDP](/420-410/sockets/tcp-udp/#serveur) qui reçoit des messages UDP au port 2112 pour contrôler le moteur. Les messages doivent contenir 2 informations séparées par `:`: 
 - `fwd` ou `rwd`: Tourner en sens horaire ou antihoraire.
 - Un nombre qui représente le nombre de secondes avant que le moteur s'arrête.
 - Par exemple, `rwd:4` fera tourner le moteur 4 secondes en sens antihoraire. 
--->
-
-<!--
 {{% expand "Solution" %}}
 import socket
 import pigpio
@@ -221,7 +214,7 @@ finally:
     off()
     socket_local.close()
 {{% /expand %}}
--->
+
 
 <!-- POUR PLUS TARD, 
 Faire une version ou les message est en bits sur un octet
