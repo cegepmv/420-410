@@ -136,7 +136,6 @@ except KeyboardInterrupt:
 ## Exercices
 1. Le moteur 28BYJ-48 doit effectuer 2048 _steps_ pour faire un tour complet. Combien de _steps_ correspondent environ à un degré de rotation?
 2. Faites un programme qui fait un tour, puis un deuxième en sens contraire et s'arrête.
-<!--
 {{% expand "Solution" %}}
 ```python
 import pigpio
@@ -195,9 +194,8 @@ except KeyboardInterrupt:
     stop_moteur()
 ```
 {{% /expand %}}
--->
+
 3. Faites un programme qui fait un tour, puis un deuxième en sens contraire à la moitié de la vitesse puis s'arrête. 
-<!--
 {{% expand "Solution" %}}
 ```python
 import pigpio
@@ -259,9 +257,8 @@ except KeyboardInterrupt:
     stop_moteur()
 ```
 {{% /expand %}}
--->
+
 4. Faites un programme qui fait une rotation de 45 degrés, change de sens, fait 20 degrés, change encore de direction et fait 90 degrés au quart de la vitesse.
-<!--
 {{% expand "Solution" %}}
 ```python
 import pigpio
@@ -333,9 +330,8 @@ except KeyboardInterrupt:
     stop_moteur()
 ```
 {{% /expand %}}
--->
+
 5. Faites un programme qui fait 1 tour en ralentissant graduellement, change de sens, et fait un tour en revenant graduellement à la vitesse initiale. Pour la vitesse maximale, utilisez un délai de 2ms et pour la vitesse minimale, 10ms.
-<!--
 {{% expand "Solution" %}}
 ```python
 import pigpio
@@ -405,4 +401,4 @@ except KeyboardInterrupt:
     stop_moteur()
 ```
 {{% /expand %}}
--->
+
