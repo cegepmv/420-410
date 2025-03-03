@@ -2,6 +2,7 @@
 title = 'Processus en parallèle'
 date = 2024-02-11T19:56:53-05:00
 draft = false
+weight = 41
 +++
 
 Dans les applications connectées, il est fréquent qu'un même programme doive gérer plusieurs processus simultanément. Cela peut poser des problèmes lorsqu'une tâche monopolise le processeur et que pendant ce temps, d'autres processus attendent leur tour. 
