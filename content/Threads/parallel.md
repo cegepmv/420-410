@@ -230,8 +230,8 @@ def clignoter(gpio,delai,duree):
 Il faut donc modifier la partie du programme où on crée les threads pour passer les paramètres à la variable `args`:
 ```python
 
-    thread_led1 = threading.Thread(target=clignoter, args=(0.3, LED1))
-    thread_led2 = threading.Thread(target=clignoter, args=(0.7, LED2))
+    thread_led1 = threading.Thread(target=clignoter, args=(LED1, 0.3, 5))
+    thread_led2 = threading.Thread(target=clignoter, args=(LED2, 0.7, 5))
 
     thread_led1.start()
     thread_led2.start()
