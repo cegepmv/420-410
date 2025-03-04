@@ -237,8 +237,30 @@ Il faut donc modifier la partie du programme où on crée les threads pour passe
     thread_led2.start()
 ```
 
-<!--
+
 ## Exercice
-Connectez votre RaspberryPi à un bouton et une LED. Faites un programme qui, chaque 10 secondes, fait clignoter en une seconde la LED le nombre de fois que le bouton a été appuyé durant les 10 secondes. Par exemple, si durant 10 secondes le bouton a été appuyé 5 fois, alors la LED clignote 5 fois en une seconde.
--->
+Connectez votre RaspberryPi à un bouton et une LED. 
+
+Faites un programme qui, chaque 10 secondes, fait clignoter en une seconde la LED le nombre de fois que le bouton a été appuyé durant les 10 secondes précédentes. Par exemple, si durant 10 secondes le bouton a été appuyé 5 fois, alors la LED clignote 5 fois en une seconde.
+
+Vous devez utiliser deux fonctions:
+- `compter_clics()`: Compte le nombre de clics sur le bouton
+- `clignoter()`: Clignote _n_ fois durant 1 seconde (n = nombre de clics)
+  
+Vous pouvez utiliser une variable globale pour stocker le nombre de clics. Il s'agit de la re-déclarer dans chaque fonction qui l'utilise avec le mot-clé `global`, par exemple:
+```python
+
+# Initialisation de la variable
+maVariable = 0
+
+def uneFonction():
+    global maVariable
+    ...
+
+def uneAutreFonction():
+    global maVariable
+    ...
+
+```
+
 
