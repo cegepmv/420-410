@@ -1,7 +1,7 @@
 +++
 title = 'Sécurité'
 date = 2024-04-07T15:56:18-04:00
-draft = false
+draft = true
 +++
 
 Pour sécuriser les communications en MQTT, on utilise les mêmes méthodes que pour n'importe quel autre protocole, c'est-à-dire: l'authentification et le chiffrement. 

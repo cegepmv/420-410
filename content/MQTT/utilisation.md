@@ -1,7 +1,7 @@
 +++
 title = 'Utilisation'
 date = 2024-03-14T11:51:44-04:00
-draft = false
+draft = true
 weight = 71
 +++
 
@@ -22,13 +22,13 @@ sys_interval 5
 > Pour le cours, SVP utilisez l'agent MQTT disponible sur le réseau interne au nom `mqttbroker.lan`.
 
 
-Dans ce cours nous utiliserons [Mosquitto](https://mosquitto.org/). Cette implémentation de MQTT, développée par la fondation _Eclipse_, fournit des utilitaires de ligne de commande pour envoyer et recevoir des messages (`mosquitto_pub` et `mosquitto_sub`), et aussi des librairies permettant d'implémenter des clients MQTT en C/C++.
+Dans ce cours nous utiliserons [Mosquitto](https://mosquitto.org/). Cette implémentation de MQTT, développée par la fondation _Eclipse_, fournit des utilitaires de ligne de commande pour envoyer et recevoir des messages (`mosquitto_pub` et `mosquitto_sub`), et aussi des librairies permettant d'implémenter des clients MQTT en python.
 
 ## Agent MQTT _Mosquitto_
 Pour installer le service _mosquitto_, lancez la commande suivante:
 ```
-apt update
-apt install mosquitto
+sudo apt update
+sudo apt install mosquitto
 ```
 #### Configuration de base
 Les paramètres de configuration de _mosquitto_ sont définis dans le fichier `/etc/mosquitto/mosquitto.conf`. 

@@ -2,7 +2,7 @@
 title = 'Description'
 date = 2024-03-13T09:49:18-04:00
 draft = false
-weight = 70
+weight = 51
 +++
 
 Le protocole MQTT, pour _Message Queuing Telemetry Transport_, est un protocole conçu pour les objets connectés: il est simple à mettre en place et à utiliser et consomme peu de ressources et de bande passante. Il permet une communication facile entre un ensemble d'objets connectés et les différentes applications qui les utilisent. 
@@ -66,6 +66,32 @@ La valeur du QoS est déterminée lors de l'_envoi_ d'un message (côté émette
 + **Qos 1**: À utiliser lorsqu'on souhaite avoir tous les messages, mais qu'on accepte d'avoir des messages répétés à l'occasion.
 + **QoS 2**: À utiliser lorsqu'on souhaite avoir tous les messages et qu'on ne veut pas avoir de messages qui se répètent.
 
+## Programmes en ligne de commande
+Les utilitaires **mosquitto_sub** et **mosquitto-pub** permettent d'utiliser le protocole mosquitto à partir de la ligne de commande linux. Pour les installer:
+```bash
+sudo apt install mosquitto-clients
+```
+
+#### _mosquitto-sub_
+Pour s'abonner à une rubrique sur un _broker_ donné. La syntaxe de base est la suivante:
+```
+mosquitto_sub -h BROKER -t TOPIC 
+```
+Par exemple, si l'adresse du _broker_ est `10.10.10.22` et le sujet est `meteo`, la commande est celle-ci:
+```bash
+mosquitto_sub -f 10.10.10.22 -t "meteo"
+```
+
+#### _mosquitto-pub_
+Pour publier un message dans une rubrique donnée. La syntaxe de la commande est:
+```
+mosquitto_pub -h BROKER -t TOPIC -m MESSAGE
+```
+Par exemple:
+```bash
+mosquitto_pub -f 10.10.10.22 -t "meteo" -m "Il neige"
+```
+
 ## Authentification
 MQTT supporte des fonctionnalités d'authentification. Lorsqu'on les active, tous les clients devront fournir un identifiant et un mot de passe à l'agent au moment de la connexion.
 
@@ -84,9 +110,9 @@ MQTT ne définit pas de méthodes de chiffrement. Ainsi les mots de passe et ide
 
 #### Identification des clients
 Les commandes `mosquitto_sub` et `mosquitto_pub` utilisent les options `-u` et `-P` pour passer respectivement le nom d'utilisateur et le mot de passe à l'agent:
-```
+```bash
 mosquitto_pub -h 192.168.0.10 -u nom_utilisateur -P mot_de_passe -t "sujet" -m "Bonjour" 
 ```
 
-Dans un programme C qui utilise la librairie `mosquitto`, il faut appeler la fonction `mosquitto_username_pw_set()` (avant la connexion) pour définir les identifiants à utiliser lors de la connexion. Voir https://mosquitto.org/api/files/mosquitto-h.html#Username_and_password pour plus de détails.
+Dans un programme python qui utilise la librairie `paho-mqtt`, il faut appeler la méthode `Client.username_pw_set()` (avant la connexion) pour définir les identifiants à utiliser lors de la connexion. Voir https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html pour plus de détails.
 
