@@ -79,7 +79,7 @@ mosquitto_sub -h BROKER -t TOPIC
 ```
 Par exemple, si l'adresse du _broker_ est `10.10.10.22` et le sujet est `meteo`, la commande est celle-ci:
 ```bash
-mosquitto_sub -f 10.10.10.22 -t "meteo"
+mosquitto_sub -h 10.10.10.22 -t "meteo"
 ```
 
 #### _mosquitto-pub_
@@ -114,5 +114,5 @@ Les commandes `mosquitto_sub` et `mosquitto_pub` utilisent les options `-u` et `
 mosquitto_pub -h 192.168.0.10 -u nom_utilisateur -P mot_de_passe -t "sujet" -m "Bonjour" 
 ```
 
-Dans un programme python qui utilise la librairie `paho-mqtt`, il faut appeler la méthode `Client.username_pw_set()` (avant la connexion) pour définir les identifiants à utiliser lors de la connexion. Voir https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html pour plus de détails.
+
 
