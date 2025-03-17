@@ -70,7 +70,6 @@ Dans un programme python qui utilise la librairie `paho-mqtt`, il faut appeler l
 ## Exercices
 
 1. Faire un programme qui envoie "10.10.10.X connecté" sur le canal `exercice1` (remplacez "10.10.10.X" par l'adresse IP de votre Pi), et qui s'abonne ensuite aux messages sur ce canal.
-<!--
 {{% expand "Solution" %}}
 ```python
 import paho.mqtt.client as pmc
@@ -98,7 +97,7 @@ client.subscribe(TOPIC)
 client.loop_forever()
 ```
 {{% /expand %}}
--->
+
 2. Faire un programme qui envoie le message "clic" au canal `exercice2` chaque fois que vous cliquez sur un bouton poussoir.
 <!--
 {{% expand "Solution" %}}
