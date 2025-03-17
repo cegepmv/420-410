@@ -26,7 +26,7 @@ def connexion(client, userdata, flags, code, properties):
         print("Erreur code %d\n", code)
 
 client = pmc.Client(pmc.CallbackAPIVersion.VERSION2)
-client.on_connect = on_connect
+client.on_connect = connexion
 
 client.connect(BROKER,PORT)
 client.publish(TOPIC,"allo")

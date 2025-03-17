@@ -67,12 +67,12 @@ La valeur du QoS est déterminée lors de l'_envoi_ d'un message (côté émette
 + **QoS 2**: À utiliser lorsqu'on souhaite avoir tous les messages et qu'on ne veut pas avoir de messages qui se répètent.
 
 ## Programmes en ligne de commande
-Les utilitaires **mosquitto_sub** et **mosquitto-pub** permettent d'utiliser le protocole mosquitto à partir de la ligne de commande linux. Pour les installer:
+Les utilitaires **mosquitto_sub** et **mosquitto_pub** permettent d'utiliser le protocole mosquitto à partir de la ligne de commande linux. Pour les installer:
 ```bash
 sudo apt install mosquitto-clients
 ```
 
-#### _mosquitto-sub_
+##### mosquitto_sub
 Pour s'abonner à une rubrique sur un _broker_ donné. La syntaxe de base est la suivante:
 ```
 mosquitto_sub -h BROKER -t TOPIC 
@@ -82,7 +82,7 @@ Par exemple, si l'adresse du _broker_ est `10.10.10.22` et le sujet est `meteo`,
 mosquitto_sub -h 10.10.10.22 -t "meteo"
 ```
 
-#### _mosquitto-pub_
+##### mosquitto_pub
 Pour publier un message dans une rubrique donnée. La syntaxe de la commande est:
 ```
 mosquitto_pub -h BROKER -t TOPIC -m MESSAGE
