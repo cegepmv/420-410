@@ -20,7 +20,7 @@ Pour installer _paho-mqtt_, lancez la commande suivante dans votre environnement
 ```python
 import paho.mqtt.client as pmc
 
-BROKER = "192.168.50.158"
+BROKER = "mqttbroker.lan"
 PORT = 1883
 TOPIC = "test"
 
@@ -45,7 +45,7 @@ Dans le programme précédent, la fonction `connexion` définit ce que le progra
 ```python
 import paho.mqtt.client as pmc
 
-BROKER = "192.168.50.158"
+BROKER = "mqttbroker.lan"
 PORT = 1883
 TOPIC = "test"
 
