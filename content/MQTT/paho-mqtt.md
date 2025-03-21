@@ -11,6 +11,11 @@ La documentation complète est ici: https://eclipse.dev/paho/files/paho.mqtt.pyt
 
 Le modue _paho_ utilise des fonctions de rappel ("callbacks") pour encoder les différentes tâches que le programme doit accomplir lors des différents évènements associés aux messages MQTT. Ceci permet d'éviter d'utiliser une boucle WHILE infinie pour contrôler le flot d'exécution du programme.
 
+Pour installer _paho-mqtt_, lancez la commande suivante dans votre environnement virtuel:
+```bash
+(code) prof@fruit:~/code $ pip install paho-mqtt
+```
+
 #### Publier un message
 ```python
 import paho.mqtt.client as pmc
