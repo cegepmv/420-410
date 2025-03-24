@@ -252,3 +252,10 @@ Moy: 34.20
 ```
 {{% /expand %}}
 -->
+5. Configurez un _broker_ pour qu'il contienne l'utilisateur `info` et le mot de passe `Password1234`. Ensuite faites un programme qui envoit un message au _topic_ "exercice5" lorsque l'utilisateur clique un bouton. Le message doit être envoyé avec QoS de niveau 2 et afficher "Message envoyé" à l'évènement `on_publish`.
+<!--
+{{% expand "Solution" %}}
+```python
+```
+{{% /expand %}}
+-->
