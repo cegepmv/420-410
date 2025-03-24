@@ -68,9 +68,58 @@ client.loop_forever()
 ```
 Dans cet exemple, on définit dans la fonction `reception_msg` ce qui doit être fait lorsqu'un message est reçu. Ici on ne fait qu'écrire le message à l'écran.
 
-<!--
-Dans un programme python qui utilise la librairie `paho-mqtt`, il faut appeler la méthode `Client.username_pw_set()` (avant la connexion) pour définir les identifiants à utiliser lors de la connexion. Voir https://eclipse.dev/paho/files/paho.mqtt.python/html/client.html pour plus de détails.
--->
+#### Authentification
+Lorsque le _broker_ demande aux clients de s'authentifier, il faut appeler la méthode `Client.username_pw_set()` (avant la connexion) pour définir les identifiants à utiliser lors de la connexion:
+```python
+...
+client.username_pw_set("alice","abc-123")
+client.connect(BROKER,PORT)
+...
+```
+
+#### QoS
+Pour activer les accusés de réception (QoS 1) et les confirmations d'envoi (QoS 2), il suffit de passer le paramètre `qos` à la méthode `Client.publish()` 
+```python
+client.publish(TOPIC,MESSAGE,qos=2)
+```
+Ces confirmations sont gérées par le module _paho.mqtt.client_: on ne peut pas y accéder à partir du programme. Donc, pour avoir l'assurance qu'un message a bien été reçu et/ou livré, il faut utiliser une fonction de rappel et la lier à l'évènement `on_publish`.
+
+L'évènement `on_publish` est déclenché à 3 moments différentes selon le niveau de _QoS_:
+- **QoS 0** : `on_publish` est déclenché lorsque le message est envoyé au _broker_
+- **QoS 1** : `on_publish` est déclenché lorsque le message est reçu par le _broker_
+- **QoS 2** : `on_publish` est déclenché lorsque le message est envoyé par le _broker_ aux autres clients.
+
+Lorsqu'on utilise les niveaux de QoS 1 et 2, on doit s'attendre à recevoir un message chaque fois qu'on en envoit un: il faut donc structurer notre programme pour qu'il puisse recevoir ces messages. Le code suivant est problématique car il termine le programme avant que l'accusé de réception arrive:
+```python
+import paho.mqtt.client as pmc
+
+BROKER = "mqttbroker.lan"
+PORT = 1883
+TOPIC = "test"
+
+def publication(client, userdata, mid, code, properties):
+    print("Envoi confirmé message #" + str(mid))
+
+client = pmc.Client(pmc.CallbackAPIVersion.VERSION2)
+client.on_publish = publication
+
+client.connect(BROKER,PORT)
+client.publish(TOPIC,"Voici un message")
+```
+Il faut donc ajouter deux choses au programme:
+- `Client.loop_start()` : Démarre un _thread_ pour la réception des messages
+- `MQTTMessageInfo.wait_for_publish()` : Attend la réception de l'accusé de réception pour poursuivre l'éxécution. Une instance de la classe _MQTTMessageInfo_ est retournée par `Client.publish()`.
+
+Les modifications à apporter sont les suivantes:
+```python
+...
+client.connect(BROKER,PORT)
+client.loop_start()
+msg_info = client.publish(TOPIC,"Voici un message",2)
+msg_info.wait_for_publish(5)
+...
+```
+Le paramètre `5` passé à *wait_for_publish()* est le nombre de secondes d'attente maximum. Si aucune valeur n'est passée, le programme attendra tant que la confirmation n'est pas reçue.
 
 ## Exercices
 

@@ -92,27 +92,23 @@ Par exemple:
 mosquitto_pub -f 10.10.10.22 -t "meteo" -m "Il neige"
 ```
 
-## Authentification
+#### Authentification
 MQTT supporte des fonctionnalités d'authentification. Lorsqu'on les active, tous les clients devront fournir un identifiant et un mot de passe à l'agent au moment de la connexion.
 
-C'est la configuration de l'agent ("broker") qui détermine si les clients doivent s'authentifier: dans le fichier de configuration du _broker_ `/etc/mosquitto/mosquitto.conf`, la variable `allow_anonymous` doit être à `false`, et `password_file` doit indiquer le fichier qui contient les identifiants et mots de passe. Par exemple:
-```
-allow_anonymous false
-password_file /etc/mosquitto/users
-```
-On peut créer autant d'utilisateurs qu'il y a de clients qui se connectent, mais il est aussi possible que plusieurs clients se partagent les mêmes identifiants.
+Dans les cas où le _broker_ demande une authentification, les paramètres suivants doivent être passés aux programmes *mosquitto_pub* et *mosquitto_sub*:
+- `-u` : Nom de l'utilisateur
+- `-P` : Mot de passe
 
-La commande `mosquitto_passwd` permet de créer le fichier des identifiants.
+Par exemple:
+```bash
+mosquitto_pub -h 192.168.0.10 -u "sophie" -P "abc-123" -t "sujet" -m "Bonjour" 
+```
 
 {{% notice primary "Attention" %}}
 MQTT ne définit pas de méthodes de chiffrement. Ainsi les mots de passe et identifiants sont transmis en clair lors de la connexion. Si on souhaite chiffrer les communications, il faut utiliser des outils tiers comme par exemple le protocole TLS.
 {{% /notice %}}
 
-#### Identification des clients
-Les commandes `mosquitto_sub` et `mosquitto_pub` utilisent les options `-u` et `-P` pour passer respectivement le nom d'utilisateur et le mot de passe à l'agent:
-```bash
-mosquitto_pub -h 192.168.0.10 -u nom_utilisateur -P mot_de_passe -t "sujet" -m "Bonjour" 
-```
+
 
 
 
