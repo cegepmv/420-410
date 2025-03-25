@@ -124,7 +124,7 @@ Le paramètre `5` passé à *wait_for_publish()* est le nombre de secondes d'att
 ## Exercices
 
 1. Faire un programme qui envoie "10.10.10.X connecté" sur le canal `exercice1` (remplacez "10.10.10.X" par l'adresse IP de votre Pi), et qui s'abonne ensuite aux messages sur ce canal.
-{{% expand "Solution" %}}
+<!--{{% expand "Solution" %}}
 ```python
 import paho.mqtt.client as pmc
 
@@ -151,9 +151,9 @@ client.subscribe(TOPIC)
 client.loop_forever()
 ```
 {{% /expand %}}
-
+-->
 2. Faire un programme qui envoie le message "clic" au canal `exercice2` chaque fois que vous cliquez sur un bouton poussoir.
-{{% expand "Solution" %}}
+<!--{{% expand "Solution" %}}
 ```python
 import paho.mqtt.client as pmc
 import pigpio
@@ -189,8 +189,9 @@ except KeyboardInterrupt:
     pass
 ```
 {{% /expand %}}
+-->
 3. Faire un chat MQTT: au démarrage, le programme s'abonne au canal `exercice3` et affiche à l'écran tous les messages qui y passent. Le programme envoie aussi sur le même canal tous les messages écrits à la ligne de commande. 
-{{% expand "Solution" %}}
+<!--{{% expand "Solution" %}}
 ```python
 import paho.mqtt.client as pmc
 import threading
@@ -230,6 +231,7 @@ except KeyboardInterrupt:
     client.disconnect()
 ```
 {{% /expand %}}
+-->
 4. Connectez un détecteur de luminosité sur votre Pi (n'oubliez pas d'utiliser le convertisseur ADS1115). Vous devez ensuite faire 2 programmes:
 + **ex4_pub**: (À faire en premier) Publie chaque 10 secondes dans la rubrique `/ex4/NOM_HOTE` la valeur de luminosité lue sur le senseur. Remplacez "NOM_HOTE" par la valeur de `hostname` de votre Pi;
 + **ex4_sub**: À partir des données lues sur tous les Pi, affiche le nom du Pi d'où est lue la valeur maximale, et la moyenne de toutes les dernières valeurs lues sur chaque Pi. Attention, vous devez prendre en compte que parfois un autre Pi peut ne pas envoyer d'informations dans sa période de 10 secondes: lorsque cela se produit, vous devez quand même calculer la moyenne et trouver le maximum parmi les informations que vous avez reçues... Pensez à l'algorithme de votre programme!
