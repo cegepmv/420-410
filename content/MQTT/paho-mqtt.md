@@ -124,7 +124,7 @@ Le paramètre `5` passé à *wait_for_publish()* est le nombre de secondes d'att
 ## Exercices
 
 1. Faire un programme qui envoie "10.10.10.X connecté" sur le canal `exercice1` (remplacez "10.10.10.X" par l'adresse IP de votre Pi), et qui s'abonne ensuite aux messages sur ce canal.
-<!--{{% expand "Solution" %}}
+{{% expand "Solution" %}}
 ```python
 import paho.mqtt.client as pmc
 
@@ -151,9 +151,8 @@ client.subscribe(TOPIC)
 client.loop_forever()
 ```
 {{% /expand %}}
--->
 2. Faire un programme qui envoie le message "clic" au canal `exercice2` chaque fois que vous cliquez sur un bouton poussoir.
-<!--{{% expand "Solution" %}}
+{{% expand "Solution" %}}
 ```python
 import paho.mqtt.client as pmc
 import pigpio
@@ -189,7 +188,6 @@ except KeyboardInterrupt:
     pass
 ```
 {{% /expand %}}
--->
 3. Faire un chat MQTT: au démarrage, le programme s'abonne au canal `exercice3` et affiche à l'écran tous les messages qui y passent. Le programme envoie aussi sur le même canal tous les messages écrits à la ligne de commande. 
 <!--{{% expand "Solution" %}}
 ```python
