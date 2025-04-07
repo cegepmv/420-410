@@ -246,12 +246,127 @@ Max: Equipe 3 (72)
 Moy: 34.20
 -------------
 ```
-<!--
-{{% expand "Solution" %}}
+{{% expand "ex4_pub" %}}
 ```python
+import paho.mqtt.client as pmc
+import pigpio
+import time
+import busio
+import board
+
+from adafruit_ads1x15.ads1115 import ADS1115
+from adafruit_ads1x15.ads1115 import P0
+from adafruit_ads1x15.analog_in import AnalogIn
+
+# Fonctions
+def connexion(client, userdata, flags, code, properties):
+    if code == 0:
+        print("Connecté")
+    else:
+        print("Erreur code %d\n", code)
+
+# Constantes
+BROKER = "mqttbroker.lan"
+PORT = 1883
+TOPIC = "ex4"
+LUM = 26
+
+# Initialisations
+pi = pigpio.pi()
+pi.set_mode(LUM,pigpio.INPUT)
+
+i2c = busio.I2C(board.SCL, board.SDA)
+ads = ADS1115(i2c,1)
+data = AnalogIn(ads, P0)
+
+client = pmc.Client(pmc.CallbackAPIVersion.VERSION2)
+client.on_connect = connexion
+
+# Connexion au broker
+client.connect(BROKER,PORT)
+client.loop_start()
+
+try:    
+    while True:
+        #Convertir la valeur de luminosité lue en %
+        pct = data.value / 32767 * 100
+        
+        # Publier et attendre 10sec
+        client.publish(TOPIC,str(int(pct)))
+        time.sleep(10)
+
+except KeyboardInterrupt:
+    client.disconnect()
+    pi.stop()
 ```
 {{% /expand %}}
--->
+{{% expand "ex4_sub" %}}
+```python
+import paho.mqtt.client as pmc
+import threading
+import pigpio
+import time
+
+# Créer le dictionnaire vide des données
+donneesRecues = {}
+
+# Fonctions
+def connexion(client, userdata, flags, code, properties):
+    if code == 0:
+        print("Connecté")
+    else:
+        print("Erreur code %d\n", code)
+
+def reception(cl,userdata,msg):
+    global donneesRecues
+    # Extraire le hostname du topic, le mettre comme clé du dictionnaire
+    try: 
+        cle = msg.topic.split("/")[1]
+        donneesRecues[cle] = int(msg.payload.decode())
+            
+    except IndexError: # Cas si un topic ne contient pas de "/"
+        print(">>> ERREUR:",msg.topic,msg.payload.decode())
+    except ValueError: # Cas si le message MQTT n'est pas un nombre
+        print(">>> ERREUR:",msg.topic,msg.payload.decode())
+
+    #("Reçu:",msg.topic,msg.payload.decode())
+
+# Constantes
+BROKER = "192.168.50.109"
+PORT = 1883
+TOPIC = "ex4/#"
+
+# Initialisations
+client = pmc.Client(pmc.CallbackAPIVersion.VERSION2)
+client.on_connect = connexion
+client.on_message = reception
+
+# Connexion au broker
+client.connect(BROKER,PORT)
+client.subscribe(TOPIC)
+client.loop_start()
+
+try:   
+    while True: 
+        time.sleep(10)
+        # Afficher le max
+        maxi = max(donneesRecues, key=donneesRecues.get)
+        print("Max:", maxi, "(" + str(donneesRecues[maxi]) + ")")
+
+        # Afficher la moyenne
+        moy = sum(donneesRecues.values()) / len(donneesRecues)
+        print("Moy:", moy)
+
+        # Réinitialiser les données
+        print("-------------")
+        donneesRecues = {}
+
+except KeyboardInterrupt:
+    client.disconnect()
+
+```
+{{% /expand %}}
+
 1. Configurez un _broker_ pour qu'il contienne l'utilisateur `info` et le mot de passe `Password1234`. Ensuite faites un programme qui envoit un message au _topic_ "exercice5" lorsque l'utilisateur clique un bouton. Le message doit être envoyé avec QoS de niveau 2 et afficher "Message envoyé" à l'évènement `on_publish`.
 <!--
 {{% expand "Solution" %}}
