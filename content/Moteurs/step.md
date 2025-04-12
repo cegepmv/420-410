@@ -147,13 +147,6 @@ steps_par_tour = 2048
 # Minimum recommandé: 2ms (0.002)
 step_pause = 0.002
 
-seq_simple = [
-    [1,0,0,0],
-    [0,1,0,0],
-    [0,0,1,0],
-    [0,0,0,1]
-]
-
 seq_full = [
     [1,0,0,1],
     [1,1,0,0],
@@ -203,17 +196,7 @@ import time
 
 M1,M2,M3,M4 = 26,13,19,6
 steps_par_tour = 2048
-steps_par_degre = 5.68
-
 step_pause = 0.002
-
-# Single coil 
-seq_simple = [
-    [1,0,0,0],
-    [0,1,0,0],
-    [0,0,1,0],
-    [0,0,0,1]
-]
 
 seq_full = [
     [1,0,0,1],
@@ -265,7 +248,6 @@ import pigpio
 import time
 
 M1,M2,M3,M4 = 26,13,19,6
-steps_par_tour = 2048
 steps_par_degre = 5.68
 
 # Minimum recommandé: 2ms (0.002)
@@ -338,7 +320,6 @@ import pigpio
 import time
 
 M1,M2,M3,M4 = 26,13,19,6
-steps_par_tour = 2048
 steps_par_degre = 5.68
 
 # Minimum recommandé: 2ms (0.002)
