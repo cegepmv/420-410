@@ -38,7 +38,7 @@ client.publish(TOPIC,"allo")
 client.disconnect()
 ```
 
-Dans le programme précédent, la fonction `connexion` définit ce que le programme fait lors de la connexion au _broker_. Dans ce cas-ci, on affiche un message de succès / erreur. Notez que la fonction doit être associée à la propriété `on_connect` du client pour être appelée.
+Dans le programme précédent, la fonction `connexion` définit ce que le programme fait lors de la connexion au _broker_. Dans ce cas-ci, on affiche un message de succès / erreur. Notez que la fonction doit être associée à la propriété `on_connect` du client pour être appelée, et comme elle est appelée de manière asynchrone, il faut appeler la méthode `loop_start()` immédiatement après pour que la connexion se fasse dans son propre *thread*.
 
 #### Recevoir des messages
 
@@ -174,6 +174,7 @@ pi.set_mode(BTN,pigpio.INPUT)
 client = pmc.Client(pmc.CallbackAPIVersion.VERSION2)
 client.on_connect = connexion
 client.connect(BROKER,PORT)
+client.loop_start()
 
 try:
     etat_bouton = 1
