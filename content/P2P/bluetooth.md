@@ -178,7 +178,7 @@ while True:
 ```
 {{% /expand %}}
 -->
-3. Faites un programme qui affiche 3 boutons sur l'appli BlueDot (rouge, vert et bleu) et allume les couleurs correspondantes sur une LED RGB du Pi d'une autre équipe.
+3. Faites un programme qui affiche 3 boutons sur l'appli BlueDot (rouge, vert et bleu) et allume les couleurs correspondantes sur une LED RGB.
 <!--
 {{% expand "Solution" %}}
 ```python
@@ -228,3 +228,4 @@ while True:
 ```
 {{% /expand %}}
 -->
+4. Avec une autre équipe, faites un programme [qui lance l'appli BlueDot sur votre Pi](https://bluedot.readthedocs.io/en/latest/bluedotpythonapp.html). Lorsque vous appuyez sur le bouton, la LED RGB sur le Pi de l'autre équipe s'allume en bleu. Lorsque vous relâchez le bouton, elle s'allume en rouge.
