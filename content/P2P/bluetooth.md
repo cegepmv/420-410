@@ -151,7 +151,7 @@ while True:
 ```
 {{% /expand %}}
 -->
-2. Dans l'exercice précédent, la LED ne s'éteint pas lorsqu'on relâche le bouton. Modifiez votre programme pour que ce soit la cas. Consultez la documentation pour savoir quel évènement utiliser.
+2. Dans l'exercice précédent, la LED ne s'éteint pas lorsqu'on relâche le bouton. Modifiez votre programme pour que ce soit le cas. Consultez la documentation pour savoir quel évènement utiliser.
 <!--
 {{% expand "Solution" %}}
 ```python
