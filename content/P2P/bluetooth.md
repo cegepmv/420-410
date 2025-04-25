@@ -127,9 +127,45 @@ pip3 install pygame
 
 > ATTENTION: La partie _serveur_ du programme doit s'exécuter avant que la partie client essaie de se connecter.
 
+### _btcomm_
+BlueDot permet aussi d'échanger des données entre deux programmes via la connexion bluetooth. Il faut cependant que les deux périphériques soient déjà appariés. Ensuite les deux programmes peuvent facilement établir une connexion client-serveur similaire à une connexion TCP: le serveur attend une connexion, le client se connecte. 
+
+Pour se faire on utilise les classes _BluetoothClient_ et _BluetoothServer_. Les exemples suivants montrent comment échanger un message simple:
+
+##### BluetoothServer
+```python
+from bluedot.btcomm import BluetoothServer
+
+# Fonction de rappel pour le traitement des messages entrants
+def reception(donnees):
+    print(donnees)
+
+# On instancie le serveur
+srv = BluetoothServer(reception)
+
+while True:
+    pass
+```
+
+##### BluetoothClient
+```python
+from bluedot.btcomm import BluetoothClient
+
+# L'adresse MAC du serveur
+SERVEUR = "E4:5F:01:EC:63:4E"
+
+def reception(data):
+    print(data)
+
+c = BluetoothClient(SERVEUR, reception)
+c.send("bonjour")
+
+while True:
+    pass
+```
+
 ## Exercices
 1. Utilisez l'évènement `when_pressed` pour allumer une LED lorsqu'on appuie sur le bouton.
-<!--
 {{% expand "Solution" %}}
 ```python
 from bluedot import BlueDot
@@ -150,9 +186,7 @@ while True:
 	pass
 ```
 {{% /expand %}}
--->
 2. Dans l'exercice précédent, la LED ne s'éteint pas lorsqu'on relâche le bouton. Modifiez votre programme pour que ce soit le cas. Consultez la documentation pour savoir quel évènement utiliser.
-<!--
 {{% expand "Solution" %}}
 ```python
 from bluedot import BlueDot
@@ -177,9 +211,7 @@ while True:
 	pass
 ```
 {{% /expand %}}
--->
 3. Faites un programme qui affiche 3 boutons sur l'appli BlueDot (rouge, vert et bleu) et allume les couleurs correspondantes sur une LED RGB.
-<!--
 {{% expand "Solution" %}}
 ```python
 from bluedot import BlueDot
@@ -227,5 +259,41 @@ while True:
         eteindre()
 ```
 {{% /expand %}}
+4. Avec une autre équipe, établissez une connexion bluetooth pour vous échanger des messages texte. Inversez ensuite les rôles de client et serveur.
+<!--
+{{% expand "Solution" %}}
+```python
+# Programme client
+from bluedot.btcomm import BluetoothClient
+
+PI2 = "E4:5F:01:EC:63:4E"
+
+def data_received(data):
+    print(data)
+    
+c = BluetoothClient(PI2, data_received)
+
+while True:
+    c.send(input(">"))
+```
+```python
+# Programme serveur
+from bluedot.btcomm import BluetoothServer
+
+def data_received(data):
+    print(data)
+    
+s = BluetoothServer(data_received)
+
+while True:
+    s.send(input(">"))
+```
+{{% /expand %}}
 -->
-4. Avec une autre équipe, faites un programme [qui lance l'appli BlueDot sur votre Pi](https://bluedot.readthedocs.io/en/latest/bluedotpythonapp.html). Lorsque vous appuyez sur le bouton, la LED RGB sur le Pi de l'autre équipe s'allume en bleu. Lorsque vous relâchez le bouton, elle s'allume en rouge.
+5. Avec une autre équipe, connectez un bouton sur un Pi et une LED sur l'autre Pi, puis faites allumer la LED à la pression du bouton en utilisant la connexion bluetooth.
+<!--
+{{% expand "Solution" %}}
+```python
+```
+{{% /expand %}}
+-->
