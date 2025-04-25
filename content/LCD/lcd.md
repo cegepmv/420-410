@@ -10,7 +10,7 @@ L'écran *LCD 0802* du kit *KS0522* Est compatible avec plusieurs modules python
 Tout d'abord il faut installer le paquet logiciel correspondant avec la commande suivante sur le Pi:
 
 ```bash
-sudo pip3 install adafruit-circuitpython-charlcd
+pip install adafruit-circuitpython-charlcd
 ```
 
 Il s'agit ensuite d'appeler le constructeur de la classe `Character_LCD` en lui passant (entre autres) les identifiants GPIO connectés aux broches de l'écran LCD.
