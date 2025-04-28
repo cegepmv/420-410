@@ -2,50 +2,51 @@
 title = 'Installation'
 date = 2024-03-04T08:04:13-05:00
 draft = false
-weight = 61
+weight = 81
 +++
 
-Pour contrôler à distance des modules connectés sur le Pi, une technique consiste à utiliser une API. À partir d'une page web, on pourra ainsi faire des appels d'API pour allumer une LED, activer des servos, lire les données d'un capteur, etc.
+# AVEC FLASK
+Pour serveur de dev:
+- pip install flask
+- Créer un répertoire pour l'app
+- Créer un fichier app.py
 
-Cette API doit donc s'exécuter sur le Pi. Pour cela nous utilisersons _Node_ et _Express_.
+Exercices: 
+- 
+Next: 
+- Faire un serveur de prod
+- Déployer 
+-------------------------------
 
-## Installation 
-#### Node
-Sur le Pi, en tant que **root**, installez _Node_ et le gestionnaire de paquets _npm_:
+Pour contrôler à distance des modules connectés sur le Pi, une technique consiste à utiliser une API. À partir d'une page web, on pourra ainsi faire des appels d'API pour allumer une LED, activer des servos, lire les données d'un capteur, etc. On utilise cette méthode pour communiquer avec des objets connectés dans les cas où le contrôleur est assez puissant pour exécuter la pile de programmes requise. C'est le cas du Raspberry Pi.
+
+Cette API doit donc s'exécuter sur le Pi. Pour cela nous utilisersons *Flask*, un cadriciel pour développer des applications en python côté serveur.
+
+L'installation de base de Flask est très simple et rapide à déployer, mais n'utilise pas HTTPS et n'est pas conçue pour recevoir de nombreuses requêtes simultanément: c'est pourquoi on l'utilise dans des contextes de développement. En production, il est préférable d'utiliser un serveur WSGI; il en existe plusieurs, mais ici nous utiliserons un serveur web _apache_ avec le module `mod_wsgi`.
+
+## Installation (développement)
+Nous allons installer un serveur de développement Flask pour déployer une application de type "Hello World" où un des points terminaux retourne une simple chaîne de caractères.
+
+La première étape est d'installer Flask:
 ```
-apt update
-apt install nodejs npm
+pip install flask
 ```
-Vérifiez que l'installation est correcte avec les commandes `node -v` et `npm -v`. Elles devraient respectivement afficher `v12.22.12` et `7.5.2`.
-
-#### Express
-Nous allons créer un répertoire nommé **rest** pour les fichiers de notre API et y installer le _framework_ Express. Les commandes sont les suivantes:
+Ensuite, créer un répertoire pour l'application:
 ```
-mkdir rest
-cd rest
-npm init 
-npm install express 
+mkdir app-flask
 ```
-{{% notice primary "npm init" %}}
-La commande `npm init` a pour but de créer le fichier _package.json_; celui-ci contient différentes informations sur votre application. Pour ce faire, `npm init` vous pose quelques questions. Ici, vous pouvez choisir les réponses par défaut en faisant `enter` pour chacune.
-{{% /notice %}}
+Puis finalement, dans ce répertoire, créez un fichier nommé `app.py` qui contient le code suivant:
+```python
+from flask import Flask, jsonify, request
 
-#### Test
-Le serveur que nous avons installé est structuré de la manière la plus simple possible: nous avons simplement défini un point d'entrée, qui correspond à l'attribut "main" dans le fichier _package.json_ (`index.js` par défaut). Il est donc possible de mettre tout le code de notre API dans cet unique fichier.
+app = Flask(__name__)
 
-On définit donc une première route pour tester notre installation. Celle-ci affiche "Bonjour le monde!" à la racine du site. Créez le fichier `index.js` et mettez-y le contenu suivant:
-```js
-const express = require('express')
-const app = express()
-const port = 3000
+@app.route('/',methods=['GET'])
+def bonjour():
+    return "<h1>Bonjour le monde!</h1>"
 
-app.get('/', (req, res) => {
-  res.send('Bonjour le monde!')
-})
-
-app.listen(port, () => {
-  console.log(`Application roule sur port ${port}`)
-})
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=3000)
 ```
-Lancez ensuite l'application avec la commande `nodejs index.js`. Vous pourrez y accéder en ouvrant une page web au port 3000 de votre Pi.
 
+Pour démarrer l'application, il suffit de lancer `python app.py` dans le répertoire où se trouve le fichier. Pour voir le message, ouvrez une page à l'adresse IP du Pi au port spécifié (ici, le port 3000).

@@ -2,7 +2,7 @@
 title = 'API'
 date = 2024-03-04T18:45:29-05:00
 draft = false
-weight = 62
+weight = 82
 +++
 
 Puisqu'on veut avoir une API, il faut définir ses points terminaux ("endpoints"). Il s'agit donc de créer les routes correspondantes et d'y ajouter le code nécessaire pour envoyer ou recevoir des données au format JSON. 
@@ -11,71 +11,65 @@ Puisqu'on veut avoir une API, il faut définir ses points terminaux ("endpoints"
 À titre d'exemple, nous allons créer un premier point terminal pour afficher des informations sur l'hôte, soit son nom et la date et l'heure du système. On souhaite que les données retournées aient le format suivant:
 ```json
 {
-    "hostname": "raspberry",
-    "date": "2024-03-03"
+    "hote": "raspberry",
+    "date": "2025-03-03, 15:39:57"
 }
 ```
-On utilisera l'objet `Date` de javascript pour récupérer la date et `os.hostname()` pour le nom de l'hôte. Attention, pour utiliser cette dernière fonction vous devez inclure le module "os" avec la commande `const os = require("os");` dans votre fichier _index.js_.
-
-Ajoutez la route suivante à votre code:
+On utilisera l'objet `Datetime` de python pour récupérer la date et `socket.gethostname()` pour le nom de l'hôte. Flask dispose aussi de la fonction `jsonify()` qui permet de créer des données au format JSON à partir d'un dictionnaire. Le fichier `app.py` doit donc contenir le code suivant:
 ```js
-app.get('/info', (req, res) => {
-  const info = {
-    "hostname": os.hostname(),
-    "date": new Date().toString()
-  };
-  res.send(info);
-})
+from flask import Flask, jsonify, request
+import socket
+from datetime import datetime
+
+app = Flask(__name__)
+
+@app.route('/info',methods=['GET'])
+def info_hote():
+  d = {}
+  date = datetime.now()
+  d['hote'] = socket.gethostname()
+  d['date'] = date.strftime("%Y-%m-%d, %H:%M:%S")
+  
+  return jsonify(d)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=3000)
 ```
 Pour tester, ouvrez une page à cet _endpoint_; par exemple si votre Pi est à l'adresse 10.10.10.100 vous devrez ouvrir une page à `http://10.10.10.100:3000/info`.
 
-## Lire une valeur digitale du GPIO
-Dans cet exemple nous utilisons un bouton sur le GPIO 18 du Pi, puis le _endpoint_ `getBTN` pour lire l'état du bouton (1 ou 0). 
+## Lire une valeur du GPIO
+Dans l'exemple suivant nous utilisons un bouton sur le GPIO 16 du Pi, puis le _endpoint_ `get_btn` pour lire l'état du bouton (1 ou 0). 
+```python
+from flask import Flask, jsonify, request
+import pigpio
 
-Pour accéder au GPIO à partir de javascript on peut utiliser le module _onoff_. Il faut tout d'abord l'installer avec la commande suivante:
-```
-npm install onoff
-```
-Ensuite on doit:
-+ Importer le module à l'aide de la fonction _require()_;
-+ Déclarer le numéro de GPIO sur lequel on veut lire les données;
-+ Utiliser la méthode _readSync()_ pour lire la valeur;
+BTN = 16
 
-Votre programme devrait donc ressembler à ceci:
-```js
-const express = require('express');
-const { Gpio } = require('onoff');  // Importer module onoff
-const BTN = new Gpio(18, 'in'); // GPIO 18 en mode lecture
-const app = express()
-const port = 3000
+app = Flask(__name__)
+pi = pigpio.pi()
+pi.set_mode(BTN,pigpio.INPUT)
 
-app.get('/', (req, res) => {
-  res.send('Bonjour le monde!')
-})
+@app.route('/bouton',methods=['GET'])
+def get_bouton():
+  d = {}
+  d['etat'] = pi.read(BTN)
+  
+  return jsonify(d)
 
-// Retourne le JSON { state: 1 } ou { state: 0 }
-app.get('/getBTN', (req, res) => {
-  const bouton = {
-    "state": BTN.readSync() // Lire la valeur 
-  };
-  res.send(bouton);
-})
-
-app.listen(port, () => {
-  console.log(`Application roule sur port ${port}`)
-})
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=3000)
 ```
 
-## Écrire une valeur digitale vers le GPIO
-Dans cet exemple on suppose qu'un module LED est connecté sur le port GPIO 17 du Pi. 
+## Écrire une valeur sur le GPIO
+Dans cet exemple on suppose qu'un module LED est connecté sur le port GPIO 20 du Pi. 
 
-On ajoutera le endpoint `setLED` à notre API. Celui-ci recevra des informations au format JSON suivant:
+On ajoutera le point terminal `led` à notre API. Celui-ci recevra des informations au format JSON suivant:
 ```json
 { 
-    state: 1
+    etat: 1
 }
 ``` 
-L'attribut `state` peut être 1 ou 0 selon qu'on veut allumer ou éteindre la LED.
+L'attribut `etat` peut être 1 ou 0 selon qu'on veut allumer ou éteindre la LED.
 
 On utilisera le module `onoff` installé précédemment pour accéder au GPIO. Dans votre fichier _index.js_, il faut inclure le module `onoff` et définir la broche qui enverra le signal avec les instructions suivantes:
 ```js
@@ -106,44 +100,105 @@ Pour tester votre programme, il y a plusieurs possibilités.
 1. Utiliser une extension Firefox comme "postman" ou "rested" qui permet d'envoyer des appels d'API
 2. L'utilitaire _curl_ pour faire un appel directement d'une ligne de commande linux:
 ```
-curl -X POST http://10.10.10.100:3000/setLED -H "Content-Type: application/json" -d '{"valeur": 1}'
+curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d '{"etat": 1}'
 ```
 3. Une page HTML simple dont le code fait les appels d'API à tester, comme l'exemple suivant:
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Test API</title>
+    <meta charset="UTF-8">
+    <title>LED Control</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        button {
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.1s;
+        }
+        #onBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #offBtn {
+            background-color: #f44336;
+            color: white;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
-  <button id="bouton">LED</button>
+    <div class="container">
+        <button id="onBtn" onclick="sendCommand(1)">ON</button>
+        <button id="offBtn" onclick="sendCommand(0)">OFF</button>
+        <div id="status"></div>
+    </div>
 
-  <script>
-    const button = document.getElementById("bouton");
-    button.addEventListener("click", () => {
-      fetch("http://10.10.10.100:3000/setLED", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ state: 1 })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Erreur de la requête");
+    <script>
+        async function sendCommand(etat) {
+            const statusDiv = document.getElementById('status');
+            try {
+                const response = await fetch('http://pi1.local:3000/led', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ etat: etat })
+                });
+
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    statusDiv.textContent = `Error: ${data.Erreur || 'Unknown error'}`;
+                    statusDiv.style.color = 'red';
+                } else {
+                    statusDiv.textContent = `LED state successfully set to ${etat}`;
+                    statusDiv.style.color = 'green';
+                }
+            } catch (error) {
+                statusDiv.textContent = `Network error: ${error.message}`;
+                statusDiv.style.color = 'red';
+            }
         }
-        console.log("LED allumée");
-      })
-      .catch(error => {
-        console.error("Erreur:", error);
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
+
+```
+Attention, lorsque vous utilisez une page HTML pour tester, vous devrez tenir compte de *CORS*, un mécanisme de sécurité actif dans la plupart des navigateurs. Pour ce faire, la méthode la plus simple est d'utiliser `flask-cors`. Installez-le d'abord:
+```
+pip install flask-cors
+```
+puis ajoutez les lignes suivantes à votre progrmme:
+```python
+from flask_cors import CORS
+(...)
+app = Flask(__name__)
+CORS(app)
+(...)
 ```
 
 ## Exercice
-Connectez la LED RGB et faites 2 endpoints: `setRGB`, qui change la couleur de la LED ou l'éteint et peut prendre 4 valeurs ("red","green","blue" et "off") pour un attribut nommé "state", et `getRGB` qui retourne des données au même format JSON selon l'état de la LED.
+Connectez la LED RGB et faites un endpoint nommé `rgb` qui change la couleur de la LED ou l'éteint et peut prendre 4 valeurs ("red","green","blue" et "off") pour un attribut nommé "etat".
 
-Codez ensuite une page HTML en vous basant sur l'exemple précédent; cette page doit comprendre 4 boutons pour changer l'état de la LED et un bouton pour afficher sur la page la couleur courante de la LED.
+Codez ensuite une page HTML en vous basant sur l'exemple précédent; cette page doit comprendre 4 boutons pour changer l'état de la LED.
