@@ -116,13 +116,13 @@ curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d
 <html lang="en">
 <body>
     <div class="container">
-        <button id="onBtn" onclick="sendCommand(1)">ON</button>
-        <button id="offBtn" onclick="sendCommand(0)">OFF</button>
+        <button id="onBtn" onclick="commande(1)">ON</button>
+        <button id="offBtn" onclick="commande(0)">OFF</button>
         <div id="status"></div>
     </div>
 
     <script>
-        async function sendCommand(etat) {
+        async function commande(etat) {
             const statusDiv = document.getElementById('status');
             try {
                 const response = await fetch('http://10.10.10.100:3000/led', {
@@ -136,7 +136,7 @@ curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d
                 const data = await response.json();
                 
                 if (!response.ok) {
-                    statusDiv.textContent = `Erreur: ${data.Erreur || 'Unknown error'}`;
+                    statusDiv.textContent = `Erreur: ${data.Erreur || 'Erreur inconnue'}`;
                     statusDiv.style.color = 'red';
                 } else {
                     statusDiv.textContent = `LED est a ${etat}`;
