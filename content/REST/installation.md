@@ -4,7 +4,7 @@ date = 2024-03-04T08:04:13-05:00
 draft = false
 weight = 81
 +++
-
+<!--
 # AVEC FLASK
 Pour serveur de dev:
 - pip install flask
@@ -17,7 +17,7 @@ Next:
 - Faire un serveur de prod
 - Déployer 
 -------------------------------
-
+-->
 Pour contrôler à distance des modules connectés sur le Pi, une technique consiste à utiliser une API. À partir d'une page web, on pourra ainsi faire des appels d'API pour allumer une LED, activer des servos, lire les données d'un capteur, etc. On utilise cette méthode pour communiquer avec des objets connectés dans les cas où le contrôleur est assez puissant pour exécuter la pile de programmes requise. C'est le cas du Raspberry Pi.
 
 Cette API doit donc s'exécuter sur le Pi. Pour cela nous utilisersons *Flask*, un cadriciel pour développer des applications en python côté serveur.

@@ -106,47 +106,6 @@ curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LED Control</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            text-align: center;
-        }
-        button {
-            padding: 20px 40px;
-            margin: 10px;
-            font-size: 1.5em;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            transition: transform 0.1s;
-        }
-        #onBtn {
-            background-color: #4CAF50;
-            color: white;
-        }
-        #offBtn {
-            background-color: #f44336;
-            color: white;
-        }
-        button:hover {
-            transform: scale(1.05);
-        }
-        #status {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-    </style>
-</head>
 <body>
     <div class="container">
         <button id="onBtn" onclick="sendCommand(1)">ON</button>
@@ -158,7 +117,7 @@ curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d
         async function sendCommand(etat) {
             const statusDiv = document.getElementById('status');
             try {
-                const response = await fetch('http://pi1.local:3000/led', {
+                const response = await fetch('http://10.10.10.100:3000/led', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -169,21 +128,20 @@ curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d
                 const data = await response.json();
                 
                 if (!response.ok) {
-                    statusDiv.textContent = `Error: ${data.Erreur || 'Unknown error'}`;
+                    statusDiv.textContent = `Erreur: ${data.Erreur || 'Unknown error'}`;
                     statusDiv.style.color = 'red';
                 } else {
-                    statusDiv.textContent = `LED state successfully set to ${etat}`;
+                    statusDiv.textContent = `LED est a ${etat}`;
                     statusDiv.style.color = 'green';
                 }
             } catch (error) {
-                statusDiv.textContent = `Network error: ${error.message}`;
+                statusDiv.textContent = `Erreur: ${error.message}`;
                 statusDiv.style.color = 'red';
             }
         }
     </script>
 </body>
 </html>
-
 ```
 Attention, lorsque vous utilisez une page HTML pour tester, vous devrez tenir compte de *CORS*, un mécanisme de sécurité actif dans la plupart des navigateurs. Pour ce faire, la méthode la plus simple est d'utiliser `flask-cors`. Installez-le d'abord:
 ```
