@@ -72,7 +72,7 @@ On ajoutera le point terminal `led` à notre API. Celui-ci recevra des informati
 L'attribut `etat` peut être 1 ou 0 selon qu'on veut allumer ou éteindre la LED.
 
 On utilisera _pigpio_ pour accéder comme d'habitude au GPIO:
-```js
+```python
 from flask import Flask, jsonify, request
 import pigpio
 

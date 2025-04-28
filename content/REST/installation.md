@@ -16,6 +16,8 @@ Exercices:
 Next: 
 - Faire un serveur de prod
 - Déployer 
+- Implémenter app RGB sur serveur
+- Faire une app avec 2 endpoints: 1 qui retourne la luminosité en JSON et 1 qui permet de set RGB. Aussi on affiche sur LCD le nombre de RGB allumés pour toute la classe (MQTT)
 -------------------------------
 -->
 Pour contrôler à distance des modules connectés sur le Pi, une technique consiste à utiliser une API. À partir d'une page web, on pourra ainsi faire des appels d'API pour allumer une LED, activer des servos, lire les données d'un capteur, etc. On utilise cette méthode pour communiquer avec des objets connectés dans les cas où le contrôleur est assez puissant pour exécuter la pile de programmes requise. C'est le cas du Raspberry Pi.
