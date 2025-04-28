@@ -71,29 +71,37 @@ On ajoutera le point terminal `led` à notre API. Celui-ci recevra des informati
 ``` 
 L'attribut `etat` peut être 1 ou 0 selon qu'on veut allumer ou éteindre la LED.
 
-On utilisera le module `onoff` installé précédemment pour accéder au GPIO. Dans votre fichier _index.js_, il faut inclure le module `onoff` et définir la broche qui enverra le signal avec les instructions suivantes:
+On utilisera _pigpio_ pour accéder comme d'habitude au GPIO:
 ```js
-const LED = new Gpio(17, 'out');
-```
+from flask import Flask, jsonify, request
+import pigpio
 
-Le module `body-parser` sera utilisé pour récupérer les valeurs JSON. Installez-le tout d'abord avec la commande suivante:
-```
-npm install body-parser
-```
-Ensuite ajoutez cette instruction à votre fichier _index.js_:
-```js
-app.use(express.json());
-```
+LED = 20
 
-Enfin, ajoutez le code suivant pour définir votre _endpoint_:
-```js
-app.post('/setLED', (req, res) => {
-  const { state } = req.body;
-  if (state !== 0 && state !== 1) {
-    return res.status(400).json({ message: 'Erreur: valeur différente de 0 ou 1' });
-  }
-  LED.writeSync(state);
-});
+app = Flask(__name__)
+
+pi = pigpio.pi()
+pi.set_mode(LED,pigpio.OUTPUT)
+
+@app.route('/led', methods=['POST'])
+def set_led():
+    if request.method == "POST":
+      json = request.get_json()
+      if "etat" in json:
+        if json["etat"] == 1:
+            pi.write(LED,1)
+        elif json["etat"] == 0:
+            pi.write(LED,0)
+        else:
+            return jsonify({'Erreur': 'Mauvaise valeur'}),500
+      else:
+        return jsonify({'Erreur': 'Mauvais attribut'}),500
+    else:
+      return jsonify({'Erreur': 'Requetes POST seulement'}),500
+    return jsonify({'Etat': json["etat"]}),200
+   
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=3000)
 ```
 ## Test
 Pour tester votre programme, il y a plusieurs possibilités.
