@@ -95,7 +95,7 @@ app.post('/setLED', (req, res) => {
   LED.writeSync(state);
 });
 ```
-#### Test
+## Test
 Pour tester votre programme, il y a plusieurs possibilités.
 1. Utiliser une extension Firefox comme "postman" ou "rested" qui permet d'envoyer des appels d'API
 2. L'utilitaire _curl_ pour faire un appel directement d'une ligne de commande linux:
@@ -143,7 +143,8 @@ curl -X POST http://10.10.10.100:3000/led -H "Content-Type: application/json" -d
 </body>
 </html>
 ```
-Attention, lorsque vous utilisez une page HTML pour tester, vous devrez tenir compte de *CORS*, un mécanisme de sécurité actif dans la plupart des navigateurs. Pour ce faire, la méthode la plus simple est d'utiliser `flask-cors`. Installez-le d'abord:
+{{% notice primary "Attention" %}}
+Lorsque vous utilisez une page HTML pour tester, vous devrez tenir compte de *CORS*, un mécanisme de sécurité actif dans la plupart des navigateurs. Pour ce faire, la méthode la plus simple est d'utiliser `flask-cors`. Installez-le d'abord:
 ```
 pip install flask-cors
 ```
@@ -155,6 +156,7 @@ app = Flask(__name__)
 CORS(app)
 (...)
 ```
+{{% /notice %}}
 
 ## Exercice
 Connectez la LED RGB et faites un endpoint nommé `rgb` qui change la couleur de la LED ou l'éteint et peut prendre 4 valeurs ("red","green","blue" et "off") pour un attribut nommé "etat".
