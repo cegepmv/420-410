@@ -16,7 +16,7 @@ Puisqu'on veut avoir une API, il faut définir ses points terminaux ("endpoints"
 }
 ```
 On utilisera l'objet `Datetime` de python pour récupérer la date et `socket.gethostname()` pour le nom de l'hôte. Flask dispose aussi de la fonction `jsonify()` qui permet de créer des données au format JSON à partir d'un dictionnaire. Le fichier `app.py` doit donc contenir le code suivant:
-```js
+```python
 from flask import Flask, jsonify, request
 import socket
 from datetime import datetime
