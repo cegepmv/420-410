@@ -1,33 +1,54 @@
 baseURL = 'https://cegepmv.github.io/420-410'
 languageCode = 'fr-ca'
 title = 'Introduction aux plateformes IdO'
-theme = 'hugo-theme-relearn'
+theme = 'relearn'
 defaultContentLanguage = "fr"
-[languages]
-  [languages.fr]
-    languageCode = 'fr'
-    languageName = 'Français'
-    title = 'Introduction aux plateformes IdO'
-    weight = 1
-[params]
-  # Change default color scheme with a variant one. Can be empty, "red", "blue", "green".
-  # "relearn-light" "relearn-dark" "relearn-bright" "zen-light" "zen-dark" 
-  themeVariant = ["relearn-light","relearn-dark"]   
-  disableLandingPageButton = true
-  alwaysopen = false
-  # Set this to true to disable copy-to-clipboard button for inline code.
+enableEmoji = true
+
+[params]  
+  additionalCSS = ["css/custom.css"]
   disableInlineCopyToClipBoard = true
-  # Désactiver search bar
-  # disableSearch = true
-  # Hide breadcrumbs in the header and only show the current page title
-  disableBreadcrumb = false
-  # If set to true, hide table of contents menu in the header of all pages
-  disableToc = true
-  # Hide Next and Previous page buttons normally displayed full height beside content
-  disableNextPrev = true
 
   [params.imageEffects]
     border = false
     lazy = true
     lightbox = false
     shadow = false
+
+  [[params.themeVariant]]
+    auto = []
+    identifier = 'relearn-auto'
+    name = 'Relearn Light/Dark'
+
+  [[params.themeVariant]]
+    identifier = 'zen-light'
+
+  [[params.themeVariant]]
+    identifier = 'zen-dark'
+
+  [[params.themeVariant]]
+    identifier = 'neon'
+
+  [[params.themeVariant]]
+    identifier = 'learn'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    noClasses = false
+    style = "dracula"  # or any theme you like
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
+[languages]
+  [languages.fr]
+    languageCode = 'fr'
+    languageName = 'Français'
+    title = 'Introduction aux plateformes IdO'
+    weight = 1
